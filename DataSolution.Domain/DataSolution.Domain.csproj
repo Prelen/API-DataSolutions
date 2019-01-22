@@ -42,12 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Interfaces\Repository\ILookupRepository.cs" />
+    <Compile Include="Interfaces\Repository\IProductRepository.cs" />
     <Compile Include="Interfaces\Repository\ITransactionRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Service\IPDFConverter.cs" />
     <Compile Include="Interfaces\Service\ITransunionAPI.cs" />
     <Compile Include="Interfaces\Utilities\Encryption\IEncryption.cs" />
     <Compile Include="Interfaces\Utilities\Logging\ILogging.cs" />
+    <Compile Include="Model\Data\LookupModel.cs" />
     <Compile Include="Model\Data\ProductModel.cs" />
     <Compile Include="Model\Data\TransactionModel.cs" />
     <Compile Include="Model\Data\UserModel.cs" />
