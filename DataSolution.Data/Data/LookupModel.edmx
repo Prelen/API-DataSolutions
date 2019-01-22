@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LookupModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="lk_AddressKeyword">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressKeyword" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_CivilDebtCode">
+          <Key>
+            <PropertyRef Name="DebtCode" />
+          </Key>
+          <Property Name="DebtCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DebtDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Court">
+          <Key>
+            <PropertyRef Name="CourtCode" />
+          </Key>
+          <Property Name="CourtCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourtName" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_CourtType">
+          <Key>
+            <PropertyRef Name="CourtTypeCode" />
+          </Key>
+          <Property Name="CourtTypeCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourtTypeDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_DebtReview">
+          <Key>
+            <PropertyRef Name="DebtReviewCode" />
+          </Key>
+          <Property Name="DebtReviewCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DebtReviewDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DataSolution.dbo.lk_Default' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="lk_Default">
+          <Key>
+            <PropertyRef Name="DefaultCode" />
+          </Key>
+          <Property Name="DefaultCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DefaultDescription" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="lk_Gender">
+          <Key>
+            <PropertyRef Name="GenderCode" />
+          </Key>
+          <Property Name="GenderCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_JudgementCode">
+          <Key>
+            <PropertyRef Name="JudmentCode" />
+          </Key>
+          <Property Name="JudmentCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Ownership">
+          <Key>
+            <PropertyRef Name="OwnershipCode" />
+          </Key>
+          <Property Name="OwnershipCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="OwnershipDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_ProvinceCode">
+          <Key>
+            <PropertyRef Name="ProvinceCode" />
+          </Key>
+          <Property Name="ProvinceCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProvinceName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="lk_Title">
+          <Key>
+            <PropertyRef Name="TitleCode" />
+          </Key>
+          <Property Name="TitleCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TitleDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Trace">
+          <Key>
+            <PropertyRef Name="TraceCode" />
+          </Key>
+          <Property Name="TraceCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TraceDescription" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DataSolution.dbo.lnk_UserProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="lnk_UserProducts">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LookupModelStoreContainer">
+          <EntitySet Name="lk_AddressKeyword" EntityType="Self.lk_AddressKeyword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_CivilDebtCode" EntityType="Self.lk_CivilDebtCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Court" EntityType="Self.lk_Court" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_CourtType" EntityType="Self.lk_CourtType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_DebtReview" EntityType="Self.lk_DebtReview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Gender" EntityType="Self.lk_Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_JudgementCode" EntityType="Self.lk_JudgementCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Ownership" EntityType="Self.lk_Ownership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_ProvinceCode" EntityType="Self.lk_ProvinceCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Title" EntityType="Self.lk_Title" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Trace" EntityType="Self.lk_Trace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Default" EntityType="Self.lk_Default" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[lk_Default].[DefaultCode] AS [DefaultCode], 
+[lk_Default].[DefaultDescription] AS [DefaultDescription]
+FROM [dbo].[lk_Default] AS [lk_Default]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="lnk_UserProducts" EntityType="Self.lnk_UserProducts" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[lnk_UserProducts].[UserID] AS [UserID], 
+[lnk_UserProducts].[ProductID] AS [ProductID]
+FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LookupModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="lk_AddressKeyword">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressKeyword" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_CivilDebtCode">
+          <Key>
+            <PropertyRef Name="DebtCode" />
+          </Key>
+          <Property Name="DebtCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DebtDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Court">
+          <Key>
+            <PropertyRef Name="CourtCode" />
+          </Key>
+          <Property Name="CourtCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourtName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_CourtType">
+          <Key>
+            <PropertyRef Name="CourtTypeCode" />
+          </Key>
+          <Property Name="CourtTypeCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourtTypeDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_DebtReview">
+          <Key>
+            <PropertyRef Name="DebtReviewCode" />
+          </Key>
+          <Property Name="DebtReviewCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DebtReviewDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Gender">
+          <Key>
+            <PropertyRef Name="GenderCode" />
+          </Key>
+          <Property Name="GenderCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_JudgementCode">
+          <Key>
+            <PropertyRef Name="JudmentCode" />
+          </Key>
+          <Property Name="JudmentCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Ownership">
+          <Key>
+            <PropertyRef Name="OwnershipCode" />
+          </Key>
+          <Property Name="OwnershipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OwnershipDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_ProvinceCode">
+          <Key>
+            <PropertyRef Name="ProvinceCode" />
+          </Key>
+          <Property Name="ProvinceCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lk_Title">
+          <Key>
+            <PropertyRef Name="TitleCode" />
+          </Key>
+          <Property Name="TitleCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TitleDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Trace">
+          <Key>
+            <PropertyRef Name="TraceCode" />
+          </Key>
+          <Property Name="TraceCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TraceDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Default">
+          <Key>
+            <PropertyRef Name="DefaultCode" />
+          </Key>
+          <Property Name="DefaultCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DefaultDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lnk_UserProducts">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LookupEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="lk_AddressKeyword" EntityType="Self.lk_AddressKeyword" />
+          <EntitySet Name="lk_CivilDebtCode" EntityType="Self.lk_CivilDebtCode" />
+          <EntitySet Name="lk_Court" EntityType="Self.lk_Court" />
+          <EntitySet Name="lk_CourtType" EntityType="Self.lk_CourtType" />
+          <EntitySet Name="lk_DebtReview" EntityType="Self.lk_DebtReview" />
+          <EntitySet Name="lk_Gender" EntityType="Self.lk_Gender" />
+          <EntitySet Name="lk_JudgementCode" EntityType="Self.lk_JudgementCode" />
+          <EntitySet Name="lk_Ownership" EntityType="Self.lk_Ownership" />
+          <EntitySet Name="lk_ProvinceCode" EntityType="Self.lk_ProvinceCode" />
+          <EntitySet Name="lk_Title" EntityType="Self.lk_Title" />
+          <EntitySet Name="lk_Trace" EntityType="Self.lk_Trace" />
+          <EntitySet Name="lk_Default" EntityType="Self.lk_Default" />
+          <EntitySet Name="lnk_UserProducts" EntityType="Self.lnk_UserProducts" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LookupModelStoreContainer" CdmEntityContainer="LookupEntities">
+          <EntitySetMapping Name="lk_AddressKeyword">
+            <EntityTypeMapping TypeName="LookupModel.lk_AddressKeyword">
+              <MappingFragment StoreEntitySet="lk_AddressKeyword">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="AddressKeyword" ColumnName="AddressKeyword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_CivilDebtCode">
+            <EntityTypeMapping TypeName="LookupModel.lk_CivilDebtCode">
+              <MappingFragment StoreEntitySet="lk_CivilDebtCode">
+                <ScalarProperty Name="DebtCode" ColumnName="DebtCode" />
+                <ScalarProperty Name="DebtDescription" ColumnName="DebtDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Court">
+            <EntityTypeMapping TypeName="LookupModel.lk_Court">
+              <MappingFragment StoreEntitySet="lk_Court">
+                <ScalarProperty Name="CourtCode" ColumnName="CourtCode" />
+                <ScalarProperty Name="CourtName" ColumnName="CourtName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_CourtType">
+            <EntityTypeMapping TypeName="LookupModel.lk_CourtType">
+              <MappingFragment StoreEntitySet="lk_CourtType">
+                <ScalarProperty Name="CourtTypeCode" ColumnName="CourtTypeCode" />
+                <ScalarProperty Name="CourtTypeDescription" ColumnName="CourtTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_DebtReview">
+            <EntityTypeMapping TypeName="LookupModel.lk_DebtReview">
+              <MappingFragment StoreEntitySet="lk_DebtReview">
+                <ScalarProperty Name="DebtReviewCode" ColumnName="DebtReviewCode" />
+                <ScalarProperty Name="DebtReviewDescription" ColumnName="DebtReviewDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Gender">
+            <EntityTypeMapping TypeName="LookupModel.lk_Gender">
+              <MappingFragment StoreEntitySet="lk_Gender">
+                <ScalarProperty Name="GenderCode" ColumnName="GenderCode" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_JudgementCode">
+            <EntityTypeMapping TypeName="LookupModel.lk_JudgementCode">
+              <MappingFragment StoreEntitySet="lk_JudgementCode">
+                <ScalarProperty Name="JudmentCode" ColumnName="JudmentCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Ownership">
+            <EntityTypeMapping TypeName="LookupModel.lk_Ownership">
+              <MappingFragment StoreEntitySet="lk_Ownership">
+                <ScalarProperty Name="OwnershipCode" ColumnName="OwnershipCode" />
+                <ScalarProperty Name="OwnershipDescription" ColumnName="OwnershipDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_ProvinceCode">
+            <EntityTypeMapping TypeName="LookupModel.lk_ProvinceCode">
+              <MappingFragment StoreEntitySet="lk_ProvinceCode">
+                <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Title">
+            <EntityTypeMapping TypeName="LookupModel.lk_Title">
+              <MappingFragment StoreEntitySet="lk_Title">
+                <ScalarProperty Name="TitleCode" ColumnName="TitleCode" />
+                <ScalarProperty Name="TitleDescription" ColumnName="TitleDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Trace">
+            <EntityTypeMapping TypeName="LookupModel.lk_Trace">
+              <MappingFragment StoreEntitySet="lk_Trace">
+                <ScalarProperty Name="TraceCode" ColumnName="TraceCode" />
+                <ScalarProperty Name="TraceDescription" ColumnName="TraceDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Default">
+            <EntityTypeMapping TypeName="LookupModel.lk_Default">
+              <MappingFragment StoreEntitySet="lk_Default">
+                <ScalarProperty Name="DefaultCode" ColumnName="DefaultCode" />
+                <ScalarProperty Name="DefaultDescription" ColumnName="DefaultDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lnk_UserProducts">
+            <EntityTypeMapping TypeName="LookupModel.lnk_UserProducts">
+              <MappingFragment StoreEntitySet="lnk_UserProducts">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

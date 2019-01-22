@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7DB4D2CE-F0AB-4B97-824A-5922277C121C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataSolution.Data</RootNamespace>
+    <AssemblyName>DataSolution.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAL\TransactionData.cs" />
+    <Compile Include="DAL\UserData.cs" />
+    <Compile Include="Data\lk_AddressKeyword.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_CivilDebtCode.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Court.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_CourtType.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_DebtReview.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Default.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Gender.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_JudgementCode.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Ownership.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_ProvinceCode.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Title.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_Trace.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lnk_UserProducts.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LookupModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LookupModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LookupModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LookupModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LookupModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Product.cs">
+      <DependentUpon>TransactionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Transaction.cs">
+      <DependentUpon>TransactionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\TransactionModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransactionModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\TransactionModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransactionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\TransactionModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransactionModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\User.cs">
+      <DependentUpon>TransactionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UserType.cs">
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Data\UserModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Data\TransactionModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TransactionModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="Data\LookupModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LookupModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\LookupModel.edmx.diagram">
+      <DependentUpon>LookupModel.edmx</DependentUpon>
+    </None>
+    <None Include="Data\TransactionModel.edmx.diagram">
+      <DependentUpon>TransactionModel.edmx</DependentUpon>
+    </None>
+    <None Include="Data\UserModel.edmx.diagram">
+      <DependentUpon>UserModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\LookupModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LookupModel.edmx</DependentUpon>
+      <LastGenOutput>LookupModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\LookupModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LookupModel.edmx</DependentUpon>
+      <LastGenOutput>LookupModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\TransactionModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TransactionModel.edmx</DependentUpon>
+      <LastGenOutput>TransactionModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\TransactionModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TransactionModel.edmx</DependentUpon>
+      <LastGenOutput>TransactionModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\UserModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UserModel.Context.cs</LastGenOutput>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Data\UserModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+      <LastGenOutput>UserModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataSolution.Domain\DataSolution.Domain.csproj">
+      <Project>{EE70949C-FB39-4809-B9A9-F9698ACAA082}</Project>
+      <Name>DataSolution.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataSolution.Utilities\DataSolution.Utilities.csproj">
+      <Project>{2FD99580-E99B-42D0-99C2-3DC109CAEC0C}</Project>
+      <Name>DataSolution.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
