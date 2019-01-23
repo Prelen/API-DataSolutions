@@ -15,6 +15,7 @@ namespace DataSolution.Domain.Interfaces.Repository
                                                DateTime? EndDate = null, bool? Locked = null, int? MasterOrgID = null);
         bool InsertUser(UserModel User);
         bool UpdateUser(UserModel User);
+       
 
 
     }

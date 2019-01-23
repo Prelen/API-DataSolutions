@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Interfaces\Repository\ILookupRepository.cs" />
     <Compile Include="Interfaces\Repository\IProductRepository.cs" />
     <Compile Include="Interfaces\Repository\ITransactionRepository.cs" />
@@ -50,11 +49,13 @@
     <Compile Include="Interfaces\Service\ITransunionAPI.cs" />
     <Compile Include="Interfaces\Utilities\Encryption\IEncryption.cs" />
     <Compile Include="Interfaces\Utilities\Logging\ILogging.cs" />
+    <Compile Include="Interfaces\Utilities\Mail\IMail.cs" />
     <Compile Include="Model\Data\LookupModel.cs" />
     <Compile Include="Model\Data\ProductModel.cs" />
     <Compile Include="Model\Data\TransactionModel.cs" />
     <Compile Include="Model\Data\UserModel.cs" />
     <Compile Include="Model\Data\UserTypeModel.cs" />
+    <Compile Include="Model\Utilities\Email.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
