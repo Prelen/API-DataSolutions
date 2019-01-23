@@ -13,6 +13,7 @@ using iTextSharp.text.xml;
 using System.Web.Services.Protocols;
 using DataSolution.Utilities.Logging;
 using DataSolution.Domain.Interfaces.Service;
+using DataSolution.Domain.Model.Services;
 
 namespace DataSolution.Service.Controllers
 {
@@ -23,85 +24,75 @@ namespace DataSolution.Service.Controllers
         readonly string securityCode = ConfigurationManager.AppSettings["TransunionSecurityCode"].ToString();
 
        
-        public async Task<bool> BureauEnquiry37Async(string Enquirer, string EnquirerPhoneNo, string EnquiryType,string EnquiryAmount,string Surname,string Forename1,
-                                                        string Forename2,string Forename3,string MaidenName,string DateOfBirth,string IdentityNo1, string IdentityNo2,
-                                                        string Sex,string Title,string MaritalStatus,string Dependents,string AddressLine1, string AddressLine2, string Suburb,
-                                                        string City,string HomePostalCode,string Province,string AddressPeriod,string OwnerTenant,string HomeTelCode,string HomeTelNo,
-                                                        string WorkTelCode,string WorkTelNo,string SpouseForname1,string SpouseForname2,string PostalAddress1,string PostalAddress2,
-                                                        string PostalSuburb,string PostalCode,string PostaProvinceCode,string Occupation,string Employer,string EmploymentPeriod,
-                                                        string Salary,string BankName,string BankBranch,string BranchCode,string BankNo,string OperatorIdentity,string CellNo,
-                                                        string Email,string[] InsuranceSubNo,string UserID)
+        public async Task<bool> BureauEnquiry37Async(TransunionRequest.BureauEnquiry37Request Request,string UserID)
         {
 
             bool result = false;
+            Logger log = new Logger();
             try
             {
                     BureauEnquiry37 request = new BureauEnquiry37
                 {
                     SubscriberCode = subNo,
                     SecurityCode = securityCode,
-                    EnquirerContactName = Enquirer,
-                    EnquirerContactPhoneNo = EnquirerPhoneNo,
-                    EnquiryType = EnquiryType,
-                    EnquiryAmount = EnquiryAmount,
-                    Surname = Surname,
-                    Forename1 = Forename1,
-                    Forename2 = Forename2,
-                    MaidenName = MaidenName,
-                    BirthDate = DateOfBirth,
-                    IdentityNo1 = IdentityNo1,
-                    IdentityNo2 = IdentityNo2,
-                    Sex = Sex,
-                    Title = Title,
-                    MaritalStatus = MaritalStatus,
-                    NoOfDependants = Dependents,
-                    AddressLine1 = AddressLine1,
-                    AddressLine2 = AddressLine2,
-                    Suburb = Suburb,
-                    City = City,
-                    PostalCode = HomePostalCode,
-                    ProvinceCode = Province,
-                    Address1Period = AddressPeriod,
-                    OwnerTenant = OwnerTenant,
-                    HomeTelCode = HomeTelCode,
-                    HomeTelNo = HomeTelNo,
-                    WorkTelCode = WorkTelCode,
-                    WorkTelNo = WorkTelNo,
-                    SpouseForename1 = SpouseForname1,
-                    SpouseForename2 = SpouseForname2,
-                    Address2Line1 = PostalAddress1,
-                    Address2Line2 = PostalAddress2,
-                    Address2Suburb = PostalSuburb,
-                    Address2ProvinceCode = PostaProvinceCode,
-                    Occupation = Occupation,
-                    Employer = Employer,
-                    EmploymentPeriod = EmploymentPeriod,
-                    Salary = Salary,
-                    BankName = BankName,
-                    BankBranch = BankBranch,
-                    BankBranchCode = BranchCode,
-                    BankAccountNumber = BankNo,
-                    OperatorIdentity = OperatorIdentity,
-                    CellNo = CellNo,
-                    EmailAddress = Email,
-                    InsuranceSubNo = InsuranceSubNo
+                    EnquirerContactName = Request.Enquirer,
+                    EnquirerContactPhoneNo = Request.EnquirerPhoneNo,
+                    EnquiryType = Request.EnquiryType,
+                    EnquiryAmount = Request.EnquiryAmount,
+                    Surname = Request.Surname,
+                    Forename1 = Request.Forename1,
+                    Forename2 = Request.Forename2,
+                    MaidenName = Request.MaidenName,
+                    BirthDate = Request.DateOfBirth,
+                    IdentityNo1 = Request.IdentityNo1,
+                    IdentityNo2 = Request.IdentityNo2,
+                    Sex = Request.Sex,
+                    Title = Request.Title,
+                    MaritalStatus = Request.MaritalStatus,
+                    NoOfDependants = Request.Dependents,
+                    AddressLine1 = Request.AddressLine1,
+                    AddressLine2 = Request.AddressLine2,
+                    Suburb = Request.Suburb,
+                    City = Request.City,
+                    PostalCode = Request.HomePostalCode,
+                    ProvinceCode = Request.Province,
+                    Address1Period = Request.AddressPeriod,
+                    OwnerTenant = Request.OwnerTenant,
+                    HomeTelCode = Request.HomeTelCode,
+                    HomeTelNo = Request.HomeTelNo,
+                    WorkTelCode = Request.WorkTelCode,
+                    WorkTelNo = Request.WorkTelNo,
+                    SpouseForename1 = Request.SpouseForname1,
+                    SpouseForename2 = Request.SpouseForname2,
+                    Address2Line1 = Request.PostalAddress1,
+                    Address2Line2 = Request.PostalAddress2,
+                    Address2Suburb = Request.PostalSuburb,
+                    Address2ProvinceCode = Request.PostaProvinceCode,
+                    Occupation = Request.Occupation,
+                    Employer = Request.Employer,
+                    EmploymentPeriod = Request.EmploymentPeriod,
+                    Salary = Request.Salary,
+                    BankName = Request.BankName,
+                    BankBranch = Request.BankBranch,
+                    BankBranchCode = Request.BranchCode,
+                    BankAccountNumber = Request.BankNo,
+                    OperatorIdentity = Request.OperatorIdentity,
+                    CellNo = Request.CellNo,
+                    EmailAddress = Request.Email,
+                    InsuranceSubNo = Request.InsuranceSubNo
                 };
 
 
-
-      
                 var response = await client.ProcessRequestTrans37Async(request, Destination.Test);
-               //Save the transaction
-                result = true;
-            }
-            //catch (SoapException soapEX)
-            //{
-            //    Logger.LogError(UserID, "DataSolutions.Services", "BureauEnquiry37Async", soapEX.Message);
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "BureauEnquiry37Async", response.ErrorCode + " " +  response.ErrorMessage);
+                //Save the transaction
 
-            //}
+            }
             catch (Exception ex)
             {
-                Logger log = new Logger();
+                
                 log.LogError(UserID, "DataSolutions.Services", "BureauEnquiry37Async", ex.Message);
             }
            
@@ -110,57 +101,59 @@ namespace DataSolution.Service.Controllers
         }
 
         
-        public async Task<bool> IndividualTraceSearchAsync(string UserID,string TicketNo,string ReportNo,string SearchIndicator,string SearchType,string SearchReason,string SearchUserID,
-                                                         string UserBranch,string Username,string UserSurname,string UserPhone,string Email,string ConsumerNo,string IDNo,string Forename,
-                                                         string Surname,string PhoneCode,string TelNo,string CellNo,string DateOfBirth,string FromAge,string ToAge,string Gender,
-                                                         string EmailAddress,string Employer,string StreetAddress,string AddressLine1, string AddressLine2,string Suburb,string Town,
-                                                         string PostalCode,string Counter,string MoreCount,string RepeatDetail)
+        public async Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID)
         {
 
             bool result = false;
+            Logger log = new Logger();
             try
             {
                 IndividualTraceSearchInput individualTrace = new IndividualTraceSearchInput
                 {
                     SubscriberCode = subNo,
                     SecurityCode = securityCode,
-                    TicketNumber = TicketNo,
-                    ReportNumber = ReportNo,
-                    SearchIndicator = SearchIndicator,
-                    SearchType = SearchType,
-                    SearchReason = SearchReason,
-                    UserID = SearchUserID,
-                    UserBranch = UserBranch,
-                    UserName = Username,
-                    UserSurname = UserSurname,
-                    UserPhone = UserPhone,
-                    UserEmail = Email,
-                    ConsumerNumber = ConsumerNo,
-                    IdentityNumber = IDNo,
-                    Forename = Forename,
-                    Surname = Surname,
-                    TelephoneAreaCode = PhoneCode,
-                    TelephoneNumber = TelNo,
-                    CellNumber = CellNo,
-                    DateOfBirth = DateOfBirth,
-                    FromAge = FromAge,
-                    ToAge = ToAge,
-                    Gender = Gender,
-                    EmailAddress = EmailAddress,
-                    Employer = Employer,
-                    AddressStreetNumber = StreetAddress,
-                    AddressLine1 = AddressLine1,
-                    AddressLine2 = AddressLine2,
-                    AddressSuburb = Suburb,
-                    AddressTown = Town,
-                    AddressPostalCode = PostalCode,
-                    Counter = Counter,
-                    MoreCount = MoreCount,
-                    RepeatDetail = RepeatDetail,
+                    TicketNumber = Request.TicketNo,
+                    ReportNumber = Request.ReportNo,
+                    SearchIndicator = Request.SearchIndicator,
+                    SearchType = Request.SearchType,
+                    SearchReason = Request.SearchReason,
+                    UserID = Request.SearchUserID,
+                    UserBranch = Request.UserBranch,
+                    UserName = Request.Username,
+                    UserSurname = Request.UserSurname,
+                    UserPhone = Request.UserPhone,
+                    UserEmail = Request.Email,
+                    ConsumerNumber = Request.ConsumerNo,
+                    IdentityNumber = Request.IDNo,
+                    Forename = Request.Forename,
+                    Surname = Request.Surname,
+                    TelephoneAreaCode = Request.PhoneCode,
+                    TelephoneNumber = Request.TelNo,
+                    CellNumber = Request.CellNo,
+                    DateOfBirth = Request.DateOfBirth,
+                    FromAge = Request.FromAge,
+                    ToAge = Request.ToAge,
+                    Gender = Request.Gender,
+                    EmailAddress = Request.EmailAddress,
+                    Employer = Request.Employer,
+                    AddressStreetNumber = Request.StreetAddress,
+                    AddressLine1 = Request.AddressLine1,
+                    AddressLine2 = Request.AddressLine2,
+                    AddressSuburb = Request.Suburb,
+                    AddressTown = Request.Town,
+                    AddressPostalCode = Request.PostalCode,
+                    Counter = Request.Counter,
+                    MoreCount = Request.MoreCount,
+                    RepeatDetail = Request.RepeatDetail,
                     
                 };
 
                 var response = await client.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "IndividualTraceSearchAsync", response.ErrorCode + " " + response.ErrorMessage);
+
 
                 //Save Transaction
 
@@ -168,7 +161,7 @@ namespace DataSolution.Service.Controllers
             }
             catch (Exception ex)
             {
-                Logger log = new Logger();
+                
                 log.LogError(UserID, "DataSolutions.Services", "IndividualTraceSearchAsync", ex.Message);
             }
 
@@ -176,16 +169,17 @@ namespace DataSolution.Service.Controllers
 
         }
 
-        public async Task<bool> TraceOrder68Async(string UserID,string TicketNo,string ReportNo,string ConsumerNo,List<string> ProductCode,string IDNo1,string IDNo2,string TelCode1,
-                                                    string TelNumber1,string TelCode2,string TelNumber2,string CellNo,string AddressLine1, string AddressLine2,string Suburb,string Code,string Province)
+        public async Task<bool> TraceOrder68Async(TransunionRequest.TraceOrder68Request Request ,string UserID)
         {
             bool result = false;
-            ModuleProductCode code = new ModuleProductCode();
-            int count = ProductCode.Count;
-            ModuleProductCode[] productCode = new ModuleProductCode[count];
+            Logger log = new Logger();
 
+            ModuleProductCode code = new ModuleProductCode();
+            int count = Request.ProductCode.Count;
+            ModuleProductCode[] productCode = new ModuleProductCode[count];
+            
             int i = 0;
-            foreach (string  item in ProductCode)
+            foreach (string  item in Request.ProductCode)
             {
                 code.Code = item;
                 productCode[i] = code;
@@ -197,32 +191,35 @@ namespace DataSolution.Service.Controllers
                 {
                     SubscriberCode = subNo,
                     SecurityCode = securityCode,
-                    TicketNo = TicketNo,
-                    ReportNo = ReportNo,
-                    ConsumerNumber = ConsumerNo,
+                    TicketNo = Request.TicketNo,
+                    ReportNo = Request.ReportNo,
+                    ConsumerNumber = Request.ConsumerNo,
                     ModuleProducts = productCode,
-                    IDNo1 = IDNo1,
-                    IDNo2 = IDNo2,
-                    TelephoneCode1 = TelCode1,
-                    TelephoneNumber1 = TelNumber1,
-                    TelephoneCode2 = TelCode2,
-                    TelephoneNumber2 = TelNumber2,
-                    CellNo = CellNo,
-                    AddressLine1 = AddressLine1,
-                    AddressLine2 = AddressLine2,
-                    Suburb = Suburb,
-                    PostalCode = Code,
-                    Province = Province
+                    IDNo1 = Request.IDNo1,
+                    IDNo2 = Request.IDNo2,
+                    TelephoneCode1 = Request.TelCode1,
+                    TelephoneNumber1 = Request.TelNumber1,
+                    TelephoneCode2 = Request.TelCode2,
+                    TelephoneNumber2 = Request.TelNumber2,
+                    CellNo = Request.CellNo,
+                    AddressLine1 = Request.AddressLine1,
+                    AddressLine2 = Request.AddressLine2,
+                    Suburb = Request.Suburb,
+                    PostalCode = Request.Code,
+                    Province = Request.Province
                 };
 
                 var response = await client.ProcessRequestIndividualTraceProductOrderTrans05Async(trace);
-                
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TraceOrder68Async", response.ErrorCode + " " + response.ErrorMessage);
                 //Save Transaction
                 result = true;
             }
             catch (Exception ex)
             {
-                Logger log = new Logger();
+                
                 log.LogError(UserID, "DataSolutions.Services", "TraceOrder68Async", ex.Message);
             }
 
