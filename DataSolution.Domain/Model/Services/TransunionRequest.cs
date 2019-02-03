@@ -116,5 +116,98 @@ namespace DataSolution.Domain.Model.Services
             public string Code { get; set; }
             public string Province { get; set; }
         }
+
+        public class ProcessPayrollEmployerInformationRequest
+        {
+            public int PageIndex { get; set; }
+            public int EmployerID { get; set; }
+            public string CompanyName { get; set; }
+            public string ProductCode { get; set; }
+            public string PayslipCategory { get; set; }
+            public bool IsLiteVersion { get; set; }
+            public string BatchNumber { get; set; }
+            public string  BranchNumber { get; set; }
+            public string ClientReference { get; set; }
+            public string ClientReferenceID { get; set; }
+        }
+
+        public class ProcessPayslipInformationRequest
+        {
+            public string ContactName { get; set; }
+            public string ContactNumber { get; set; }
+            public string IdentityNumber { get; set; }
+            public string Surname { get; set; }
+            public string FirstName { get; set; }
+            public string AddressLine1 { get; set; }
+            public string AddressLine2 { get; set; }
+            public string AddressLine3 { get; set; }
+            public string AddressLine4 { get; set; }
+            public string PostalCode { get; set; }
+            public string EmployerDetailsID { get; set; }
+            public string CompanyName { get; set; }
+            public string BatchNumner { get; set; }
+            public string BranchNumer { get; set; }
+            public string CountryOfOrigin { get; set; }
+            public string TransactionItemID { get; set; }
+            public string PayslipCategory { get; set; }
+            public bool IsLiteVersion { get; set;
+ }
+        }
+
+        public class ProcessRequestTrans01
+        {
+            public string EnquirerContactName { get; set; }
+            public string EnquirerContactPhoneNo { get; set; }
+            public string EnquiryAmount { get; set; }
+            public string EnquiryType { get; set; }
+            public string Surname { get; set; }
+            public string Forename1 { get; set; }
+            public string Forename2 { get; set; }
+            public string Forename3 { get; set; }
+            public string MaidenName { get; set; }
+            public string BirthDate { get; set; }
+            public string IdentityNo1 { get; set; }
+            public string IdentityNo2 { get; set; }
+            public string Sex { get; set; }
+            public string Title { get; set; }
+            public string MaritalStatus { get; set; }
+            public string NoOfDependants { get; set; }
+            public string AddressLine1 { get; set; }
+            public string AddressLine2 { get; set; }
+            public string Suburb { get; set; }
+            public string City { get; set; }
+            public string PostalCode { get; set; }
+            public string ProvinceCode { get; set; }
+            public string Address1Period { get; set; }
+            public string OwnerTenant { get; set; }
+            public string HomeTelCode { get; set; }
+            public string HomeTelNo { get; set; }
+            public string WorkTelCode { get; set; }
+            public string WorkTelNo { get; set; }
+            public string SpouseForename1 { get; set; }
+            public string SpouseForename2 { get; set; }
+            public string Address2Line1 { get; set; }
+            public string Address2Line2 { get; set; }
+            public string Address2Suburb { get; set; }
+            public string Address2City { get; set; }
+            public string Address2PostalCode { get; set; }
+            public string Address2ProvinceCode { get; set; }
+            public string Address2Period { get; set; }
+            public string Occupation { get; set; }
+            public string Employer { get; set; }
+            public string EmploymentPeriod { get; set; }
+            public string Salary { get; set; }
+            public string BankName { get; set; }
+            public string BankBranch { get; set; }
+            public string BankBranchCode { get; set; }
+            public string BankAccountNumber { get; set; }
+            public string OperatorIdentity { get; set; }
+            public string ShortScore { get; set; }
+            public string MediumScore { get; set; }
+            public string LongScore { get; set; }
+            public string CellNo { get; set; }
+            public string EmailAddress { get; set; }
+            
+        }
     }
 }
