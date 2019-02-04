@@ -25,15 +25,19 @@ namespace DataSolution.Service.Controllers
         ConsumerSoapClient client = new ConsumerSoapClient();
         readonly string subNo = ConfigurationManager.AppSettings["TransunionSub"].ToString();
         readonly string securityCode = ConfigurationManager.AppSettings["TransunionSecurityCode"].ToString();
+        readonly string environment = ConfigurationManager.AppSettings["Environment"].ToString();
+        Destination destination = new Destination();
+        private Logger log;
+        bool result;
 
        [AllowAnonymous]
        [HttpGet]
-       [Route("api/TransunionAPI/BureauEnquiry37Async/{Request}/{UserID}")]
-        public async Task<bool> BureauEnquiry37Async(TransunionRequest.BureauEnquiry37Request Request,string UserID)
+       [Route("api/TransunionAPI/ProcessRequestTrans37Async/{Request}/{UserID}")]
+        public async Task<bool> ProcessRequestTrans37Async(TransunionRequest.BureauEnquiry37Request Request,string UserID)
         {
 
-            bool result = false;
-            Logger log = new Logger();
+         
+             log = new Logger();
             try
             {
               
@@ -53,17 +57,19 @@ namespace DataSolution.Service.Controllers
                 bureauEnquiry37.SecurityCode = securityCode;
                 bureauEnquiry37.SubscriberCode = subNo;
 
-                var response = await client.ProcessRequestTrans37Async(bureauEnquiry37, Destination.Test);
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans37Async(bureauEnquiry37, destination);
                 result = response.ErrorCode.Trim() != string.Empty ? true : false;
                 if (!result)
-                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,BureauEnquiry37Async", response.ErrorCode + " " +  response.ErrorMessage);
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,ProcessRequestTrans37Async", response.ErrorCode + " " +  response.ErrorMessage);
                 //Save the transaction
 
             }
             catch (Exception ex)
             {
                 
-                log.LogError(UserID, "DataSolutions.Services", "BureauEnquiry37Async", ex.Message);
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans37Async", ex.Message);
             }
            
 
@@ -76,8 +82,8 @@ namespace DataSolution.Service.Controllers
         public async Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID)
         {
 
-            bool result = false;
-            Logger log = new Logger();
+            
+             log = new Logger();
             try
             {
                 Mapper.Initialize(
@@ -127,8 +133,8 @@ namespace DataSolution.Service.Controllers
         [Route("api/TransunionAPI/TraceOrder68Async/{Request}/UserID")]
         public async Task<bool> TraceOrder68Async(TransunionRequest.TraceOrder68Request Request ,string UserID)
         {
-            bool result = false;
-            Logger log = new Logger();
+          
+             log = new Logger();
 
             ModuleProductCode code = new ModuleProductCode();
             int count = Request.ProductCode.Count;
@@ -185,8 +191,8 @@ namespace DataSolution.Service.Controllers
         public async Task<bool> ProcessPayrollEmployerInformationAsync(TransunionRequest.PayrollEmployerInformationRequest Request, string UserID)
         {
 
-            bool result = false;
-            Logger log = new Logger();
+          
+             log = new Logger();
             try
             {
 
@@ -225,8 +231,8 @@ namespace DataSolution.Service.Controllers
         [Route("api/TransunionAPI/ProcessPayslipInformationAsync/{Request}/UserID")]
         public async Task<bool> ProcessPayslipInformationAsync(TransunionRequest.PayslipInformationRequest Request, string UserID)
         {
-            bool result = false;
-            Logger log = new Logger();
+           
+             log = new Logger();
 
             try
             {
@@ -268,8 +274,8 @@ namespace DataSolution.Service.Controllers
         [Route("api/TransunionAPI/ProcessRequestTrans01Async/{Request}/UserID")]
         public async Task<bool> ProcessRequestTrans01Async(TransunionRequest.RequestTrans01 Request, string UserID)
         {
-            bool result = false;
-            Logger log = new Logger();
+           
+             log = new Logger();
             try
             {
 
@@ -313,8 +319,8 @@ namespace DataSolution.Service.Controllers
         [Route("api/TransunionAPI/ProcessRequestTrans04Async/{Request}/UserID")]
         public async Task<bool> ProcessRequestTrans04Async(TransunionRequest.RequestTrans01 Request, string UserID)
         {
-            bool result = false;
-            Logger log = new Logger();
+          
+             log = new Logger();
 
            
             try
@@ -331,6 +337,8 @@ namespace DataSolution.Service.Controllers
                     }
                     );
                 var enquiry = Mapper.Map<BureauEnquiry04>(Request);
+                enquiry.SecurityCode = securityCode;
+                enquiry.SubscriberCode = subNo;
                 var response = await client.ProcessRequestTrans04Async(enquiry);
 
                 result = response.ErrorCode.Trim() != string.Empty ? true : false;
@@ -355,10 +363,10 @@ namespace DataSolution.Service.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("api/TransunionAPI/ProcessRequestTrans07Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans07Async(TransunionRequest.RequestTrans07 Request, string UserID)
+        public async Task<bool> ProcessRequestTrans07Async(TransunionRequest.BureauEnquiry37Request Request, string UserID)
         {
-            bool result = false;
-            Logger log = new Logger();
+           
+            log = new Logger();
 
             try
             {
@@ -396,7 +404,414 @@ namespace DataSolution.Service.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans12Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans12Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+          
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                   cfg =>
+                   {
+                       cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry12>()
+                       .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                       .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                       .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                       .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                       .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                   }
+                   );
+
+                var enquiry12 = Mapper.Map<BureauEnquiry12>(Request);
+                enquiry12.SecurityCode = securityCode;
+                enquiry12.SubscriberCode = subNo;
+                var response = await client.ProcessRequestTrans12Async(enquiry12);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans12Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                //log transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans12Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans13Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans13Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+           
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, BureauEnquiry13>()
+                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                    }
+                    );
+
+                var enquiry13 = Mapper.Map<BureauEnquiry13>(Request);
+                enquiry13.SecurityCode = securityCode;
+                enquiry13.SubscriberCode = subNo;
+                var response = await client.ProcessRequestTrans13Async(enquiry13);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans13Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                //log transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans13Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans17Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans17Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, BureauEnquiry17>()
+                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                    }
+                    );
+
+                var enquiry17 = Mapper.Map<BureauEnquiry17>(Request);
+                enquiry17.SecurityCode = securityCode;
+                enquiry17.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans17Async(enquiry17, destination);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans17Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans17Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans18Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans18Async(TransunionRequest.RequestTrans18 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans18, BureauEnquiry18>()
+                        .ForMember(x => x.Uif, y => y.MapFrom(z => z.UIF))
+                       .ForMember(x => x.Schoolfees, y => y.MapFrom(z => z.SchoolFees));
+                    }
+                    );
+                var enquiry18 = Mapper.Map<BureauEnquiry18>(Request);
+                enquiry18.SecurityCode = securityCode;
+                enquiry18.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans18Async(enquiry18, destination);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans18Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans18Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans22Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans22Async(TransunionRequest.RequestTrans22 Request, string UserID)
+        {
+
+            log = new Logger();
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans22, BureauEnquiry22>();
+                    }
+                    );
+
+                var enquiry22 = Mapper.Map<BureauEnquiry22>(Request);
+                enquiry22.SecurityCode = securityCode;
+                enquiry22.SubscriberCode = subNo;
+
+                var response = await client.ProcessRequestTrans22Async(enquiry22);
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans22Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans22Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans23Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans23Async(TransunionRequest.RequestTrans23 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans23, BureauEnquiry23>()
+                        .ForMember(x => x.SAIDNumber, y => y.MapFrom(z => z.IDNumber));
+                    }
+                    );
+
+                var enquiry23 = Mapper.Map<BureauEnquiry23>(Request);
+                enquiry23.SecurityCode = securityCode;
+                enquiry23.SubscriberCode = subNo;
+
+                var response = await client.ProcessRequestTrans23Async(enquiry23);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans23Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans23Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans26Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans26Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, BureauEnquiry26>();
+                      
+                    }
+                    );
+
+                var enquiry26 = Mapper.Map<BureauEnquiry26>(Request);
+                enquiry26.SecurityCode = securityCode;
+                enquiry26.SubscriberCode = subNo;
+
+               
+                var response = await client.ProcessRequestTrans26Async(enquiry26);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans26Async", response.ErrorCode + " " + response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans26Async", ex.Message);
+            }
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans31Async/{Request}/UserID")]
+        public async Task<bool> ProcessRequestTrans31Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, BureauEnquiry31>();
+
+                    }
+                    );
+
+                var enquiry31 = Mapper.Map<BureauEnquiry31>(Request);
+                enquiry31.SecurityCode = securityCode;
+                enquiry31.SubscriberCode = subNo;
 
 
+                var response = await client.ProcessRequestTrans31Async(enquiry31);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans31Async", response.ErrorCode + " " + response.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans31Async", ex.Message);
+            }
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans38Async/{Request}/{UserID}")]
+        public async Task<bool> ProcessRequestTrans38Async(TransunionRequest.BureauEnquiry37Request Request, string UserID)
+        {
+
+
+            log = new Logger();
+            try
+            {
+
+
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry38>()
+                        .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                        .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                        .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                        .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                        .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                    }
+                    );
+                var bureauEnquiry38 = Mapper.Map<BureauEnquiry38>(Request);
+                bureauEnquiry38.SecurityCode = securityCode;
+                bureauEnquiry38.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans38Async(bureauEnquiry38, destination);
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,ProcessRequestTrans38Async", response.ErrorCode + " " + response.ErrorMessage);
+                //Save the transaction
+
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans38Async", ex.Message);
+            }
+
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTrans41Async/{Request}/{UserID}")]
+        public async Task<bool> ProcessRequestTrans41Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, BureauEnquiry41>()
+                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                    }
+                    );
+
+                var enquiry41 = Mapper.Map<BureauEnquiry41>(Request);
+                enquiry41.SecurityCode = securityCode;
+                enquiry41.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans41Async(enquiry41, destination);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", ex.Message);
+            }
+
+            return result;
+        }
     }
 }
