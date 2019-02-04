@@ -13,8 +13,10 @@ namespace DataSolution.Domain.Interfaces.Service
         Task<bool> BureauEnquiry37Async(TransunionRequest.BureauEnquiry37Request Request , string UserID);
         Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID);
         Task<bool> TraceOrder68Async(TransunionRequest.TraceOrder68Request Request, string UserID);
-        Task<bool> ProcessPayrollEmployerInformationAsync(TransunionRequest.ProcessPayrollEmployerInformationRequest Request, string UserID);
-        Task<bool> ProcessPayslipInformationAsync(TransunionRequest.ProcessPayslipInformationRequest Request, string UserID);
-        Task<bool> ProcessRequestTrans01Async(TransunionRequest.ProcessRequestTrans01 Request, string UserID);
+        Task<bool> ProcessPayrollEmployerInformationAsync(TransunionRequest.PayrollEmployerInformationRequest Request, string UserID);
+        Task<bool> ProcessPayslipInformationAsync(TransunionRequest.PayslipInformationRequest Request, string UserID);
+        Task<bool> ProcessRequestTrans01Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans04Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans07Async(TransunionRequest.RequestTrans07 Request, string UserID);
     }
 }

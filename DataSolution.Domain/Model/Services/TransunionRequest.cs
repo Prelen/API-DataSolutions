@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataSolution.Domain.Model.Services
 {
-   public class TransunionRequest
+    public class TransunionRequest
     {
         public class BureauEnquiry37Request
         {
@@ -80,8 +80,8 @@ namespace DataSolution.Domain.Model.Services
             public string TelNo { get; set; }
             public string CellNo { get; set; }
             public string DateOfBirth { get; set; }
-            public  string FromAge { get; set; }
-            public  string ToAge { get; set; }
+            public string FromAge { get; set; }
+            public string ToAge { get; set; }
             public string Gender { get; set; }
             public string EmailAddress { get; set; }
             public string Employer { get; set; }
@@ -117,7 +117,7 @@ namespace DataSolution.Domain.Model.Services
             public string Province { get; set; }
         }
 
-        public class ProcessPayrollEmployerInformationRequest
+        public class PayrollEmployerInformationRequest
         {
             public int PageIndex { get; set; }
             public int EmployerID { get; set; }
@@ -126,12 +126,12 @@ namespace DataSolution.Domain.Model.Services
             public string PayslipCategory { get; set; }
             public bool IsLiteVersion { get; set; }
             public string BatchNumber { get; set; }
-            public string  BranchNumber { get; set; }
+            public string BranchNumber { get; set; }
             public string ClientReference { get; set; }
             public string ClientReferenceID { get; set; }
         }
 
-        public class ProcessPayslipInformationRequest
+        public class PayslipInformationRequest
         {
             public string ContactName { get; set; }
             public string ContactNumber { get; set; }
@@ -150,11 +150,13 @@ namespace DataSolution.Domain.Model.Services
             public string CountryOfOrigin { get; set; }
             public string TransactionItemID { get; set; }
             public string PayslipCategory { get; set; }
-            public bool IsLiteVersion { get; set;
- }
+            public bool IsLiteVersion
+            {
+                get; set;
+            }
         }
 
-        public class ProcessRequestTrans01
+        public class RequestTrans01
         {
             public string EnquirerContactName { get; set; }
             public string EnquirerContactPhoneNo { get; set; }
@@ -207,7 +209,14 @@ namespace DataSolution.Domain.Model.Services
             public string LongScore { get; set; }
             public string CellNo { get; set; }
             public string EmailAddress { get; set; }
-            
+            public string AverageScore { get; set; }
         }
+
+        public class RequestTrans07
+        {
+            public RequestTrans01 RequestTrans01 { get; set; }
+            public string[] InsuranceNo { get; set; }
+        }
+     
     }
 }
