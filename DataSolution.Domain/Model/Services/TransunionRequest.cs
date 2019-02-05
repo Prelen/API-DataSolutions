@@ -375,5 +375,36 @@ namespace DataSolution.Domain.Model.Services
             public string DateOfClosureOrCancellation { get; set; }
         }
 
+        public class RequestC29
+        {
+            public string TraceDataSelection { get; set; }
+            public string EnquiryReason { get; set; }
+            public string IDNumber { get; set; }
+            public string TelephoneType { get; set; }
+            public string TelephoneNumber { get; set; }
+            public string Surname { get; set; }
+            public string DateOfBirth { get; set; }
+            public string Address { get; set; }
+            public string PostalCode { get; set; }
+        }
+
+        public class RequestTransC30
+        {
+            public string OriginalITCRequestID { get; set; }
+            public string OriginalClientRequestID { get; set; }
+            public string PossibleConsumerNumber { get; set; }
+        }
+
+        public class RequestTransC4
+        {
+            public int ConsumerNumber { get; set; }
+            public string SubscriberReference { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+            public string Acton { get; set; }
+        }
+
+        
+
     }
 }

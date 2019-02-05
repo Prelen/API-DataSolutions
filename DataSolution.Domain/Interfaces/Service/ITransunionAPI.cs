@@ -28,5 +28,14 @@ namespace DataSolution.Domain.Interfaces.Service
         Task<bool> ProcessRequestTrans31Async(TransunionRequest.RequestTrans01 Request, string UserID);
         Task<bool> ProcessRequestTrans38Async(TransunionRequest.BureauEnquiry37Request Request, string UserID);
         Task<bool> ProcessRequestTrans41Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans42Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans43Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans47Async(TransunionRequest.BureauEnquiry37Request Request, string UserID);
+        Task<bool> ProcessRequestTrans91Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTrans92Async(TransunionRequest.RequestTrans01 Request, string UserID);
+        Task<bool> ProcessRequestTransC20Async(string IDNumber, string UserID);
+        Task<bool> ProcessRequestTransC29Async(TransunionRequest.RequestC29 Request ,string UserID);
+        Task<bool> ProcessRequestTransC3Async( string UserID);
+        Task<bool> ProcessRequestTransC30Async(TransunionRequest.RequestTransC30 Request, string UserID);
     }
 }
