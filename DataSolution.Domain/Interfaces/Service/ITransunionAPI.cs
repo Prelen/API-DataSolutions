@@ -37,5 +37,9 @@ namespace DataSolution.Domain.Interfaces.Service
         Task<bool> ProcessRequestTransC29Async(TransunionRequest.RequestC29 Request ,string UserID);
         Task<bool> ProcessRequestTransC3Async( string UserID);
         Task<bool> ProcessRequestTransC30Async(TransunionRequest.RequestTransC30 Request, string UserID);
+        Task<bool> ProcessRequestTransC4Async(TransunionRequest.RequestTransC4 Request, string UserID);
+        Task<bool> ProcessRequestTransC6Async(string UserID);
+        Task<bool> ProcessRequestStrikeDate(TransunionRequest.RequestTrans01 Request, string UserID);
+
     }
 }

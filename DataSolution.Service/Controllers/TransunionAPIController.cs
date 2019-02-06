@@ -1178,5 +1178,125 @@ namespace DataSolution.Service.Controllers
             return result;
 
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTransC4Async/{Request}/{UserID}")]
+        public async Task<bool> ProcessRequestTransC4Async(TransunionRequest.RequestTransC4 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTransC30, RequestTransC4>();
+                    }
+                    );
+
+                var bureauC4 = Mapper.Map<BureauEnquiryC4>(Request);
+                bureauC4.SecurityCode = securityCode;
+                bureauC4.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTransC4Async(bureauC4, destination);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTransC4Async", response.ErrorCode + " " + response.ErrorMessage);
+
+
+                // Save Transaction
+
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTransC4Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestTransC6Async/{UserID}")]
+        public async Task<bool> ProcessRequestTransC6Async(string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                BureauEnquiryC6 bureauEnquiryC3 = new BureauEnquiryC6
+                {
+                    SecurityCode = securityCode,
+                    SubscriberCode = subNo
+                };
+
+              
+                var response = await client.ProcessRequestTransC6Async(bureauEnquiryC3);
+
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTransC6Async", response.ErrorCode + " " + response.ErrorMessage);
+
+
+                // Save Transaction
+
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTransC6Async", ex.Message);
+            }
+            return result;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/TransunionAPI/ProcessRequestStrikeDate/{Request}/{UserID}")]
+        public async Task<bool> ProcessRequestStrikeDate(TransunionRequest.RequestTrans01 Request, string UserID)
+        {
+            log = new Logger();
+
+            try
+            {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<RequestTrans01, StrikeDateC16>();
+
+                    }
+                    );
+
+                var strike = Mapper.Map<StrikeDateC16>(Request);
+                strike.SecurityCode = securityCode;
+                strike.SubscriberCode = subNo;
+
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessStrikeDateAsync(strike);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestStrikeDate", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestStrikeDate", ex.Message);
+            }
+
+            return result;
+        }
     }
 }

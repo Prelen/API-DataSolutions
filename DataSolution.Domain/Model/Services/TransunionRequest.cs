@@ -405,6 +405,10 @@ namespace DataSolution.Domain.Model.Services
         }
 
         
+        public class RequestStrikeDate
+        {
+
+        }
 
     }
 }
