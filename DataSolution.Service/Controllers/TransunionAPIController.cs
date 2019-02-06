@@ -17,6 +17,8 @@ using DataSolution.Domain.Model.Services;
 using static DataSolution.Domain.Model.Services.TransunionRequest;
 using AutoMapper;
 using AutoMapper.Configuration;
+using DataSolution.Domain.Model.Data;
+using DataSolution.Data.DAL;
 
 namespace DataSolution.Service.Controllers
 {
@@ -29,14 +31,18 @@ namespace DataSolution.Service.Controllers
         Destination destination = new Destination();
         private Logger log;
         bool result;
+        TransactionModel.TransactionData transData;
+        DateTime startDate;
+        DateTime endDate;
 
        [AllowAnonymous]
        [HttpGet]
-       [Route("api/TransunionAPI/ProcessRequestTrans37Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans37Async(TransunionRequest.BureauEnquiry37Request Request,string UserID)
+       [Route("api/TransunionAPI/ProcessRequestTrans37Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans37Async(TransunionRequest.BureauEnquiry37Request Request,string UserID,int ProductID)
         {
 
-         
+            startDate = DateTime.Now;
+
              log = new Logger();
             try
             {
@@ -61,9 +67,22 @@ namespace DataSolution.Service.Controllers
 
                 var response = await client.ProcessRequestTrans37Async(bureauEnquiry37, destination);
                 result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                endDate = DateTime.Now;
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,ProcessRequestTrans37Async", response.ErrorCode + " " +  response.ErrorMessage);
                 //Save the transaction
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
 
             }
             catch (Exception ex)
@@ -78,10 +97,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/IndividualTraceSearchAsync/{Request}/UserID")]
-        public async Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID)
+        [Route("api/TransunionAPI/IndividualTraceSearchAsync/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID,int ProductID)
         {
-
+            startDate = DateTime.Now;
             
              log = new Logger();
             try
@@ -114,6 +133,18 @@ namespace DataSolution.Service.Controllers
 
 
                 //Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
 
                 result = true;
             }
@@ -130,12 +161,13 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/TraceOrder68Async/{Request}/UserID")]
-        public async Task<bool> TraceOrder68Async(TransunionRequest.TraceOrder68Request Request ,string UserID)
+        [Route("api/TransunionAPI/TraceOrder68Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> TraceOrder68Async(TransunionRequest.TraceOrder68Request Request ,string UserID,int ProductID)
         {
-          
-             log = new Logger();
+            startDate = DateTime.Now;
 
+             log = new Logger();
+            
             ModuleProductCode code = new ModuleProductCode();
             int count = Request.ProductCode.Count;
             ModuleProductCode[] productCode = new ModuleProductCode[count];
@@ -172,7 +204,19 @@ namespace DataSolution.Service.Controllers
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.TraceOrder68Async", response.ErrorCode + " " + response.ErrorMessage);
                 //Save Transaction
-                result = true;
+
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -187,10 +231,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessPayrollEmployerInformationAsync/{Request}/UserID")]
-        public async Task<bool> ProcessPayrollEmployerInformationAsync(TransunionRequest.PayrollEmployerInformationRequest Request, string UserID)
+        [Route("api/TransunionAPI/ProcessPayrollEmployerInformationAsync/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessPayrollEmployerInformationAsync(TransunionRequest.PayrollEmployerInformationRequest Request, string UserID,int ProductID)
         {
-
+            startDate = DateTime.Now;
           
              log = new Logger();
             try
@@ -213,8 +257,20 @@ namespace DataSolution.Service.Controllers
                 if(!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessPayrollEmployerInformation", response.ErrorCode + " " + response.ErrorMessage);
 
-                
+
                 //Log Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -228,10 +284,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessPayslipInformationAsync/{Request}/UserID")]
-        public async Task<bool> ProcessPayslipInformationAsync(TransunionRequest.PayslipInformationRequest Request, string UserID)
+        [Route("api/TransunionAPI/ProcessPayslipInformationAsync/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessPayslipInformationAsync(TransunionRequest.PayslipInformationRequest Request, string UserID,int ProductID)
         {
-           
+            startDate = DateTime.Now;
              log = new Logger();
 
             try
@@ -258,7 +314,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessPayslipInformationAsync", response.ErrorCode + " " + response.ErrorMessage);
 
                 //Log Transaction
-            
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -271,10 +338,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans01Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans01Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans01Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans01Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
-           
+            startDate = DateTime.Now;
              log = new Logger();
             try
             {
@@ -303,6 +370,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans01Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 //Log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -316,13 +395,13 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans04Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans04Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans04Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans04Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
           
              log = new Logger();
 
-           
             try
             {
 
@@ -346,6 +425,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans04Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 //Log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -362,10 +453,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans07Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans07Async(TransunionRequest.BureauEnquiry37Request Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans07Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans07Async(TransunionRequest.BureauEnquiry37Request Request, string UserID,int ProductID)
         {
-           
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -393,6 +484,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans07Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 //log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -406,9 +509,11 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans12Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans12Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans12Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans12Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+
+            startDate = DateTime.Now;
           
             log = new Logger();
 
@@ -437,6 +542,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans12Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 //log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -449,10 +566,11 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans13Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans13Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans13Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans13Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
-           
+            startDate = DateTime.Now;
+
             log = new Logger();
 
             try
@@ -479,6 +597,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans13Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 //log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -491,9 +621,11 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans17Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans17Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans17Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans17Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -523,6 +655,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans17Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -535,9 +679,11 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans18Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans18Async(TransunionRequest.RequestTrans18 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans18Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans18Async(TransunionRequest.RequestTrans18 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
+
             log = new Logger();
 
             try
@@ -564,6 +710,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans18Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -576,10 +734,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans22Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans22Async(TransunionRequest.RequestTrans22 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans22Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans22Async(TransunionRequest.RequestTrans22 Request, string UserID,int ProductID)
         {
-
+            startDate = DateTime.Now;
             log = new Logger();
             try
             {
@@ -601,6 +759,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans22Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -613,9 +783,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans23Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans23Async(TransunionRequest.RequestTrans23 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans23Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans23Async(TransunionRequest.RequestTrans23 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -640,6 +811,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans23Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -652,9 +835,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans26Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans26Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans26Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans26Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -678,6 +862,20 @@ namespace DataSolution.Service.Controllers
 
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans26Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                //Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -689,9 +887,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans31Async/{Request}/UserID")]
-        public async Task<bool> ProcessRequestTrans31Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans31Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans31Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -715,6 +914,20 @@ namespace DataSolution.Service.Controllers
 
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans31Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                //Log transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -726,10 +939,11 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans38Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans38Async(TransunionRequest.BureauEnquiry37Request Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans38Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans38Async(TransunionRequest.BureauEnquiry37Request Request, string UserID,int ProductID)
         {
 
+            startDate = DateTime.Now;
 
             log = new Logger();
             try
@@ -758,7 +972,18 @@ namespace DataSolution.Service.Controllers
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,ProcessRequestTrans38Async", response.ErrorCode + " " + response.ErrorMessage);
                 //Save the transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
 
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -772,9 +997,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans41Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans41Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans41Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans41Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -804,6 +1030,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -817,9 +1055,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans42Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans42Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans42Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans42Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -846,6 +1085,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans42Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -858,9 +1109,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans43Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans43Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans43Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans43Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -887,6 +1139,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans43Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -900,9 +1164,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans47Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans47Async(TransunionRequest.BureauEnquiry37Request Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans47Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans47Async(TransunionRequest.BureauEnquiry37Request Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
             try
             {
@@ -929,6 +1194,18 @@ namespace DataSolution.Service.Controllers
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,ProcessRequestTrans47Async", response.ErrorCode + " " + response.ErrorMessage);
                 //Save the transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
 
             }
             catch (Exception ex)
@@ -943,9 +1220,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans91Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans91Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans91Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans91Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -972,6 +1250,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans91Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -985,9 +1275,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTrans92Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTrans92Async(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTrans92Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTrans92Async(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1014,6 +1305,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans92Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1026,10 +1329,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC20Async/{IDNumber}/{UserID}")]
-        public async Task<bool> ProcessRequestTransC20Async(string IDNumber, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC20Async/{IDNumber}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC20Async(string IDNumber, string UserID,int ProductID)
         {
-
+            startDate = DateTime.Now;
             log = new Logger();
             try
             {
@@ -1049,6 +1352,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans92Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1061,9 +1376,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC29Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTransC29Async(TransunionRequest.RequestC29 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC29Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC29Async(TransunionRequest.RequestC29 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1087,8 +1403,20 @@ namespace DataSolution.Service.Controllers
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans92Async", response.ErrorCode + " " + response.ErrorMessage);
 
-               
+
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1100,9 +1428,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC3Async/{UserID}")]
-        public async Task<bool> ProcessRequestTransC3Async(string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC3Async/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC3Async(string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1125,7 +1454,18 @@ namespace DataSolution.Service.Controllers
 
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
 
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1137,9 +1477,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC30Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTransC30Async(TransunionRequest.RequestTransC30 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC30Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC30Async(TransunionRequest.RequestTransC30 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1167,6 +1508,18 @@ namespace DataSolution.Service.Controllers
 
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
 
             }
             catch (Exception ex)
@@ -1181,9 +1534,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC4Async/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestTransC4Async(TransunionRequest.RequestTransC4 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC4Async/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC4Async(TransunionRequest.RequestTransC4 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1211,7 +1565,18 @@ namespace DataSolution.Service.Controllers
 
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
 
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1224,9 +1589,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestTransC6Async/{UserID}")]
-        public async Task<bool> ProcessRequestTransC6Async(string UserID)
+        [Route("api/TransunionAPI/ProcessRequestTransC6Async/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestTransC6Async(string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1248,6 +1614,18 @@ namespace DataSolution.Service.Controllers
 
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
 
             }
             catch (Exception ex)
@@ -1260,9 +1638,10 @@ namespace DataSolution.Service.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/TransunionAPI/ProcessRequestStrikeDate/{Request}/{UserID}")]
-        public async Task<bool> ProcessRequestStrikeDate(TransunionRequest.RequestTrans01 Request, string UserID)
+        [Route("api/TransunionAPI/ProcessRequestStrikeDate/{Request}/{UserID}/{ProductID}")]
+        public async Task<bool> ProcessRequestStrikeDate(TransunionRequest.RequestTrans01 Request, string UserID,int ProductID)
         {
+            startDate = DateTime.Now;
             log = new Logger();
 
             try
@@ -1289,6 +1668,18 @@ namespace DataSolution.Service.Controllers
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestStrikeDate", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
             }
             catch (Exception ex)
             {
@@ -1297,6 +1688,12 @@ namespace DataSolution.Service.Controllers
             }
 
             return result;
+        }
+
+        private bool SaveTransaction(TransactionModel.TransactionData Transaction)
+        {
+
+            return new TransactionData().InsertTransaction(Transaction, Transaction.UserID.ToString());
         }
     }
 }

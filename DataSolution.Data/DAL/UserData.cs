@@ -6,6 +6,7 @@ using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Domain.Model.Data;
 using DataSolution.Utilities.Encryption;
 using DataSolution.Utilities.Logging;
+using AutoMapper;
 
 namespace DataSolution.Data.DAL
 {
@@ -13,8 +14,10 @@ namespace DataSolution.Data.DAL
     public class UserData : IUserRepository
     {
 
-        private readonly Logger log = new Logger();
-        
+        private  Logger log = new Logger();
+        bool result;
+
+
        public List<UserTypeModel> GetAllUserTypes()
         {
             using (UserEntities user = new UserEntities())
@@ -116,33 +119,33 @@ namespace DataSolution.Data.DAL
             }
         }
 
-        public bool InsertUser(UserModel User)
+        public bool InsertUser(UserModel UserDetails)
         {
-            bool result = false;
+             result = false;
             UserEntities userEntities = new UserEntities();
             DataEncryption encryption = new DataEncryption();
-            string encUsername = encryption.Encrypt(User.Username);
-            string encPwd = encryption.Encrypt(User.Password);
-            Data.User user = new Data.User
-            {
-                Username = encUsername,
-                Password = encPwd,
-                OrganizationName = User.OrganizationName,
-                UserTypeID = (int)User.UserTypeID,
-                IsLocked = (bool)User.IsLocked,
-                MasterOrganization = User.MasterOrganization,
-                DateCreated = DateTime.Now
-            };
-
+            string encUsername = encryption.Encrypt(UserDetails.Username);
+            string encPwd = encryption.Encrypt(UserDetails.Password);
+            
             try
             {
+                Mapper.Initialize(
+                    cfg =>
+                    {
+                        cfg.CreateMap<UserModel, User>();
+                    }
+                    );
+
+                var user = Mapper.Map<User>(UserDetails);
+                user.Username = encUsername;
+                user.Password = encPwd;
                 userEntities.Users.Add(user);
                 userEntities.SaveChanges();
                 result = true;
             }
             catch (Exception ex)
             {
-                string userID = User.MasterOrganization != null ? User.MasterOrganization.ToString() : "New registration";
+                string userID = UserDetails.MasterOrganization != null ? UserDetails.MasterOrganization.ToString() : "New registration";
                
                 log.LogError(userID, "DataSolutions.Data", "InsertUser", ex.Message);
             }
@@ -152,7 +155,7 @@ namespace DataSolution.Data.DAL
 
         public bool UpdateUser(UserModel User)
         {
-            bool result = false;
+             result = false;
             DataEncryption encryption = new DataEncryption();
            
             

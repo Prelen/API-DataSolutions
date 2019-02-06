@@ -9,7 +9,7 @@ namespace DataSolution.Domain.Interfaces.Repository
 {
     public interface ITransactionRepository
     {
-        bool InsertTransaction(TransactionData Transaction);
-        List<TrasnactionView> TransactionHistory(TransactionReport TransactionReportDetails);
+        bool InsertTransaction(TransactionData Transaction, string UserID);
+        List<TransactionView> TransactionHistory(TransactionReport TransactionDetail, string UserID);
     }
 }

@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0302e71bfa9c45d787be9635cbacfc0e" Name="Diagram1">
         <EntityTypeShape EntityType="TransactionModel.Product" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TransactionModel.Transaction" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TransactionModel.User" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TransactionModel.Transaction" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

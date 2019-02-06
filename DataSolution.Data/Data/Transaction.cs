@@ -20,6 +20,6 @@ namespace DataSolution.Data.Data
         public Nullable<System.DateTime> TransStartDate { get; set; }
         public Nullable<System.DateTime> TransEndDate { get; set; }
         public Nullable<bool> IsSuccessful { get; set; }
-        public string ErrorMessage { get; set; }
+        public string Message { get; set; }
     }
 }

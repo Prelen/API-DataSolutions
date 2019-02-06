@@ -16,10 +16,10 @@ namespace DataSolution.Domain.Model.Data
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
             public bool? IsSuccessful { get; set; }
-            public string ErrorMEssage { get; set; }
+            public string Message { get; set; }
         }
 
-        public class TrasnactionView
+        public class TransactionView
         {
             public int TransID { get; set; }
             public string MainOrganization { get; set; }
@@ -27,15 +27,14 @@ namespace DataSolution.Domain.Model.Data
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
             public bool? IsSuccessful { get; set; }
-            public string ErrorMEssage { get; set; }
+            public string Message { get; set; }
         }
 
         public class TransactionReport
         {
-
-            string UserID { get; set; }
-            DateTime StartDate { get; set; }
-            DateTime EndDate { get; set; }
+           public  int UserID { get; set; }
+           public  DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
         }
         
     }

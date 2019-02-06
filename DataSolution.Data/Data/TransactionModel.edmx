@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TransactionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TransactionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -26,7 +26,7 @@
           <Property Name="TransStartDate" Type="datetime" />
           <Property Name="TransEndDate" Type="datetime" />
           <Property Name="IsSuccessful" Type="bit" />
-          <Property Name="ErrorMessage" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -51,8 +51,7 @@
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TransactionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -66,18 +65,6 @@
           <Property Name="ProductDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ProductPrice" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="TemplateID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Transaction">
-          <Key>
-            <PropertyRef Name="TransID" />
-          </Key>
-          <Property Name="TransID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="TransStartDate" Type="DateTime" Precision="3" />
-          <Property Name="TransEndDate" Type="DateTime" Precision="3" />
-          <Property Name="IsSuccessful" Type="Boolean" />
-          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -99,9 +86,21 @@
         </EntityType>
         <EntityContainer Name="TransactionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Transactions" EntityType="TransactionModel.Transaction" />
         </EntityContainer>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransID" />
+          </Key>
+          <Property Name="TransID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="TransStartDate" Type="DateTime" Precision="3" />
+          <Property Name="TransEndDate" Type="DateTime" Precision="3" />
+          <Property Name="IsSuccessful" Type="Boolean" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -117,19 +116,6 @@
                 <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
                 <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
                 <ScalarProperty Name="TemplateID" ColumnName="TemplateID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="TransactionModel.Transaction">
-              <MappingFragment StoreEntitySet="Transaction">
-                <ScalarProperty Name="TransID" ColumnName="TransID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="TransStartDate" ColumnName="TransStartDate" />
-                <ScalarProperty Name="TransEndDate" ColumnName="TransEndDate" />
-                <ScalarProperty Name="IsSuccessful" ColumnName="IsSuccessful" />
-                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -149,6 +135,19 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
                 <ScalarProperty Name="BusinessNo" ColumnName="BusinessNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="TransactionModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="IsSuccessful" ColumnName="IsSuccessful" />
+                <ScalarProperty Name="TransEndDate" ColumnName="TransEndDate" />
+                <ScalarProperty Name="TransStartDate" ColumnName="TransStartDate" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TransID" ColumnName="TransID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
