@@ -182,7 +182,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PDFConverterController.cs" />
     <Compile Include="Controllers\TransunionAPIController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
