@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class="row" ng-app="ContactUsApp" ng-controller="ContactUsController">
+        <div class="col-md-6">
+            <div class="card">
+                <form class="form-horizontal" ng-submit="Submit()">
+                    <div class="card-body">
+                        <h4 class="card-title">Enquiry</h4>
+                        <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="fname" ng-model="contact.FirstName">First Name</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="fname" type="text" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="sname" type="text" placeholder="Surname" ng-model="contact.Surname">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="email">Email Address</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="email" type="email" placeholder="Email Address" ng-model="contact.EmailAddress">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="conatct">Contact Number</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="conatct" type="text" placeholder="Contact Number" ng-model="contact.ContactNumber">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="enquiry">
+                                Enquiry
+                            </label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="enquiry" spellcheck="true" rows="7" placeholder="Maximum 500 characters" ng-model="contact.Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button class="btn btn-success btn-lg" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

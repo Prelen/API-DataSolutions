@@ -27,9 +27,10 @@ namespace DataSolution
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/theme").Include(
+                "~/Assets/libs/jquery/dist/jquery.min.js",
                 "~/Assets/libs/popperjs/dist/umd/popper.min.js",
                 "~/Scripts/bootstrap.min.js",
-                "~/Assets/libs/perfect-scrollbar/dist/perfect-scrollbar.min.js",
+                "~/Assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js",
                 "~/Assets/extra-libs/sparkline/sparkline.js",
                 "~/Assets/dist/js/waves.js",
                 "~/Assets/dist/js/sidebarmenu.js",

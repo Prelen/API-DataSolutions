@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-md-flex align-items-center">
+                    <div>
+                        <h1 class="card-title">Contact Us</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <img src="~/Assets/images/ContactUs.png" />
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel finibus odio. Cras ac magna elit. Cras ut pulvinar lorem, eget tempus neque. Pellentesque rhoncus blandit purus, a congue neque aliquet ac. Nunc facilisis commodo nulla ac tempor. Maecenas non ornare augue, iaculis suscipit magna. Proin metus purus, fermentum vel ex sed, porta eleifend nibh. Curabitur ut lacus venenatis nisi fringilla aliquam quis ut quam. Ut sed dignissim dolor, id tempus felis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-app="ContactUsApp" ng-controller="ContactUsController">
+    <div class="col-md-6">
+        <div class="card">
+            <form class="form-horizontal" ng-submit="Submit()">
+                <div class="card-body">
+                    <h4 class="card-title">Enquiry</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="fname" type="text" placeholder="First Name" ng-model="firstName" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="sname" type="text" placeholder="Surname" ng-model="surname" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="email">Email Address</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="email" type="email" placeholder="Email Address" ng-model="emailAddress" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="conatct">Contact Number</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="conatct" type="text" placeholder="Contact Number" ng-model="contactNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="enquiry">
+                            Enquiry
+                        </label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="enquiry" spellcheck="true" rows="7" placeholder="Maximum 500 characters" ng-model="message" required></textarea>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button class="btn btn-success" type="submit"  ng-click="toggle = !toggle" ng-disabled="buttonToggle">
+                                <i class="fa fa-spinner fa-spin" ng-hide="toggle"></i>{{buttonText}}
+                            </button>
+                            <div role="alert" id="divMessage" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[divClass === 'success']" ng-show="divStyle">{{ responseMessage }}</div>
+                        </div>
+                    </div>
+        
+                </div>
+            </form>
+        </div>
+    </div>
+    <dic class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Contact Details</h4>
+                <div class="form-group row">
+                    <label class="col-sm-3 text-right control-label col-form-label">Phone Number:</label>
+                    <label class="col-sm-3 text-right control-label col-form-label">011 100 0000</label>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 text-right control-label col-form-label">Email Address:</label>
+                    <label class="col-sm-3 text-right control-label col-form-label">test@test.com</label>
+                </div>
+            </div>
+        </div>
+    </dic>
+</div>
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Areas/External/Scripts/ContactUsController.js"></script>

@@ -57,6 +57,7 @@
     <Compile Include="Model\Data\UserTypeModel.cs" />
     <Compile Include="Model\Services\TransunionRequest.cs" />
     <Compile Include="Model\Utilities\Email.cs" />
+    <Compile Include="Model\Web\External\ContactUsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
