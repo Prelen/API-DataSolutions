@@ -66,8 +66,8 @@ namespace DataSolution.Areas.External.Controllers
                 };
 
                 Utilities.Mail.Email server = new Utilities.Mail.Email();
-                server.SendEmail(email);
-                result = true;
+               
+                result = server.SendEmail(email);
             }
             catch (Exception ex)
             {

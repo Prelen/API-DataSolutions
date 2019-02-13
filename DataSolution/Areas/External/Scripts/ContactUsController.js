@@ -6,6 +6,10 @@
         $scope.toggle = true;
         $scope.buttonToggle = false;
 
+        $(".preloader").fadeOut();
+
+
+        //Send the email
         $scope.Submit = function () {
             $scope.toggle = false;
             $scope.buttonToggle = true;
@@ -23,7 +27,7 @@
                 $scope.divStyle = true;
 
                 if (data.data === true) {
-                    $scope.responseMessage = 'Your enquiry has been sucessfully submitted.';
+                    $scope.responseMessage = 'Your enquiry has been successfully submitted.';
                     $scope.divClass = 'success';
                     $scope.firstName = '';
                     $scope.surname = '';

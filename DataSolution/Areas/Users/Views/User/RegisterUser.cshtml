@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
+    <div class="auth-box bg-dark border-top border-secondary"  ng-app="RegisterUserApp" ng-controller="RegisterUserController">
+        <div>
+            <div class="text-center p-t-20 p-b-20">
+                <span class="db"><img src="~/Assets/images/iDoIT.png" /></span>
+            </div>
+            <!-- Form -->
+            <form class="form-horizontal m-t-20" ng-submit="saveRegistration()">
+                <div class="row p-b-30">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-pencil-alt"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="First Name" required="" type="text" placeholder="First Name" ng-model="fname">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-pencil-alt"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Surname" required="" type="text" placeholder="Surname" ng-model="surname">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span  ng-class="{true: 'input-group-text bg-danger text-white', false: 'input-group-text bg-success text-white'}[usernameExists === true]" id="basic-addon1"><i class="ti-user"></i></span>
+                            </div>
+                            <input  ng-class="{true: 'form-control form-control-lg  is-invalid', false: 'form-control form-control-lg'}[usernameExists === true]" aria-describedby="basic-addon1" aria-label="Username" required="" type="text" placeholder="Username" data-placement="top" ng-model="username" ng-blur="showUsernameInfo();checkUsername()" ng-focus="showUsernameInfo()">
+                        </div>
+                        <div class="mb-1" ng-show="toggleUsernameInfo">
+                            <div class="alert alert-info" role="dialog" id="passwordInfo">Username must be between 6 and 12 characters with at least one letter and number and no special characters.</div>
+                        </div>
+                        <div class="mb-1" ng-show="usernameExists">
+                            <div class="alert alert-danger" role="alert">{{ usernameMessage }}</div>
+                        </div>
+                        <!-- Passowrd-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span ng-class="{true: 'input-group-text bg-danger text-white', false: 'input-group-text bg-primary text-white'}[isPasswordMatched === false]" id="basic-addon2"><i class="ti-pencil-alt2"></i></span>
+                            </div>
+                            <input ng-class="{true: 'form-control form-control-lg  is-invalid', false: 'form-control form-control-lg'}[isPasswordMatched === false]" aria-describedby="basic-addon1" aria-label="Password" required="" type="password" placeholder="Password" ng-model="password" ng-keyup="comparePasswords()" ng-focus="isPasswordMatched = true;showPasswordInfo()" ng-blur="showPasswordInfo();checkPassword(password)">
+                        </div>
+                        <div class="mb-1" ng-show="togglePassowrdInfo">
+                            <div class="alert alert-info" role="dialog">Password must be between 6 and 20 characters with at least one letter and number and contain at least one special characters.</div>
+                        </div>
+                        <div class="mb-1" ng-hide="isPasswordMatched">
+                            <div class="alert alert-danger" role="alert">{{ passwordMessage }}</div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-primary text-white" id="basic-addon2"><i class="ti-pencil-alt2"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Confirm Password" required="" type="password" placeholder="Confirm Password" ng-model="repeatPassword" ng-keyup="comparePasswords()">
+                        </div>
+
+                        <!-- email -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span ng-class="{true: 'input-group-text bg-danger text-white', false: 'input-group-text bg-warning text-white'}[isEmailMatched === false]" id="basic-addon1"><i class="ti-email"></i></span>
+                            </div>
+                            <input ng-class="{true: 'form-control form-control-lg  is-invalid', false: 'form-control form-control-lg'}[isEmailMatched === false]" aria-describedby="basic-addon1" aria-label="Email Address" required="" type="email" placeholder="Email Address" ng-model="email" ng-keyup="compareEmail()">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-warning text-white" id="basic-addon1"><i class="ti-email"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Confirm Email Address" required="" type="email" placeholder="Confirm Email Address" ng-model="newEmail" ng-keyup="compareEmail()">
+                        </div>
+                        <div class="mb-6">
+                            <div class="alert alert-danger" role="alert" ng-hide="isEmailMatched">Email addresses do not match</div>
+                        </div>
+                        <!-- Company Info-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-info text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Company Name" required="" type="text" placeholder="Company Name" ng-model="companyname">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-info text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
+                            </div>
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Contact Number" required="" type="text" placeholder="Contact Number" ng-model="contactnumber">
+                        </div>
+                    </div>
+                    </div>
+                <div class="row border-top border-secondary">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="p-t-20">
+                                <button ng-class="{true: 'btn btn-block btn-lg btn-success', false: 'btn btn-block btn-lg btn-info'}[showProcessing === true]" type="submit" ng-disabled="toggleButton"  >
+                                    <i class="fa fa-spinner fa-spin" ng-show="showProcessing"></i>&nbsp;{{ buttonText}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-6">
+                        <div role="alert" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[responseOutcome === true]" ng-show="showOutcome">{{ responseMessage }}</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Areas/Users/Scripts/RegisterUserController.js"></script>

@@ -45,6 +45,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="450" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="20" />
           <Property Name="BusinessNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsTempPassword" Type="bit" />
         </EntityType>
         <EntityContainer Name="TransactionModelStoreContainer">
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
@@ -83,6 +84,7 @@
           <Property Name="Email" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="BusinessNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsTempPassword" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="TransactionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -122,6 +124,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="TransactionModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsTempPassword" ColumnName="IsTempPassword" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

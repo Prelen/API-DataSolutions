@@ -21,5 +21,6 @@ namespace DataSolution.Domain.Model.Data
         public string Email { get; set; }
         public string MobileNo { get; set; }
         public string WorkNo { get; set; }
+        public bool IsTempPassword { get; set; }
     }
 }

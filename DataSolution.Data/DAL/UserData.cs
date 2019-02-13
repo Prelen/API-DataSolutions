@@ -7,6 +7,7 @@ using DataSolution.Domain.Model.Data;
 using DataSolution.Utilities.Encryption;
 using DataSolution.Utilities.Logging;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace DataSolution.Data.DAL
 {
@@ -139,6 +140,8 @@ namespace DataSolution.Data.DAL
                 var user = Mapper.Map<User>(UserDetails);
                 user.Username = encUsername;
                 user.Password = encPwd;
+                user.DateCreated = DateTime.Now;
+                user.IsTempPassword = false;
                 userEntities.Users.Add(user);
                 userEntities.SaveChanges();
                 result = true;
@@ -215,6 +218,61 @@ namespace DataSolution.Data.DAL
 
            return result;
 
+        }
+
+        public async Task<bool> CheckUsernameAsync(string Username)
+        {
+          
+
+            try
+            {
+                using (UserEntities users = new UserEntities())
+                {
+
+                    
+                    var user = (from u in users.Users
+                                where u.Username.Trim() == Username.Trim()
+                                select u).Count();
+
+                    
+                    result = user > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError("N/A","DataSolutions.Data", "CheckUsername", ex.Message);
+            }
+
+            return result;
+        }
+
+
+        public bool CheckUsername(string Username)
+        {
+
+
+            try
+            {
+                using (UserEntities users = new UserEntities())
+                {
+
+
+                    var user = (from u in users.Users
+                                where u.Username.Trim() == Username.Trim()
+                                select u).Count();
+
+
+                    result = user > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError("N/A", "DataSolutions.Data", "CheckUsername", ex.Message);
+            }
+
+            return result;
         }
     }
 }

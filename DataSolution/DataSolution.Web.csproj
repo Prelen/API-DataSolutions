@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\External\Controllers\ExternalController.cs" />
     <Compile Include="Areas\External\ExternalAreaRegistration.cs" />
+    <Compile Include="Areas\Users\Controllers\UserController.cs" />
     <Compile Include="Areas\Users\UsersAreaRegistration.cs" />
     <Compile Include="Views\Home\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -146,6 +147,8 @@
   <ItemGroup>
     <Content Include="Areas\External\Scripts\ContactUsController.js" />
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
+    <Content Include="Areas\Users\Scripts\LoginController.js" />
+    <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-brands.css" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-brands.min.css" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-regular.css" />
@@ -247,6 +250,7 @@
     <Content Include="Assets\images\logo-icon.png" />
     <Content Include="Assets\images\logo-text.png" />
     <Content Include="Assets\images\Services.png" />
+    <Content Include="Assets\images\user-registrations.png" />
     <Content Include="Assets\libs\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="Assets\libs\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.min.css" />
     <Content Include="Assets\libs\bootstrap-datepicker\dist\css\bootstrap-datepicker3.min.css" />
@@ -1100,6 +1104,8 @@
     <Content Include="Areas\External\Views\External\Services.cshtml" />
     <Content Include="Areas\External\Views\External\ContactUs.cshtml" />
     <Content Include="Areas\Users\Views\web.config" />
+    <Content Include="Areas\Users\Views\User\RegisterUser.cshtml" />
+    <Content Include="Areas\Users\Views\User\Login.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1872,7 +1878,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\External\Models\" />
     <Folder Include="Areas\External\Views\Shared\" />
-    <Folder Include="Areas\Users\Controllers\" />
     <Folder Include="Areas\Users\Models\" />
     <Folder Include="Areas\Users\Views\Shared\" />
     <Folder Include="Models\" />

@@ -20,9 +20,8 @@ namespace DataSolution.Utilities.Encryption
             var rj = new RijndaelManaged()
             {
                 Padding = PaddingMode.Zeros,
-                Mode = CipherMode.CBC,
-                KeySize = 256,
-                BlockSize = 256
+                Mode = CipherMode.CBC
+
 
             };
 
@@ -43,8 +42,6 @@ namespace DataSolution.Utilities.Encryption
             {
                 Padding = PaddingMode.Zeros,
                 Mode = CipherMode.CBC,
-                KeySize = 256,
-                BlockSize = 256
 
             };
 
