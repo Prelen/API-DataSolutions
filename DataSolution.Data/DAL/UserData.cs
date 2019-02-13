@@ -5,6 +5,8 @@ using DataSolution.Data.Data;
 using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Domain.Model.Data;
 using DataSolution.Utilities.Encryption;
+using DataSolution.Domain.Interfaces.Utilities.Passwords;
+using DataSolution.Utilities.Passwords;
 using DataSolution.Utilities.Logging;
 using AutoMapper;
 using System.Threading.Tasks;
@@ -204,6 +206,15 @@ namespace DataSolution.Data.DAL
                         if(User.LastLogin != null)
                             user.LoginCount = User.LoginCount;
 
+                        if (User.IsTempPassword != null)
+                            user.IsTempPassword = User.IsTempPassword;
+
+                        if (User.FirstName != null)
+                            user.FirstName = User.FirstName;
+
+                        if (User.Surname != null)
+                            user.Surname = User.Surname;
+
                         users.SaveChanges();
                     }
                                
@@ -273,6 +284,57 @@ namespace DataSolution.Data.DAL
             }
 
             return result;
+        }
+
+        public UserModel ResetPassword(string EmailAddress)
+        {
+
+            try
+            {
+                using (UserEntities users = new UserEntities())
+                {
+                    var user = (from u in users.Users
+                                where u.Email == EmailAddress.Trim()
+                                select u).FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        //Reset Password
+                        string tempPassword = new Password().GenerateTempPassword();
+                        user.IsTempPassword = true;
+
+
+                        Mapper.Initialize(
+                            cfg =>
+                            {
+                                cfg.CreateMap<User, UserModel>();
+                            }
+                            );
+
+                        var updatedUser = Mapper.Map<UserModel>(user);
+                        result = UpdateUser(updatedUser);
+                        if (result)
+                        {
+                            return updatedUser;
+                        }
+                        else
+                            return null;
+                    }
+                    else
+                        return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(EmailAddress, "DataSolutions.Data", "ResetPassword", ex.Message);
+            }
+         
+
+
+            return null;
+
         }
     }
 }

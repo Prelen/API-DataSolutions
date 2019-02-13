@@ -1857,6 +1857,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\sitemap.xml" />
     <Content Include="Templates\EmailTemplate.html" />
+    <Content Include="Templates\ResetPassword.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

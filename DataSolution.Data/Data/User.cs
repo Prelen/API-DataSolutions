@@ -28,5 +28,7 @@ namespace DataSolution.Data.Data
         public string MobileNo { get; set; }
         public string BusinessNo { get; set; }
         public Nullable<bool> IsTempPassword { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
     }
 }

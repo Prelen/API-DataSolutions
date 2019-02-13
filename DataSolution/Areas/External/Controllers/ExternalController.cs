@@ -65,9 +65,9 @@ namespace DataSolution.Areas.External.Controllers
                     ToEmail = new List<string> { "a83c6dabb1-f8b9c3@inbox.mailtrap.io" }
                 };
 
-                Utilities.Mail.Email server = new Utilities.Mail.Email();
                
-                result = server.SendEmail(email);
+               
+                result = new Utilities.Mail.Email().SendEmail(email);
             }
             catch (Exception ex)
             {

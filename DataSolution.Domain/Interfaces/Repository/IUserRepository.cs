@@ -17,6 +17,7 @@ namespace DataSolution.Domain.Interfaces.Repository
         bool UpdateUser(UserModel User);
         Task<bool> CheckUsernameAsync(string Username);
         bool CheckUsername(string Username);
+        UserModel ResetPassword(string EmailAddress);
 
 
 

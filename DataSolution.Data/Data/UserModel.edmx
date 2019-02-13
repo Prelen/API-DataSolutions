@@ -11,6 +11,8 @@
           </Key>
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="250" />
           <Property Name="Password" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="OrganizationName" Type="nvarchar" MaxLength="500" />
           <Property Name="UserTypeID" Type="int" Nullable="false" />
@@ -57,6 +59,8 @@
           <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="BusinessNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="IsTempPassword" Type="Boolean" />
+          <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -78,6 +82,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="UserModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="IsTempPassword" ColumnName="IsTempPassword" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />

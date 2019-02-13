@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\Utilities\Encryption\IEncryption.cs" />
     <Compile Include="Interfaces\Utilities\Logging\ILogging.cs" />
     <Compile Include="Interfaces\Utilities\Mail\IMail.cs" />
+    <Compile Include="Interfaces\Utilities\Passwords\IPassword.cs" />
     <Compile Include="Model\Data\LookupModel.cs" />
     <Compile Include="Model\Data\ProductModel.cs" />
     <Compile Include="Model\Data\TransactionModel.cs" />
