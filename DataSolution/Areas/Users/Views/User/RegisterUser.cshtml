@@ -42,9 +42,11 @@
                         <!-- Passowrd-->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span ng-class="{true: 'input-group-text bg-danger text-white', false: 'input-group-text bg-primary text-white'}[isPasswordMatched === false]" id="basic-addon2"><i class="ti-pencil-alt2"></i></span>
+                                <span ng-class="{true: 'input-group-text bg-danger text-white', false: 'input-group-text bg-primary text-white'}[isPasswordMatched === false]" id="basic-addon2" title="{{ passwordHideMessage }}" ng-click="showPassword()">
+                                <i ng-class="{true: 'fa fa-fw fa-eye field-icon', false: 'fa fa-fw fa-eye-slash field-icon'}[togglePassword === true]"></i>
+                                </span>
                             </div>
-                            <input ng-class="{true: 'form-control form-control-lg  is-invalid', false: 'form-control form-control-lg'}[isPasswordMatched === false]" aria-describedby="basic-addon1" aria-label="Password" required="" type="password" placeholder="Password" ng-model="password" ng-keyup="comparePasswords()" ng-focus="isPasswordMatched = true;showPasswordInfo()" ng-blur="showPasswordInfo();checkPassword(password)">
+                            <input ng-class="{true: 'form-control form-control-lg  is-invalid', false: 'form-control form-control-lg'}[isPasswordMatched === false]" aria-describedby="basic-addon1" aria-label="Password" required type="{{ passwordType }}" placeholder="Password" ng-model="password" ng-keyup="comparePasswords()" ng-focus="isPasswordMatched = true;showPasswordInfo()" ng-blur="showPasswordInfo();checkPassword(password)">
                         </div>
                         <div class="mb-1" ng-show="togglePassowrdInfo">
                             <div class="alert alert-info" role="dialog">Password must be between 6 and 20 characters with at least one letter and number and contain at least one special characters.</div>
@@ -54,9 +56,11 @@
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-primary text-white" id="basic-addon2"><i class="ti-pencil-alt2"></i></span>
+                                <span class="input-group-text bg-primary text-white" id="basic-addon2"  ng-click="showPasswordConfirm()" title="{{ passwordHideMessageConfirm }}">
+                                <i ng-class="{true: 'fa fa-fw fa-eye field-icon', false: 'fa fa-fw fa-eye-slash field-icon'}[togglePasswordConfirm === true]"></i>
+                                </span>
                             </div>
-                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Confirm Password" required="" type="password" placeholder="Confirm Password" ng-model="repeatPassword" ng-keyup="comparePasswords()">
+                            <input class="form-control form-control-lg" aria-describedby="basic-addon1" aria-label="Confirm Password" required="" type="{{ passwordTypeConfirm }}" placeholder="Confirm Password" ng-model="repeatPassword" ng-keyup="comparePasswords()">
                         </div>
 
                         <!-- email -->

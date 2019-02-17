@@ -1,5 +1,7 @@
 ﻿angular.module('RegisterUserApp', [])
     .controller('RegisterUserController', function ($scope, $http) {
+        $(".preloader").fadeOut(); 
+
         $scope.showProcessing = false;
         $scope.isEmailMatched = true;
         $scope.isPasswordMatched = true;
@@ -14,8 +16,16 @@
         $scope.buttonText = 'Sign Up';
         $scope.responseOutcome = false;
         $scope.showOutcome = false;
-
-        $(".preloader").fadeOut();
+        //Show Hide Password
+        $scope.passwordHideMessage = 'Show Password';
+        $scope.passwordType = 'password';
+        $scope.togglePassword = true;
+   
+        //Show Hide Cnfirm PAssword
+        $scope.passwordHideMessageConfirm = 'Show Password';
+        $scope.passwordTypeConfirm = 'password';
+        $scope.togglePasswordConfirm = true;
+ 
         
 
         $scope.saveRegistration = function() {
@@ -116,7 +126,7 @@
                 $scope.usernameMessage = 'Username must contain a number';
             } else if (username.search(/[a-zA-Z]/) === -1) {
                 $scope.usernameMessage = 'Username must contain a letter';
-            } else if (username.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) > 0) {
+            } else if (username.search(/[^a-zA-Z0-9]/) > 0) {
                 $scope.usernameMessage = 'Username contains invalid characters';
             }
             else {
@@ -142,7 +152,7 @@
                 $scope.passwordMessage = 'Password must contain a number';
             } else if (password.search(/[a-zA-Z]/) === -1) {
                 $scope.passwordMessage = 'Password must contain a letter';
-            } else if (password.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1) {
+            } else if (username.search(/[^a-zA-Z0-9]/) < 0) {
                 $scope.passwordMessage = 'Username must contain a special character';
             }
             else {
@@ -224,4 +234,34 @@
             $scope.buttonText = $scope.showProcessing === true ? 'Processing' : 'Sign Up';
            
         });
+
+        $scope.showPassword = function () {
+            if ($scope.togglePassword === true) {
+                $scope.togglePassword = false;
+                $scope.passwordHideMessage = 'Hide Password';
+                $scope.passwordType = 'text';
+                $scope.passwordClass = false;
+            }
+            else {
+                $scope.togglePassword = true;
+                $scope.passwordHideMessage = 'Show Password';
+                $scope.passwordType = 'password';
+                $scope.passwordClass = true;
+            }
+        };
+
+        $scope.showPasswordConfirm = function () {
+            if ($scope.togglePasswordConfirm === true) {
+                $scope.togglePasswordConfirm = false;
+                $scope.passwordHideMessageConfirm = 'Hide Password';
+                $scope.passwordTypeConfirm = 'text';
+               
+            }
+            else {
+                $scope.togglePasswordConfirm = true;
+                $scope.passwordHideMessageConfirm = 'Show Password';
+                $scope.passwordTypeConfirm = 'password';
+             
+            }
+        };
     });

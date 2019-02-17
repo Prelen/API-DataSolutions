@@ -13,7 +13,7 @@ namespace DataSolution.Utilities.Passwords
     {
         public string GenerateTempPassword()
         {
-            return Membership.GeneratePassword(8, 1); 
+            return Membership.GeneratePassword(12, 1); 
 
         }
     }

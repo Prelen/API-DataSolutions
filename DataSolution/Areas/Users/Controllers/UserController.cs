@@ -105,8 +105,8 @@ namespace DataSolution.Areas.Users.Controllers
                  .Replace("!!!Surname!!!", user.Surname)
                  .Replace("!!!Password!!!", new DataEncryption().Decrypt(user.Password));
 
-                //Test Email
-                user.Email = "a83c6dabb1 - f8b9c3@inbox.mailtrap.io";
+                //Test Email TODO: Remove 
+                user.Email = "a83c6dabb1-f8b9c3@inbox.mailtrap.io";
 
                 Domain.Model.Utilities.Email email = new Domain.Model.Utilities.Email
                 {
@@ -123,6 +123,37 @@ namespace DataSolution.Areas.Users.Controllers
             }
 
             return Json(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public JsonResult Login(string Username, string Password)
+        {
+            bool result = false;
+            IUserRepository repo = new UserData();
+            
+            var user = repo.Login(Username, Password);
+            TempData["User"] = user;
+            return Json(user);
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+
+        public ActionResult Home()
+        {
+            if (TempData["User"] is UserModel user)
+            {
+                if (user.IsTempPassword)
+                    RedirectToAction("ResetPassword");
+            }
+            else
+                RedirectToAction("Login");
+
+            return View();
         }
     }
 }

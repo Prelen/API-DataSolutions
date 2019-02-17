@@ -24,5 +24,6 @@ namespace DataSolution.Domain.Model.Data
         public bool IsTempPassword { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
+      
     }
 }

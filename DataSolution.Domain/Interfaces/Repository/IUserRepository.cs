@@ -14,11 +14,11 @@ namespace DataSolution.Domain.Interfaces.Repository
         List<UserModel> SearchAllUsers(int? UserID = null, string Username = null, string OrgName = null, int? UserTypeID = null, DateTime? StartDate = null,
                                      DateTime? EndDate = null, bool? Locked = null, int? MasterOrgID = null);
         bool InsertUser(UserModel User);
-        bool UpdateUser(UserModel User);
+        bool UpdateUser(UserModel User, bool IsEncrypted);
         Task<bool> CheckUsernameAsync(string Username);
         bool CheckUsername(string Username);
         UserModel ResetPassword(string EmailAddress);
-
+        UserModel Login(string Username, string Password);
 
 
     }

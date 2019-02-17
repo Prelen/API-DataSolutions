@@ -18,13 +18,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text bg-success text-white" id="basic-addon1"><i class="ti-user"></i></span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required="">
+                            <input type="text" id="username" class="form-control form-control-lg" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required ng-model="username">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil-alt2"></i></span>
+                                <span class="input-group-text bg-warning text-white" id="basic-addon2" title="{{ passwordMessage }}" ng-click="showPassword()">
+                                <i ng-class="{true: 'fa fa-fw fa-eye field-icon', false: 'fa fa-fw fa-eye-slash field-icon'}[togglePassword === true]"></i>
+                                </span>
                             </div>
-                            <input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
+                            <input type="{{ passwordType }}" id="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required ng-model="password" >
                         </div>
                     </div>
                 </div>
@@ -33,7 +35,12 @@
                         <div class="form-group">
                             <div class="p-t-20">
                                 <button class="btn btn-info" id="recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                <button class="btn btn-success float-right" type="submit">Login</button>
+                                <button class="btn btn-success float-right" type="submit" ng-click="Login()">
+                                    <i class="fa fa-spinner fa-spin" ng-show="showProcessing"></i>&nbsp;{{ buttonLoginMessage }}
+                                </button>
+                                <div role="alert" id="loginMessage" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[responseLogin === true]" ng-show="toggleLogin">
+                                    <i class="fa fa-spinner fa-spin" ng-show="responseLogin"></i>&nbsp; {{ loginMessage }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,13 +59,17 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text bg-warning text-white" id="basic-addon1"><i class="ti-email"></i></span>
                         </div>
-                        <input type="text" class="form-control form-control-lg" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="email" class="form-control form-control-lg" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1" ng-model="recoveremail" id="recoverEmail">
                     </div>
                     <!-- pwd -->
                     <div class="row m-t-20 p-t-20 border-top border-secondary">
                         <div class="col-12">
                             <a class="btn btn-success" href="#" id="to-login" name="action">Back To Login</a>
-                            <button class="btn btn-info float-right" type="button" name="action" ng-click="recoverPassword()">Recover</button>
+                            <button class="btn btn-info float-right" ng-class="{true: 'btn btn-success float-right', false: 'btn btn-info float-right'}[showProcessing === true]" type="button" name="action" ng-click="recoverPassword()" ng-disabled="showProcessing">
+                                <i class="fa fa-spinner fa-spin" ng-show="showProcessing"></i>&nbsp;{{buttonMessage}}
+                            </button>
+                            <div role="alert" id="recoverMessage" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[responseRecover === true]" ng-show="toggleRecoverMessage">{{ responseMessage }}</div>
+
                         </div>
                     </div>
                 </form>

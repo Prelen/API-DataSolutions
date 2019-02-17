@@ -149,6 +149,7 @@
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
     <Content Include="Areas\Users\Scripts\LoginController.js" />
     <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
+    <Content Include="Areas\Users\Scripts\ResetPasswordController.js" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-brands.css" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-brands.min.css" />
     <Content Include="Assets\dist\css\icons\font-awesome\css\fa-regular.css" />
@@ -1106,6 +1107,8 @@
     <Content Include="Areas\Users\Views\web.config" />
     <Content Include="Areas\Users\Views\User\RegisterUser.cshtml" />
     <Content Include="Areas\Users\Views\User\Login.cshtml" />
+    <Content Include="Areas\Users\Views\User\Home.cshtml" />
+    <Content Include="Areas\Users\Views\User\ResetPassword.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1874,6 +1877,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayoutPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

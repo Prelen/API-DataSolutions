@@ -67,7 +67,7 @@ namespace DataSolution.Data.DAL
         public List<UserModel> SearchAllUsers(int? UserID = null,string Username = null ,string OrgName = null,int? UserTypeID = null, DateTime? StartDate = null,               
                                                DateTime? EndDate = null,bool? Locked = null, int? MasterOrgID = null)
         {
-            DataEncryption encryption = new DataEncryption();
+            
             using (UserEntities user = new UserEntities())
             {
 
@@ -92,7 +92,7 @@ namespace DataSolution.Data.DAL
 
                 if (Username != null)
                 {
-                    string encUsername = encryption.Encrypt(Username);
+                    string encUsername = new DataEncryption().Encrypt(Username);
                     usrs = usrs.ToList().AsQueryable()
                               .Where(u => u.Username.Contains(encUsername));
                 }
@@ -126,9 +126,9 @@ namespace DataSolution.Data.DAL
         {
              result = false;
             UserEntities userEntities = new UserEntities();
-            DataEncryption encryption = new DataEncryption();
-            string encUsername = encryption.Encrypt(UserDetails.Username);
-            string encPwd = encryption.Encrypt(UserDetails.Password);
+          
+            string encUsername = new DataEncryption().Encrypt(UserDetails.Username);
+            string encPwd = new DataEncryption().Encrypt(UserDetails.Password);
             
             try
             {
@@ -144,6 +144,7 @@ namespace DataSolution.Data.DAL
                 user.Password = encPwd;
                 user.DateCreated = DateTime.Now;
                 user.IsTempPassword = false;
+                user.IsLocked = true;
                 userEntities.Users.Add(user);
                 userEntities.SaveChanges();
                 result = true;
@@ -158,12 +159,10 @@ namespace DataSolution.Data.DAL
         }
 
 
-        public bool UpdateUser(UserModel User)
+        public bool UpdateUser(UserModel User,bool IsEncrypted)
         {
              result = false;
-            DataEncryption encryption = new DataEncryption();
-           
-            
+ 
             try
             {
                 using (UserEntities users = new UserEntities())
@@ -175,18 +174,22 @@ namespace DataSolution.Data.DAL
 
                     if (user != null)
                     {
-                        if (User.Username != null)
+                        if (!IsEncrypted)
                         {
-                            string encUsername = encryption.Encrypt(User.Username);
-                            user.Username = encUsername;
+                            if (User.Username != null)
+                            {
+                                string encUsername = new DataEncryption().Encrypt(User.Username);
+                                user.Username = encUsername;
+                            }
+
+                           
+
                         }
-                            
 
                         if (User.Password != null)
-                        {
-                            string encPwd = encryption.Encrypt(User.Password);
-                            user.Password = encPwd;
-                        }
+                            user.Password = IsEncrypted ? User.Password : new DataEncryption().Encrypt(User.Password);
+                    
+
 
                         if (User.OrganizationName != null)
                             user.OrganizationName = User.OrganizationName;
@@ -216,6 +219,7 @@ namespace DataSolution.Data.DAL
                             user.Surname = User.Surname;
 
                         users.SaveChanges();
+                        result = true;
                     }
                                
                 }
@@ -300,7 +304,7 @@ namespace DataSolution.Data.DAL
                     if (user != null)
                     {
                         //Reset Password
-                        string tempPassword = new Password().GenerateTempPassword();
+                        user.Password = new DataEncryption().Encrypt(new Password().GenerateTempPassword());
                         user.IsTempPassword = true;
 
 
@@ -312,7 +316,8 @@ namespace DataSolution.Data.DAL
                             );
 
                         var updatedUser = Mapper.Map<UserModel>(user);
-                        result = UpdateUser(updatedUser);
+                        
+                        result = UpdateUser(updatedUser,true);
                         if (result)
                         {
                             return updatedUser;
@@ -330,11 +335,59 @@ namespace DataSolution.Data.DAL
 
                 log.LogError(EmailAddress, "DataSolutions.Data", "ResetPassword", ex.Message);
             }
-         
-
-
             return null;
 
+        }
+
+        public UserModel Login(string Username, string Password)
+        {
+            UserModel userInfo = new UserModel();
+            string encUsername = new DataEncryption().Encrypt(Username.Trim());
+            string encPassword = new DataEncryption().Encrypt(Password.Trim());
+            try
+            {
+                using (UserEntities users =  new UserEntities())
+                {
+                    var user = (from u in users.Users
+                                where u.Username == encUsername && u.Password == encPassword
+                              select u).FirstOrDefault();
+
+                    if (user != null)
+                    {
+                        Mapper.Initialize(
+                            cfg =>
+                            {
+                                cfg.CreateMap<User, UserModel>();
+                            }
+                            );
+
+                        userInfo = Mapper.Map<UserModel>(user);
+                    }
+                    else
+                    {
+                        //Invalid password
+                        var checkUser = SearchAllUsers(null, Username.Trim());
+                        if (checkUser != null)
+                        {
+                            var usr = checkUser.FirstOrDefault();
+                            if (usr.LoginCount < 3)
+                                usr.LoginCount += 1;
+                            else
+                                usr.IsLocked = true;
+
+                            UpdateUser(usr, true);
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(Username, "DataSolutions.Data", "Login", ex.Message);
+            }
+            return userInfo;
         }
     }
 }

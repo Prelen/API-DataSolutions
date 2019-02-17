@@ -19,6 +19,7 @@ namespace DataSolution.Areas.External.Controllers
             return View();
         }
 
+        
         public ActionResult Home()
         {
             ViewBag.Title = "Home";
