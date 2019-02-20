@@ -1,8 +1,21 @@
 ﻿
 @{
     ViewBag.Title = "Home";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
+@model  DataSolution.Domain.Model.Data.UserModel
 <h2>Home</h2>
-
+<div class="row" ng-app="HomeApp" ng-controller="HomeController" ng-init="GetData()">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Transactions in last 10 days</h5>
+                <div id="graph" style="width: 100%; height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Areas/Users/Scripts/HomeController.js"></script>

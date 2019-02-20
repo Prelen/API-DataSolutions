@@ -34,8 +34,8 @@
                     <div class="col-12">
                         <div class="form-group">
                             <div class="p-t-20">
-                                <button class="btn btn-info" id="recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                <button class="btn btn-success float-right" type="submit" ng-click="Login()">
+                                <button class="btn btn-primary" id="recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
+                                <button  ng-class="{true: 'btn btn-success float-right', false: 'btn btn-info float-right'}[showProcessing === true]" type="submit" ng-click="Login()">
                                     <i class="fa fa-spinner fa-spin" ng-show="showProcessing"></i>&nbsp;{{ buttonLoginMessage }}
                                 </button>
                                 <div role="alert" id="loginMessage" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[responseLogin === true]" ng-show="toggleLogin">

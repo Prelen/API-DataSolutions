@@ -145,6 +145,7 @@ namespace DataSolution.Data.DAL
                 user.DateCreated = DateTime.Now;
                 user.IsTempPassword = false;
                 user.IsLocked = true;
+                user.LoginCount = 0;
                 userEntities.Users.Add(user);
                 userEntities.SaveChanges();
                 result = true;
@@ -362,6 +363,9 @@ namespace DataSolution.Data.DAL
                             );
 
                         userInfo = Mapper.Map<UserModel>(user);
+                        userInfo.LoginCount = 0;
+                        userInfo.LastLogin = DateTime.Now;
+                        UpdateUser(userInfo,true);
                     }
                     else
                     {
@@ -388,6 +392,23 @@ namespace DataSolution.Data.DAL
                 log.LogError(Username, "DataSolutions.Data", "Login", ex.Message);
             }
             return userInfo;
+        }
+
+        public bool CheckTempPassword(int UserID, string TempPassword)
+        {
+            result = false;
+
+            using (UserEntities users = new UserEntities())
+            {
+                string encTempPassword = new DataEncryption().Encrypt(TempPassword);
+                var user = (from u in users.Users
+                            where u.UserID == UserID && u.Password == encTempPassword
+                            select u).Count();
+
+                if (user > 0)
+                    result = true;
+            }
+            return result;
         }
     }
 }

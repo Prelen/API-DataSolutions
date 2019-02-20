@@ -19,6 +19,7 @@ namespace DataSolution.Domain.Interfaces.Repository
         bool CheckUsername(string Username);
         UserModel ResetPassword(string EmailAddress);
         UserModel Login(string Username, string Password);
+        bool CheckTempPassword(int UserID, string TempPassword);
 
 
     }

@@ -97,10 +97,9 @@
                                 <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
                             </form>
                         </li>
-                    </ul>
-
-
+                      </ul>
                 </div>
+                
             </nav>
         </header>
         <!-- ============================================================== -->
@@ -115,11 +114,11 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Home","External", new { area = "External"})" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Home</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Home","User", new { area = "Users"})" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Home</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Services","External", new { area = "External"})" aria-expanded="false"><i class="mdi mdi-move-resize-variant"></i><span class="hide-menu">Our Services</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("ContactUs","External", new { area = "External"})" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Contact Us</span></a></li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">Authentication </span></a>
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">User Management </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="@Url.Action("Login","User", new { area = "Users"})" class="sidebar-link"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Login </span></a></li>
                                 <li class="sidebar-item"><a href="@Url.Action("RegisterUser","User", new { area = "Users"})" class="sidebar-link"><i class="mdi mdi-pencil"></i><span class="hide-menu"> Register </span></a></li>

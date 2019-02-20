@@ -147,6 +147,7 @@
   <ItemGroup>
     <Content Include="Areas\External\Scripts\ContactUsController.js" />
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
+    <Content Include="Areas\Users\Scripts\HomeController.js" />
     <Content Include="Areas\Users\Scripts\LoginController.js" />
     <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
     <Content Include="Areas\Users\Scripts\ResetPasswordController.js" />
@@ -244,6 +245,7 @@
     <Content Include="Assets\extra-libs\multicheck\jquery.multicheck.js" />
     <Content Include="Assets\extra-libs\multicheck\multicheck.css" />
     <Content Include="Assets\extra-libs\sparkline\sparkline.js" />
+    <Content Include="Assets\images\1.jpg" />
     <Content Include="Assets\images\Company-Profile01.jpg" />
     <Content Include="Assets\images\ContactUs.png" />
     <Content Include="Assets\images\favicon.png" />

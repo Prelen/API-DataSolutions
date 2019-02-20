@@ -58,8 +58,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\AuditData.cs" />
+    <Compile Include="DAL\NotificationData.cs" />
     <Compile Include="DAL\TransactionData.cs" />
     <Compile Include="DAL\UserData.cs" />
+    <Compile Include="Data\Audit.cs">
+      <DependentUpon>AuditModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AuditModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AuditModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AuditModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AuditModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Data\lk_AddressKeyword.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
@@ -113,6 +133,24 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LookupModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Notification.cs">
+      <DependentUpon>NotificationModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\NotificationModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\NotificationModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\NotificationModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\Product.cs">
       <DependentUpon>TransactionModel.tt</DependentUpon>
@@ -174,8 +212,22 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LookupModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="Data\AuditModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AuditModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\AuditModel.edmx.diagram">
+      <DependentUpon>AuditModel.edmx</DependentUpon>
+    </None>
     <None Include="Data\LookupModel.edmx.diagram">
       <DependentUpon>LookupModel.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="Data\NotificationModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NotificationModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\NotificationModel.edmx.diagram">
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
     </None>
     <None Include="Data\TransactionModel.edmx.diagram">
       <DependentUpon>TransactionModel.edmx</DependentUpon>
@@ -186,6 +238,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\AuditModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AuditModel.edmx</DependentUpon>
+      <LastGenOutput>AuditModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\AuditModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AuditModel.edmx</DependentUpon>
+      <LastGenOutput>AuditModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Data\LookupModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LookupModel.edmx</DependentUpon>
@@ -195,6 +257,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LookupModel.edmx</DependentUpon>
       <LastGenOutput>LookupModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\NotificationModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+      <LastGenOutput>NotificationModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\NotificationModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+      <LastGenOutput>NotificationModel.cs</LastGenOutput>
     </Content>
     <Content Include="Data\TransactionModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

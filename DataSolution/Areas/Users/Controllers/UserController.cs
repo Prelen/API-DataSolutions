@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using DataSolution.Data;
 using DataSolution.Data.DAL;
 using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Domain.Model.Data;
+using DataSolution.Domain.Model.Web.Charts;
 using DataSolution.Utilities.Encryption;
 
 namespace DataSolution.Areas.Users.Controllers
@@ -133,7 +136,7 @@ namespace DataSolution.Areas.Users.Controllers
             IUserRepository repo = new UserData();
             
             var user = repo.Login(Username, Password);
-            TempData["User"] = user;
+            Session["User"] = user;
             return Json(user);
         }
 
@@ -145,15 +148,66 @@ namespace DataSolution.Areas.Users.Controllers
 
         public ActionResult Home()
         {
-            if (TempData["User"] is UserModel user)
+            if (Session["User"] is UserModel user)
             {
                 if (user.IsTempPassword)
-                    RedirectToAction("ResetPassword");
+                  return  RedirectToAction("ResetPassword");
+                else
+                    return View(user);
             }
             else
-                RedirectToAction("Login");
+               return RedirectToAction("Login");
 
-            return View();
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult CheckTempPassword(string TempPassword)
+        {
+            bool result = false;
+            if (Session["User"] is UserModel user)
+            {
+                IUserRepository userRepo = new UserData();
+                result = userRepo.CheckTempPassword(user.UserID, TempPassword);
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult PasswordReset(string NewPassword)
+        {
+            bool result = false;
+            if (Session["User"] is UserModel user)
+            {
+                user.Password = new DataEncryption().Encrypt(NewPassword);
+                user.IsTempPassword = false;
+                result = new UserData().UpdateUser(user, true);
+            }
+            return Json(result);
+        }
+
+        public JsonResult GetChartValues()
+        {
+          
+            ChartOptions[] options = new ChartOptions[10];
+            options[0] = new ChartOptions { label = "20-01",value = 6 };
+            options[1] = new ChartOptions { label = "21-01", value = 7 };
+            options[2] = new ChartOptions { label = "22-01", value = 2};
+            options[3] = new ChartOptions { label = "23-01", value = 9 };
+            options[4] = new ChartOptions { label = "24-01", value = 4 };
+            options[5] = new ChartOptions { label = "25-01", value = 7 };
+            options[6] = new ChartOptions { label = "26-01", value = 12 };
+            options[7] = new ChartOptions { label = "27-01", value = 5 };
+            options[8] = new ChartOptions { label = "28-01", value = 9 };
+            options[9] = new ChartOptions { label = "29-01", value = 3 };
+
+            var json = new JavaScriptSerializer().Serialize(options);
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+       
+
+       
     }
 }

@@ -112,7 +112,7 @@
             }).finally(function() {
                 if ($scope.responseLogin === true) {
                    
-                    $timeout(function () { $scope.redirectToUserHome(); }, 3000);
+                    $timeout(function () { $scope.redirectToUserHome(); }, 1000);
                 }
             });
 
