@@ -120,7 +120,7 @@
         };
 
         $scope.redirectToUserHome = function () {
-           
+            $(".preloader").fadeIn();
             var currentURL = $location.absUrl();
             var homepage = currentURL.replace('Login', 'Home');
             window.location.href = homepage;

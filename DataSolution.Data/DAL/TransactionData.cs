@@ -24,15 +24,17 @@ namespace DataSolution.Data.DAL
             transactionEntities = new TransactionEntities();
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<TransactionData, Data.Transaction>();
-                    }
-                    );
 
-                
-                var transaction = Mapper.Map<Data.Transaction>(TransactionDetail);
+                var config = new MapperConfiguration(
+                       cfg =>
+                       {
+                           cfg.CreateMap<TransactionData, Data.Transaction>();
+                       }
+                       );
+
+                var mapper = config.CreateMapper();
+           
+                var transaction = mapper.Map<Data.Transaction>(TransactionDetail);
                 transactionEntities.Transactions.Add(transaction);
                 transactionEntities.SaveChanges();
 

@@ -46,20 +46,22 @@ namespace DataSolution.Service.Controllers
              log = new Logger();
             try
             {
-              
 
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry37>()
-                        .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
-                        .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
-                        .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
-                        .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
-                        .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
-                    }
-                    );
-                var bureauEnquiry37 = Mapper.Map<BureauEnquiry37>(Request);
+
+                var config = new MapperConfiguration(
+                       cfg =>
+                       {
+                           cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry37>()
+                           .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                           .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                           .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                           .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                           .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                       }
+                       );
+
+                var mapper = config.CreateMapper();
+                var bureauEnquiry37 = mapper.Map<BureauEnquiry37>(Request);
                 bureauEnquiry37.SecurityCode = securityCode;
                 bureauEnquiry37.SubscriberCode = subNo;
 
@@ -105,11 +107,12 @@ namespace DataSolution.Service.Controllers
              log = new Logger();
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
 
-                        cfg.CreateMap<IndividualTraceSearchRequest, IndividualTraceSearchInput>()
+
+                var config = new MapperConfiguration(
+                     cfg =>
+                     {
+                         cfg.CreateMap<IndividualTraceSearchRequest, IndividualTraceSearchInput>()
                         .ForMember(x => x.TicketNumber, y => y.MapFrom(z => z.TicketNo))
                         .ForMember(x => x.ReportNumber, y => y.MapFrom(z => z.ReportNo))
                         .ForMember(x => x.UserEmail, y => y.MapFrom(z => z.Email))
@@ -121,10 +124,12 @@ namespace DataSolution.Service.Controllers
                         .ForMember(x => x.AddressSuburb, y => y.MapFrom(z => z.Suburb))
                         .ForMember(x => x.AddressTown, y => y.MapFrom(z => z.Town))
                         .ForMember(x => x.AddressPostalCode, y => y.MapFrom(z => z.PostalCode));
-                    }
-                    );
+                     }
+                     );
 
-                var individualTrace = Mapper.Map<IndividualTraceSearchInput>(Request);
+                var mapper = config.CreateMapper();
+
+                var individualTrace = mapper.Map<IndividualTraceSearchInput>(Request);
                 var response = await client.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
                 result = response.ErrorCode.Trim() != string.Empty ? true : false;
 
@@ -181,20 +186,21 @@ namespace DataSolution.Service.Controllers
             }
             try
             {
-               
 
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<TraceOrder68Request, IndividualTraceProductOrder68>()
-                        .ForMember(x => x.ConsumerNumber, y => y.MapFrom(z => z.ConsumerNo))
-                        .ForMember(x => x.TelephoneCode1, y => y.MapFrom(z => z.TelCode1))
-                        .ForMember(x => x.TelephoneCode2, y => y.MapFrom(z => z.TelCode2))
-                        .ForMember(x => x.PostalCode, y => y.MapFrom(z => z.Code));
-                    }
-                    );
+                var config = new MapperConfiguration(
+                     cfg =>
+                     {
+                         cfg.CreateMap<TraceOrder68Request, IndividualTraceProductOrder68>()
+                         .ForMember(x => x.ConsumerNumber, y => y.MapFrom(z => z.ConsumerNo))
+                         .ForMember(x => x.TelephoneCode1, y => y.MapFrom(z => z.TelCode1))
+                         .ForMember(x => x.TelephoneCode2, y => y.MapFrom(z => z.TelCode2))
+                         .ForMember(x => x.PostalCode, y => y.MapFrom(z => z.Code));
+                     }
+                     );
 
-                var trace = Mapper.Map<IndividualTraceProductOrder68>(Request);
+                var mapper = config.CreateMapper();
+
+                var trace = mapper.Map<IndividualTraceProductOrder68>(Request);
                 trace.SecurityCode = securityCode;
                 trace.SubscriberCode = subNo;
                 trace.ModuleProducts = productCode;
@@ -240,15 +246,18 @@ namespace DataSolution.Service.Controllers
             try
             {
 
-                Mapper.Initialize(
+               
+
+                var config = new MapperConfiguration(
                     cfg =>
                     {
-
                         cfg.CreateMap<PayrollEmployerInformationRequest, EmployerEnquiry>();
                     }
                     );
 
-                var employerEnquiry = Mapper.Map<EmployerEnquiry>(Request);
+                var mapper = config.CreateMapper();
+
+                var employerEnquiry = mapper.Map<EmployerEnquiry>(Request);
                 employerEnquiry.SecurityCode = securityCode;
                 employerEnquiry.SubscriberCode = subNo;
                 var response = await client.ProcessPayrollEmployerInformationAsync(employerEnquiry);
@@ -292,17 +301,19 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-               
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<PayslipInformationRequest, PayslipEnquiry>()
-                        .ForMember(x => x.IdentityNo, y => y.MapFrom(z => z.IdentityNumber))
-                        .ForMember(x => x.Forenames, y => y.MapFrom(z => z.FirstName));
-                        
-                    }
-                    );
-                var payslipEnquiry = Mapper.Map<PayslipEnquiry>(Request);
+
+                var config = new MapperConfiguration(
+                   cfg =>
+                   {
+                       cfg.CreateMap<PayslipInformationRequest, PayslipEnquiry>()
+                       .ForMember(x => x.IdentityNo, y => y.MapFrom(z => z.IdentityNumber))
+                       .ForMember(x => x.Forenames, y => y.MapFrom(z => z.FirstName));
+                   }
+                   );
+
+                var mapper = config.CreateMapper();
+
+                var payslipEnquiry = mapper.Map<PayslipEnquiry>(Request);
                 payslipEnquiry.SubscriberCode = subNo;
                 payslipEnquiry.SecurityCode = securityCode;
 
@@ -346,18 +357,21 @@ namespace DataSolution.Service.Controllers
             try
             {
 
-                Mapper.Initialize(
-                    cg =>
-                    {
-                        cg.CreateMap<RequestTrans01, BureauEnquiry01>()
-                        .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
-                        .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
-                        .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
-                        .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
-                    }
-                    );
 
-                var enquiry = Mapper.Map<BureauEnquiry01>(Request);
+                var config = new MapperConfiguration(
+                           cg =>
+                           {
+                               cg.CreateMap<RequestTrans01, BureauEnquiry01>()
+                                .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                                .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                                .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                                .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                           }
+                           );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry = mapper.Map<BureauEnquiry01>(Request);
                 MapperConfiguration cfg = new MapperConfiguration(new AutoMapper.Configuration.MapperConfigurationExpression());
                 MapperConfigurationExpression expression = new MapperConfigurationExpression();
               
@@ -405,17 +419,20 @@ namespace DataSolution.Service.Controllers
             try
             {
 
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry04>()
-                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
-                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
-                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
-                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
-                    }
-                    );
-                var enquiry = Mapper.Map<BureauEnquiry04>(Request);
+
+                var config = new MapperConfiguration(
+                           cg =>
+                           {
+                               cg.CreateMap<RequestTrans01, BureauEnquiry04>()
+                                .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                                .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                                .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                                .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                           }
+                           );
+
+                var mapper = config.CreateMapper();
+                var enquiry = mapper.Map<BureauEnquiry04>(Request);
                 enquiry.SecurityCode = securityCode;
                 enquiry.SubscriberCode = subNo;
                 var response = await client.ProcessRequestTrans04Async(enquiry);
@@ -461,19 +478,22 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry07>()
-                        .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
-                        .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
-                        .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
-                        .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
-                        .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
-                    }
-                    );
 
-                var enquiry07 = Mapper.Map<BureauEnquiry07>(Request);
+                var config = new MapperConfiguration(
+                          cfg =>
+                          {
+                              cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry07>()
+                            .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                            .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                            .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                            .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                            .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                          }
+                          );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry07 = mapper.Map<BureauEnquiry07>(Request);
                 enquiry07.SecurityCode = securityCode;
                 enquiry07.SubscriberCode = subNo;
                 var response = await client.ProcessRequestTrans07Async(enquiry07);
@@ -519,19 +539,23 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                   cfg =>
-                   {
-                       cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry12>()
-                       .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
-                       .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
-                       .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
-                       .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
-                       .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
-                   }
-                   );
 
-                var enquiry12 = Mapper.Map<BureauEnquiry12>(Request);
+
+                var config = new MapperConfiguration(
+                         cfg =>
+                         {
+                             cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry12>()
+                             .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                             .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                             .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                             .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                             .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                         }
+                         );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry12 = mapper.Map<BureauEnquiry12>(Request);
                 enquiry12.SecurityCode = securityCode;
                 enquiry12.SubscriberCode = subNo;
                 var response = await client.ProcessRequestTrans12Async(enquiry12);
@@ -575,18 +599,21 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry13>()
-                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
-                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
-                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
-                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
-                    }
-                    );
 
-                var enquiry13 = Mapper.Map<BureauEnquiry13>(Request);
+                var config = new MapperConfiguration(
+                        cfg =>
+                        {
+                            cfg.CreateMap<RequestTrans01, BureauEnquiry13>()
+                           .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                           .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                           .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                           .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                        }
+                        );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry13 = mapper.Map<BureauEnquiry13>(Request);
                 enquiry13.SecurityCode = securityCode;
                 enquiry13.SubscriberCode = subNo;
                 var response = await client.ProcessRequestTrans13Async(enquiry13);
@@ -630,18 +657,21 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry17>()
+
+                var config = new MapperConfiguration(
+                       cfg =>
+                       {
+                           cfg.CreateMap<RequestTrans01, BureauEnquiry17>()
                        .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
                        .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
                        .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
                        .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
-                    }
-                    );
+                       }
+                       );
 
-                var enquiry17 = Mapper.Map<BureauEnquiry17>(Request);
+                var mapper = config.CreateMapper();
+
+                var enquiry17 = mapper.Map<BureauEnquiry17>(Request);
                 enquiry17.SecurityCode = securityCode;
                 enquiry17.SubscriberCode = subNo;
 
@@ -688,15 +718,18 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans18, BureauEnquiry18>()
-                        .ForMember(x => x.Uif, y => y.MapFrom(z => z.UIF))
-                       .ForMember(x => x.Schoolfees, y => y.MapFrom(z => z.SchoolFees));
-                    }
-                    );
-                var enquiry18 = Mapper.Map<BureauEnquiry18>(Request);
+
+                var config = new MapperConfiguration(
+                           cfg =>
+                           {
+                               cfg.CreateMap<RequestTrans18, BureauEnquiry18>()
+                               .ForMember(x => x.Uif, y => y.MapFrom(z => z.UIF))
+                                .ForMember(x => x.Schoolfees, y => y.MapFrom(z => z.SchoolFees));
+                           }
+                           );
+
+                var mapper = config.CreateMapper();
+                var enquiry18 = mapper.Map<BureauEnquiry18>(Request);
                 enquiry18.SecurityCode = securityCode;
                 enquiry18.SubscriberCode = subNo;
 
@@ -741,14 +774,17 @@ namespace DataSolution.Service.Controllers
             log = new Logger();
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans22, BureauEnquiry22>();
-                    }
-                    );
 
-                var enquiry22 = Mapper.Map<BureauEnquiry22>(Request);
+                var config = new MapperConfiguration(
+                           cfg =>
+                           {
+                               cfg.CreateMap<RequestTrans22, BureauEnquiry22>();
+                           }
+                           );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry22 = mapper.Map<BureauEnquiry22>(Request);
                 enquiry22.SecurityCode = securityCode;
                 enquiry22.SubscriberCode = subNo;
 
@@ -791,15 +827,18 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans23, BureauEnquiry23>()
-                        .ForMember(x => x.SAIDNumber, y => y.MapFrom(z => z.IDNumber));
-                    }
-                    );
 
-                var enquiry23 = Mapper.Map<BureauEnquiry23>(Request);
+                var config = new MapperConfiguration(
+                          cfg =>
+                          {
+                              cfg.CreateMap<RequestTrans23, BureauEnquiry23>()
+                              .ForMember(x => x.SAIDNumber, y => y.MapFrom(z => z.IDNumber));
+                          }
+                          );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry23 = mapper.Map<BureauEnquiry23>(Request);
                 enquiry23.SecurityCode = securityCode;
                 enquiry23.SubscriberCode = subNo;
 
@@ -843,15 +882,17 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry26>();
-                      
-                    }
-                    );
+          
+                var config = new MapperConfiguration(
+                          cfg =>
+                          {
+                              cfg.CreateMap<RequestTrans01, BureauEnquiry26>();
+                          }
+                          );
 
-                var enquiry26 = Mapper.Map<BureauEnquiry26>(Request);
+                var mapper = config.CreateMapper();
+
+                var enquiry26 = mapper.Map<BureauEnquiry26>(Request);
                 enquiry26.SecurityCode = securityCode;
                 enquiry26.SubscriberCode = subNo;
 
@@ -895,15 +936,17 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry31>();
 
-                    }
-                    );
+                var config = new MapperConfiguration(
+                  cfg =>
+                  {
+                      cfg.CreateMap<RequestTrans01, BureauEnquiry31>();
+                  }
+                  );
 
-                var enquiry31 = Mapper.Map<BureauEnquiry31>(Request);
+                var mapper = config.CreateMapper();
+
+                var enquiry31 = mapper.Map<BureauEnquiry31>(Request);
                 enquiry31.SecurityCode = securityCode;
                 enquiry31.SubscriberCode = subNo;
 
@@ -948,20 +991,20 @@ namespace DataSolution.Service.Controllers
             log = new Logger();
             try
             {
+                var config = new MapperConfiguration(
+                  cfg =>
+                  {
+                      cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry38>()
+                       .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                       .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                       .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                       .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                       .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                  }
+                  );
 
-
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry38>()
-                        .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
-                        .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
-                        .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
-                        .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
-                        .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
-                    }
-                    );
-                var bureauEnquiry38 = Mapper.Map<BureauEnquiry38>(Request);
+                var mapper = config.CreateMapper();
+                var bureauEnquiry38 = mapper.Map<BureauEnquiry38>(Request);
                 bureauEnquiry38.SecurityCode = securityCode;
                 bureauEnquiry38.SubscriberCode = subNo;
 
@@ -1005,18 +1048,20 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry41>()
-                       .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
-                       .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
-                       .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
-                       .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
-                    }
-                    );
 
-                var enquiry41 = Mapper.Map<BureauEnquiry41>(Request);
+                var config = new MapperConfiguration(
+                          cfg =>
+                          {
+                              cfg.CreateMap<RequestTrans01, BureauEnquiry41>()
+                            .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                            .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                            .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                            .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                          }
+                          );
+
+                var mapper = config.CreateMapper();
+                var enquiry41 = mapper.Map<BureauEnquiry41>(Request);
                 enquiry41.SecurityCode = securityCode;
                 enquiry41.SubscriberCode = subNo;
 
@@ -1063,15 +1108,18 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry42>();
 
-                    }
-                    );
 
-                var enquiry42 = Mapper.Map<BureauEnquiry42>(Request);
+                var config = new MapperConfiguration(
+                      cfg =>
+                      {
+                          cfg.CreateMap<RequestTrans01, BureauEnquiry42>();
+                      }
+                      );
+
+                var mapper = config.CreateMapper();
+
+                var enquiry42 = mapper.Map<BureauEnquiry42>(Request);
                 enquiry42.SecurityCode = securityCode;
                 enquiry42.SubscriberCode = subNo;
 
@@ -1117,15 +1165,16 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
+                var config = new MapperConfiguration(
                     cfg =>
                     {
                         cfg.CreateMap<RequestTrans01, BureauEnquiry43>();
-
                     }
                     );
 
-                var enquiry43 = Mapper.Map<BureauEnquiry43>(Request);
+                var mapper = config.CreateMapper();
+
+                var enquiry43 = mapper.Map<BureauEnquiry43>(Request);
                 enquiry43.SecurityCode = securityCode;
                 enquiry43.SubscriberCode = subNo;
 
@@ -1172,19 +1221,20 @@ namespace DataSolution.Service.Controllers
             try
             {
 
+                var config = new MapperConfiguration(
+                  cfg =>
+                  {
+                      cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry47>()
+                       .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
+                       .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
+                       .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
+                       .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
+                       .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
+                  }
+                  );
 
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<BureauEnquiry37Request, BureauEnquiry47>()
-                        .ForMember(x => x.NoOfDependants, y => y.MapFrom(z => z.Dependents))
-                        .ForMember(x => x.ProvinceCode, y => y.MapFrom(z => z.Province))
-                        .ForMember(x => x.Address1Period, y => y.MapFrom(z => z.AddressPeriod))
-                        .ForMember(x => x.BankAccountNumber, y => y.MapFrom(z => z.BankNo))
-                        .ForMember(x => x.EmailAddress, y => y.MapFrom(z => z.Email));
-                    }
-                    );
-                var bureauEnquiry47 = Mapper.Map<BureauEnquiry47>(Request);
+                var mapper = config.CreateMapper();
+                var bureauEnquiry47 = mapper.Map<BureauEnquiry47>(Request);
                 bureauEnquiry47.SecurityCode = securityCode;
                 bureauEnquiry47.SubscriberCode = subNo;
 
@@ -1228,15 +1278,16 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry91>();
+                var config = new MapperConfiguration(
+                  cfg =>
+                  {
+                      cfg.CreateMap<RequestTrans01, BureauEnquiry91>();
+                  }
+                  );
 
-                    }
-                    );
+                var mapper = config.CreateMapper();
 
-                var enquiry91 = Mapper.Map<BureauEnquiry91>(Request);
+                var enquiry91 = mapper.Map<BureauEnquiry91>(Request);
                 enquiry91.SecurityCode = securityCode;
                 enquiry91.SubscriberCode = subNo;
 
@@ -1283,15 +1334,17 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, BureauEnquiry92>();
 
-                    }
-                    );
+                var config = new MapperConfiguration(
+                 cfg =>
+                 {
+                     cfg.CreateMap<RequestTrans01, BureauEnquiry92>();
+                 }
+                 );
 
-                var enquiry92 = Mapper.Map<BureauEnquiry92>(Request);
+                var mapper = config.CreateMapper();
+
+                var enquiry92 = mapper.Map<BureauEnquiry92>(Request);
                 enquiry92.SecurityCode = securityCode;
                 enquiry92.SubscriberCode = subNo;
 
@@ -1343,6 +1396,7 @@ namespace DataSolution.Service.Controllers
                     SubscriberCode = subNo
                 };
 
+
                 var response = await client.ProcessRequestTransC20Async(bureauEnquiryC20);
 
 
@@ -1384,16 +1438,19 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestC29, BureauEnquiryC29>()
-                        .ForMember(x => x.TelNumber, y => y.MapFrom(z => z.TelephoneNumber))
-                        .ForMember(x => x.TelType, y => y.MapFrom(z => z.TelephoneType));
-                    }
-                    );
 
-                var bureauC29 = Mapper.Map<BureauEnquiryC29>(Request);
+                var config = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg.CreateMap<RequestC29, BureauEnquiryC29>()
+                       .ForMember(x => x.TelNumber, y => y.MapFrom(z => z.TelephoneNumber))
+                       .ForMember(x => x.TelType, y => y.MapFrom(z => z.TelephoneType));
+                }
+                );
+
+                var mapper = config.CreateMapper();
+
+                var bureauC29 = mapper.Map<BureauEnquiryC29>(Request);
                 bureauC29.SecurityCode = securityCode;
                 bureauC29.SubscriberCode = subNo;
 
@@ -1485,14 +1542,17 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTransC30, BureauEnquiryC30>();
-                    }
-                    );
 
-                var bureauC30 = Mapper.Map<BureauEnquiryC30>(Request);
+                var config = new MapperConfiguration(
+                      cfg =>
+                      {
+                          cfg.CreateMap<RequestTransC30, BureauEnquiryC30>();
+                      }
+                      );
+
+                var mapper = config.CreateMapper();
+
+                var bureauC30 = mapper.Map<BureauEnquiryC30>(Request);
                 bureauC30.SecurityCode = securityCode;
                 bureauC30.SubscriberCode = subNo;
 
@@ -1646,15 +1706,16 @@ namespace DataSolution.Service.Controllers
 
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<RequestTrans01, StrikeDateC16>();
 
-                    }
-                    );
+                var config = new MapperConfiguration(
+                     cfg =>
+                     {
+                         cfg.CreateMap<RequestTrans01, StrikeDateC16>();
+                     }
+                     );
 
-                var strike = Mapper.Map<StrikeDateC16>(Request);
+                var mapper = config.CreateMapper();
+                var strike = mapper.Map<StrikeDateC16>(Request);
                 strike.SecurityCode = securityCode;
                 strike.SubscriberCode = subNo;
 

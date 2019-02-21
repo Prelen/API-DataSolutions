@@ -27,8 +27,16 @@
 
         };
 
-         $scope.GetData = function () {
-             $(".preloader").fadeIn();
+        $scope.InitPage = function () {
+          
+            $scope.fullName = 'Prelen Nair';
+            GetData();
+            
+        };
+
+
+        function GetData() {
+             
              $http(
                  {
                      method: 'GET',
@@ -47,7 +55,7 @@
                    
                      var dataset = [{ label: "Transactions", data: $scope.datapoints, color: 'purple' }]; 
                      $.plot($("#graph"), dataset, options);
-                     $(".preloader").fadeOut();
+                    
                  }
              });
         };

@@ -13,11 +13,14 @@ using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Domain.Model.Data;
 using DataSolution.Domain.Model.Web.Charts;
 using DataSolution.Utilities.Encryption;
+using DataSolution.Utilities.Logging;
 
 namespace DataSolution.Areas.Users.Controllers
 {
     public class UserController : Controller
     {
+
+        AuditModel auditModel;
         // GET: Users/User
         public ActionResult Index()
         {
@@ -52,11 +55,21 @@ namespace DataSolution.Areas.Users.Controllers
                 };
 
                 result = new UserData().InsertUser(user);
+                //Save Audit Details
+                auditModel = new AuditModel
+                {
+                    ActivityDescription = "Your account was created",
+                    AuditDate = DateTime.Now,
+                    UserID = user.UserID
+                };
+
+                result = new AuditData().InsertAudit(auditModel);
             }
             catch (Exception ex)
             {
 
-                throw;
+                var log = new Logger();
+                log.LogError("0", "DataSolutions.Web", "SaveUser", ex.Message);
             }
            
 
@@ -108,6 +121,18 @@ namespace DataSolution.Areas.Users.Controllers
                  .Replace("!!!Surname!!!", user.Surname)
                  .Replace("!!!Password!!!", new DataEncryption().Decrypt(user.Password));
 
+                //Audit 
+                result = new UserData().InsertUser(user);
+                //Save Audit Details
+                auditModel = new AuditModel
+                {
+                    ActivityDescription = "Your password was reset",
+                    AuditDate = DateTime.Now,
+                    UserID = user.UserID
+                };
+
+                result = new AuditData().InsertAudit(auditModel);
+
                 //Test Email TODO: Remove 
                 user.Email = "a83c6dabb1-f8b9c3@inbox.mailtrap.io";
 
@@ -153,7 +178,22 @@ namespace DataSolution.Areas.Users.Controllers
                 if (user.IsTempPassword)
                   return  RedirectToAction("ResetPassword");
                 else
+                {
+
+                   
+                    //Save Audit Details
+                    auditModel = new AuditModel
+                    {
+                        ActivityDescription = "You successfully logged in",
+                        AuditDate = DateTime.Now,
+                        UserID = user.UserID
+                    };
+
+                    new AuditData().InsertAudit(auditModel);
+
                     return View(user);
+                }
+                    
             }
             else
                return RedirectToAction("Login");

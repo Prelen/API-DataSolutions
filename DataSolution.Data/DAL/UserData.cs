@@ -132,14 +132,16 @@ namespace DataSolution.Data.DAL
             
             try
             {
-                Mapper.Initialize(
-                    cfg =>
-                    {
-                        cfg.CreateMap<UserModel, User>();
-                    }
-                    );
 
-                var user = Mapper.Map<User>(UserDetails);
+                var config = new MapperConfiguration(
+                       cfg =>
+                       {
+                           cfg.CreateMap<UserModel, User>();
+                       }
+                       );
+
+                var mapper = config.CreateMapper();
+                var user = mapper.Map<User>(UserDetails);
                 user.Username = encUsername;
                 user.Password = encPwd;
                 user.DateCreated = DateTime.Now;
@@ -308,15 +310,15 @@ namespace DataSolution.Data.DAL
                         user.Password = new DataEncryption().Encrypt(new Password().GenerateTempPassword());
                         user.IsTempPassword = true;
 
+                        var config = new MapperConfiguration(
+                             cfg =>
+                             {
+                                 cfg.CreateMap<User, UserModel>();
+                             }
+                             );
 
-                        Mapper.Initialize(
-                            cfg =>
-                            {
-                                cfg.CreateMap<User, UserModel>();
-                            }
-                            );
-
-                        var updatedUser = Mapper.Map<UserModel>(user);
+                        var mapper = config.CreateMapper();
+                        var updatedUser = mapper.Map<UserModel>(user);
                         
                         result = UpdateUser(updatedUser,true);
                         if (result)
@@ -355,14 +357,16 @@ namespace DataSolution.Data.DAL
 
                     if (user != null)
                     {
-                        Mapper.Initialize(
-                            cfg =>
-                            {
-                                cfg.CreateMap<User, UserModel>();
-                            }
-                            );
+               
+                        var config = new MapperConfiguration(
+                           cfg =>
+                           {
+                               cfg.CreateMap<User, UserModel>();
+                           }
+                           );
 
-                        userInfo = Mapper.Map<UserModel>(user);
+                        var mapper = config.CreateMapper();
+                        userInfo = mapper.Map<UserModel>(user);
                         userInfo.LoginCount = 0;
                         userInfo.LastLogin = DateTime.Now;
                         UpdateUser(userInfo,true);

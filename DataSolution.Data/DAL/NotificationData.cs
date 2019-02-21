@@ -20,14 +20,17 @@ namespace DataSolution.Data.DAL
             {
                 using (NotificationEntities notificationEntities = new NotificationEntities())
                 {
-                    Mapper.Initialize(
-                        cfg =>
-                        {
-                            cfg.CreateMap<NotificationModel, Notification>();
-                        }
-                        );
 
-                    var notification = Mapper.Map<Notification>(Notification);
+
+                    var config = new MapperConfiguration(
+                       cfg =>
+                       {
+                           cfg.CreateMap<NotificationModel, Notification>();
+                       }
+                       );
+
+                    var mapper = config.CreateMapper();
+                    var notification = mapper.Map<Notification>(Notification);
                     notificationEntities.Notifications.Add(notification);
                     notificationEntities.SaveChanges();
                 }

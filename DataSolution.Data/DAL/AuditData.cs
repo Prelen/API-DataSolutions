@@ -21,13 +21,16 @@ namespace DataSolution.Data.DAL
             {
                 using (AuditEntities auditEntities = new AuditEntities())
                 {
-                    Mapper.Initialize(
-                       cfg =>
+
+                    var config = new MapperConfiguration(
+                        cfg =>
                         {
                             cfg.CreateMap<AuditModel, Audit>();
-                    }
-                    );
-                    var audit = Mapper.Map<Audit>(Audit);
+                        }
+                        );
+
+                    var mapper = config.CreateMapper();
+                    var audit = mapper.Map<Audit>(Audit);
                     auditEntities.Audits.Add(audit);
                     auditEntities.SaveChanges();
                 }
