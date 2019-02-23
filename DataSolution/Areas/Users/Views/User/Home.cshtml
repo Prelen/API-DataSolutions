@@ -29,13 +29,53 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="card">
+                <div class="card" style="overflow-y: scroll; height:450px;">
                     <div class="card-body">
-
-                    </div>
+                        <h4 class="card-title">Latest Activity</h4>
+                        <div class="todo-widget scrollable ps-container ps-theme-default ps-active-y" data-ps-id="c0a8b639-daf3-196f-9a54-0d81650abf87">
+                            <ul class="list-style-none">
+                                <!-- History -->
+                                <li class="d-flex no-block card-body border-top" ng-repeat="act in activities track by $index">
+                                    <i class="fa fa-book w-30px m-t-5"></i>
+                                    <div>
+                                        <a class="m-b-0 font-medium p-0" href="#">{{act.activityType}}</a>
+                                        <span class="text-muted">{{act.description}}</span>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <div class="tetx-right">
+                                            <h5 class="text-muted m-b-0">{{act.day}}</h5>
+                                            <span class="text-muted font-16">{{act.month}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-md-6">
+                <div class="card" style="overflow-y: scroll; height:450px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Notifications</h4>
+                        <div class="comment-widgets scrollable ps-container ps-theme-default" data-ps-id="82f0df30-edd1-485c-fb2c-dadf8f9b127f">
+                            <!-- Comment Row -->
+                            <div class="d-flex flex-row comment-row m-t-0" ng-repeat="noti in notifications track by $index">
+                                <div class="p-2">
+                                    <i class="fa fa-bell w-30px m-t-5"></i>
+                                </div>
+                                <div class="comment-text w-100">
+                                    <h6 class="font-medium">Notification</h6>
+                                    <span class="m-b-15 d-block">{{noti.message}}</span>
+                                    <div class="comment-footer">
+                                        <span class="text-muted float-right">{{noti.day}}-{{noti.month}}</span>
+                                        <button class="btn btn-danger btn-sm" type="button" ng-model="noti.notificationID" ng-click="DeleteNotification(noti.notificationID)">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
     </form>
 
 <script src="~/Scripts/angular.min.js"></script>

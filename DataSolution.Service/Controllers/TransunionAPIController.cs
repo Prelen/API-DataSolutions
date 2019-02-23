@@ -34,6 +34,7 @@ namespace DataSolution.Service.Controllers
         TransactionModel.TransactionData transData;
         DateTime startDate;
         DateTime endDate;
+       
 
        [AllowAnonymous]
        [HttpGet]
@@ -1400,7 +1401,7 @@ namespace DataSolution.Service.Controllers
                 var response = await client.ProcessRequestTransC20Async(bureauEnquiryC20);
 
 
-                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                result = response.ErrorCode.Trim() == string.Empty ? true : false;
 
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans92Async", response.ErrorCode + " " + response.ErrorMessage);
@@ -1418,6 +1419,7 @@ namespace DataSolution.Service.Controllers
                 };
 
                 SaveTransaction(transData);
+
             }
             catch (Exception ex)
             {

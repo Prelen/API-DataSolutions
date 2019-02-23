@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using DataSolution.Areas.Users.Models;
 using DataSolution.Data;
 using DataSolution.Data.DAL;
 using DataSolution.Domain.Interfaces.Repository;
@@ -175,21 +176,25 @@ namespace DataSolution.Areas.Users.Controllers
         {
             if (Session["User"] is UserModel user)
             {
+                
                 if (user.IsTempPassword)
                   return  RedirectToAction("ResetPassword");
                 else
                 {
 
-                   
-                    //Save Audit Details
-                    auditModel = new AuditModel
+                    if (Request.UrlReferrer.ToString().Contains("Login"))
                     {
-                        ActivityDescription = "You successfully logged in",
-                        AuditDate = DateTime.Now,
-                        UserID = user.UserID
-                    };
+                        //Save Audit Details
+                        auditModel = new AuditModel
+                        {
+                            ActivityDescription = "You successfully logged in",
+                            AuditDate = DateTime.Now,
+                            UserID = user.UserID
+                        };
 
-                    new AuditData().InsertAudit(auditModel);
+                        new AuditData().InsertAudit(auditModel);
+                    }
+                    
 
                     return View(user);
                 }
@@ -226,28 +231,107 @@ namespace DataSolution.Areas.Users.Controllers
             return Json(result);
         }
 
-        public JsonResult GetChartValues()
+        public JsonResult GetHomePageInfo()
         {
-          
-            ChartOptions[] options = new ChartOptions[10];
-            options[0] = new ChartOptions { label = "20-01",value = 6 };
-            options[1] = new ChartOptions { label = "21-01", value = 7 };
-            options[2] = new ChartOptions { label = "22-01", value = 2};
-            options[3] = new ChartOptions { label = "23-01", value = 9 };
-            options[4] = new ChartOptions { label = "24-01", value = 4 };
-            options[5] = new ChartOptions { label = "25-01", value = 7 };
-            options[6] = new ChartOptions { label = "26-01", value = 12 };
-            options[7] = new ChartOptions { label = "27-01", value = 5 };
-            options[8] = new ChartOptions { label = "28-01", value = 9 };
-            options[9] = new ChartOptions { label = "29-01", value = 3 };
+            if (Session["User"] is UserModel user)
+            {
+                HomeModel homeModel = new HomeModel();
 
-            var json = new JavaScriptSerializer().Serialize(options);
+                homeModel.UserInfo = user;
+                homeModel.ChartValues = new ChartOptions[10];
 
-            return Json(json, JsonRequestBehavior.AllowGet);
+                string formattedDate = DateTime.Now.AddDays(-9).Day.ToString() + "-" + DateTime.Now.AddDays(-9).ToString("MMM");
+                homeModel.ChartValues[0] = new ChartOptions { label = formattedDate, value = 4 };
+                formattedDate = DateTime.Now.AddDays(-8).Day.ToString() + "-" + DateTime.Now.AddDays(-8).ToString("MMM");
+                homeModel.ChartValues[1] = new ChartOptions { label = formattedDate, value = 7 };
+                formattedDate = DateTime.Now.AddDays(-7).Day.ToString() + "-" + DateTime.Now.AddDays(-7).ToString("MMM");
+                homeModel.ChartValues[2] = new ChartOptions { label = formattedDate, value = 8 };
+                formattedDate = DateTime.Now.AddDays(-6).Day.ToString() + "-" + DateTime.Now.AddDays(-6).ToString("MMM");
+                homeModel.ChartValues[3] = new ChartOptions { label = formattedDate, value = 11 };
+                formattedDate = DateTime.Now.AddDays(-5).Day.ToString() + "-" + DateTime.Now.AddDays(-5).ToString("MMM");
+                homeModel.ChartValues[4] = new ChartOptions { label = formattedDate, value = 5 };
+                formattedDate = DateTime.Now.AddDays(-4).Day.ToString() + "-" + DateTime.Now.AddDays(-4).ToString("MMM");
+                homeModel.ChartValues[5] = new ChartOptions { label = formattedDate, value = 10 };
+                formattedDate = DateTime.Now.AddDays(-3).Day.ToString() + "-" + DateTime.Now.AddDays(-3).ToString("MMM");
+                homeModel.ChartValues[6] = new ChartOptions { label = formattedDate, value = 7 };
+                formattedDate = DateTime.Now.AddDays(-2).Day.ToString() + "-" + DateTime.Now.AddDays(-2).ToString("MMM");
+                homeModel.ChartValues[7] = new ChartOptions { label = formattedDate, value = 3 };
+                formattedDate = DateTime.Now.AddDays(-1).Day.ToString() + "-" + DateTime.Now.AddDays(-1).ToString("MMM");
+                homeModel.ChartValues[8] = new ChartOptions { label = formattedDate, value = 8 };
+                formattedDate = DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString("mm");
+                homeModel.ChartValues[9] = new ChartOptions { label = formattedDate, value = 6 };
+
+                var audits = new AuditData().GetLast10Audit(user.UserID);
+                homeModel.AuditInfo = new AuditModelExtended[10];
+
+                int count = 0;
+                DateTime dt = DateTime.Now;
+                foreach (var audit in audits)
+                {
+                    dt = (DateTime)audit.AuditDate;
+                    homeModel.AuditInfo[count] = new AuditModelExtended
+                    {
+                        AuditInfo = audit,
+                        FormattedDay = dt.ToString("dd"),
+                        FormattedMonth = dt.ToString("MMM")
+                    };
+                    count++;
+                }
+                homeModel.Notifications = new NotificationsModelExtended[10];
+                var notifications = new NotificationData().GetNotifications(user.UserID);
+                count = 0;
+                foreach (var notification in notifications)
+                {
+                    dt = notification.DateCreated;
+                    homeModel.Notifications[count] = new NotificationsModelExtended
+                    {
+                        NotificationInfo = notification,
+                        FormattedDay = dt.ToString("dd"),
+                        FormattedMonth = dt.ToString("MMM")
+                    };
+
+                    count++;
+                }
+
+                var json = new JavaScriptSerializer().Serialize(homeModel);
+
+                return Json(json, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
-       
+        public JsonResult DeleteNotification(int NotificationID)
+        {
+            if (Session["User"] is UserModel user)
+            {
 
-       
+                var result = new NotificationData().DismissNotification(NotificationID, user.UserID);
+                NotificationsModelExtended[] notifications = new NotificationsModelExtended[10];
+                DateTime dt = DateTime.Now;
+                int count = 0;
+                foreach (var notification in result)
+                {
+                    dt = notification.DateCreated;
+                    notifications[count] = new NotificationsModelExtended
+                    {
+                        NotificationInfo = notification,
+                        FormattedDay = dt.ToString("dd"),
+                        FormattedMonth = dt.ToString("MMM")
+                    };
+
+                    count++;
+                }
+
+                return Json(notifications, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
     }
 }

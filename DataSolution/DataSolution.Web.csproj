@@ -54,6 +54,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -136,7 +138,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\External\Controllers\ExternalController.cs" />
     <Compile Include="Areas\External\ExternalAreaRegistration.cs" />
+    <Compile Include="Areas\Products\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Products\ProductsAreaRegistration.cs" />
     <Compile Include="Areas\Users\Controllers\UserController.cs" />
+    <Compile Include="Areas\Users\Models\HomeModel.cs" />
     <Compile Include="Areas\Users\UsersAreaRegistration.cs" />
     <Compile Include="Views\Home\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -147,6 +152,7 @@
   <ItemGroup>
     <Content Include="Areas\External\Scripts\ContactUsController.js" />
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
+    <Content Include="Areas\Products\Scripts\TestProductController.js" />
     <Content Include="Areas\Users\Scripts\HomeController.js" />
     <Content Include="Areas\Users\Scripts\LoginController.js" />
     <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
@@ -1111,6 +1117,8 @@
     <Content Include="Areas\Users\Views\User\Login.cshtml" />
     <Content Include="Areas\Users\Views\User\Home.cshtml" />
     <Content Include="Areas\Users\Views\User\ResetPassword.cshtml" />
+    <Content Include="Areas\Products\Views\web.config" />
+    <Content Include="Areas\Products\Views\Product\TestProduct.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1885,7 +1893,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\External\Models\" />
     <Folder Include="Areas\External\Views\Shared\" />
-    <Folder Include="Areas\Users\Models\" />
+    <Folder Include="Areas\Products\Models\" />
+    <Folder Include="Areas\Products\Views\Shared\" />
     <Folder Include="Areas\Users\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -1922,6 +1931,9 @@
       <Project>{2fd99580-e99b-42d0-99c2-3dc109caec0c}</Project>
       <Name>DataSolution.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,7 +9,7 @@ using DataSolution.Utilities.Logging;
 using AutoMapper;
 using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Data.Data;
-
+using static DataSolution.Domain.Model.Data.TransactionModel;
 
 namespace DataSolution.Data.DAL
 {
@@ -28,7 +28,9 @@ namespace DataSolution.Data.DAL
                 var config = new MapperConfiguration(
                        cfg =>
                        {
-                           cfg.CreateMap<TransactionData, Data.Transaction>();
+                           cfg.CreateMap<TransactionModel.TransactionData, Data.Transaction>()
+                           .ForMember(x => x.TransStartDate, y => y.MapFrom(z => z.StartDate))
+                           .ForMember(x => x.TransEndDate, y => y.MapFrom(z => z.EndDate));
                        }
                        );
 
@@ -83,5 +85,12 @@ namespace DataSolution.Data.DAL
             }
             return  results;
         }
+
+        public List<TransactionsDataPoints> GetTransactionsLadt10Days(int UserID)
+        {
+            return null;
+        }
     }
+
+
 }

@@ -57,6 +57,7 @@ namespace DataSolution.Data.DAL
                 {
                     var audits = (from a in audit.Audits
                                   where a.UserID == UserID
+                                  orderby a.AuditDate descending
                                   select  new AuditModel
                                   {
                                     ActivityDescription = a.ActivityDescription,

@@ -174,7 +174,7 @@
       <DependentUpon>TransactionModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\User.cs">
-      <DependentUpon>UserModel.tt</DependentUpon>
+      <DependentUpon>TransactionModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UserModel.Context.cs">
       <AutoGen>True</AutoGen>

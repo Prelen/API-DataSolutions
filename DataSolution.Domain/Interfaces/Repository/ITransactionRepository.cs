@@ -11,5 +11,6 @@ namespace DataSolution.Domain.Interfaces.Repository
     {
         bool InsertTransaction(TransactionData Transaction, string UserID);
         List<TransactionView> TransactionHistory(TransactionReport TransactionDetail, string UserID);
+        List<TransactionsDataPoints> GetTransactionsLadt10Days(int UserID);
     }
 }

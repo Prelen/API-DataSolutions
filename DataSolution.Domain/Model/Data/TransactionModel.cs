@@ -13,8 +13,8 @@ namespace DataSolution.Domain.Model.Data
             public int TransID { get; set; }
             public int UserID { get; set; }
             public int ProductID { get; set; }
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
             public bool? IsSuccessful { get; set; }
             public string Message { get; set; }
         }
@@ -35,6 +35,12 @@ namespace DataSolution.Domain.Model.Data
            public  int UserID { get; set; }
            public  DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
+        }
+
+        public class TransactionsDataPoints
+        {
+            public int TransactionCount { get; set; }
+            public string TransactionDate { get; set; }
         }
         
     }

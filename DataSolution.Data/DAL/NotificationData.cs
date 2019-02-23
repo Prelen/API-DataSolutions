@@ -75,5 +75,39 @@ namespace DataSolution.Data.DAL
 
             return userNotification;
          }
+
+        public List<NotificationModel> DismissNotification(int NotificationID,int UserID)
+        {
+            
+
+            try
+            {
+                using (NotificationEntities notificationEntities = new NotificationEntities())
+                {
+                    var noti = (from n in notificationEntities.Notifications
+                                where n.NotificationID == NotificationID
+                                select n).FirstOrDefault();
+
+                    if (noti != null)
+                    {
+                        noti.IsDimissed = true;
+                    }
+                    notificationEntities.SaveChanges();
+
+                    var newNotifications = GetNotifications(UserID);
+
+                    return newNotifications;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var log = new Logger();
+                log.LogError(UserID.ToString(), "DataSolutions.Data", "GetNotifications", ex.Message);
+            }
+
+
+            return null;
+        }
     }
 }

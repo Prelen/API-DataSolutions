@@ -1,9 +1,32 @@
 ﻿angular.module('HomeApp', [])
     .controller('HomeController', function ($scope, $http, $timeout) {
         
-        //$scope.GetData();
+        userprofile = '';
         $scope.ticks = [];
         $scope.datapoints = [];
+        $scope.activities = [];
+        $scope.activity = {};
+        $scope.activity[
+            {
+                activityType: '',
+                description: '',
+                day: '',
+                month: ''
+            }
+        ];
+
+        $scope.notifications = [];
+        $scope.notification = {};
+        $scope.notification[
+            {
+                notificationID: '',
+                message: '',
+                day: '',
+                month: ''
+            }
+        ];
+
+        $scope.userID = '';
         function formatter(val, axis) {
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         };
@@ -29,34 +52,111 @@
 
         $scope.InitPage = function () {
           
-            $scope.fullName = 'Prelen Nair';
-            GetData();
+           
+            GetHomePageInfo();
             
         };
 
 
-        function GetData() {
+        function GetHomePageInfo() {
              
              $http(
                  {
                      method: 'GET',
-                     url: '/Users/User/GetChartValues'
+                     url: '/Users/User/GetHomePageInfo'
                  }
              ).then(function (response) {
-                 
+                
                  if (response.data !== null) {
-
+                     
                      var json = JSON.parse(response.data);
+                     var chartVals = json.ChartValues;
+                     var activityJson = json.AuditInfo;
+                     var notificationJson = json.Notifications;
 
-                     for (var i = 0; i < json.length; i++) {
-                         $scope.ticks.push([i, json[i].label]);
-                         $scope.datapoints.push([i, json[i].value]);
+                     $scope.fullName = json.UserInfo.FirstName + " " + json.UserInfo.Surname;
+                     $scope.userID = json.UserInfo.UserID;
+                     userprofile = $scope.userID;
+
+                     //Chart
+                     for (var i = 0; i < chartVals.length; i++) {
+                         $scope.ticks.push([i, chartVals[i].label]);
+                         $scope.datapoints.push([i, chartVals[i].value]);
                      }
-                   
+
+                     //Audit
+                     for (var j = 0; j < activityJson.length; j++) {
+                         if (activityJson[j] != null) {
+                             $scope.activity = {
+                                 activityType: 'Activity',
+                                 description: activityJson[j].AuditInfo.ActivityDescription,
+                                 day: activityJson[j].FormattedDay,
+                                 month: activityJson[j].FormattedMonth
+                             };
+                             $scope.activities.push($scope.activity);
+                         }
+                     }
+
+                     //Notification
+                     LoadNotifications(notificationJson,false);
+                     //for (var k = 0; k < notificationJson.length; k++) {
+                     //    if (notificationJson[k] != null) {
+                     //        $scope.notification = {
+                     //            notificationID: notificationJson[k].NotificationInfo.NotificationID,
+                     //            message: notificationJson[k].NotificationInfo.NotificationMessage,
+                     //            day: notificationJson[k].FormattedDay,
+                     //            month: notificationJson[k].FormattedMonth
+                     //        };
+                     //        $scope.notifications.push($scope.notification);
+                     //    }
+                     //}
+
+                        
                      var dataset = [{ label: "Transactions", data: $scope.datapoints, color: 'purple' }]; 
                      $.plot($("#graph"), dataset, options);
                     
                  }
              });
+        };
+
+        $scope.DeleteNotification = function (notID) {
+            $http(
+                {
+                    method: 'GET',
+                    url: '/Users/User/DeleteNotification',
+                    params: {
+                        NotificationID: notID
+                    }
+                }
+            ).then(function (response) {
+                LoadNotifications(response.data, true);
+                                
+            });
+
+        };
+
+
+        function LoadNotifications(noteData,isReload) {
+            if (noteData != null) {
+                var newjson = JSON.stringify(noteData);
+                var json = JSON.parse(newjson);
+                $scope.notifications = [];
+                for (var i = 0; i < json.length; i++) {
+                    if (json[i] != null) {
+                        $scope.notification = {
+                            notificationID: json[i].NotificationInfo.NotificationID,
+                            message: json[i].NotificationInfo.NotificationMessage,
+                            day: json[i].FormattedDay,
+                            month: json[i].FormattedMonth
+                        };
+                        $scope.notifications.push($scope.notification);
+
+                    }
+                }
+            }
+
+            if (isReload) {
+                $scope.$apply();
+            }
         };
     });

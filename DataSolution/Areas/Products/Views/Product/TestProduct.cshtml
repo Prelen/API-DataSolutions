@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "TestProduct";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+@using DataSolution.Domain.Model.Data;
+@model UserModel
+<h2>Test Product</h2>
+<form ng-app="TestProductApp" ng-controller="TestProductController">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-header">A Product</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="idnumber">ID Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="idnumber" type="text" placeholder="ID Number" required ng-model="idNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-top">
+                    <div class="col-12">
+                        <div class="p-t-20">
+                            <button class="btn  btn-lg btn-info" type="button" ng-click="callProduct();">
+                                <i class="fa fa-spinner fa-spin"></i>&nbsp;Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Areas/Products/Scripts/TestProductController.js"></script>
