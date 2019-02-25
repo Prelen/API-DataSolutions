@@ -1,4 +1,4 @@
-﻿angular.module('LoginApp', [])
+﻿angular.module('DataSolutionApp', [])
     .controller('LoginController', function ($scope, $http, $timeout, $location) {
         $(".preloader").fadeOut();
 

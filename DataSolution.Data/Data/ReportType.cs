@@ -12,14 +12,9 @@ namespace DataSolution.Data.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class ReportType
     {
-        public int ProductID { get; set; }
-        public string ProductCode { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public Nullable<decimal> ProductPrice { get; set; }
-        public Nullable<int> TemplateID { get; set; }
-        public Nullable<int> ReportTypeID { get; set; }
+        public int ReportTypeID { get; set; }
+        public string ReportDescription { get; set; }
     }
 }

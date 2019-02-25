@@ -12,5 +12,6 @@ namespace DataSolution.Domain.Interfaces.Repository
         bool InsertProduct(ProductModel Product);
         bool UpdateProduct(ProductModel Product);
         bool DeleteProduct(ProductModel Product);
+        List<ProductModel> GetProductsByType(int ReportTypeID);
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="Model\Data\LookupModel.cs" />
     <Compile Include="Model\Data\NotificationModel.cs" />
     <Compile Include="Model\Data\ProductModel.cs" />
+    <Compile Include="Model\Data\ReportTypeModel.cs" />
     <Compile Include="Model\Data\TransactionModel.cs" />
     <Compile Include="Model\Data\UserModel.cs" />
     <Compile Include="Model\Data\UserTypeModel.cs" />

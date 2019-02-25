@@ -1,6 +1,6 @@
-﻿angular.module('HomeApp', [])
+﻿angular.module('DataSolutionApp', [])
     .controller('HomeController', function ($scope, $http, $timeout) {
-        
+        $(".preloader").fadeOut();
         userprofile = '';
         $scope.ticks = [];
         $scope.datapoints = [];
@@ -99,19 +99,7 @@
 
                      //Notification
                      LoadNotifications(notificationJson,false);
-                     //for (var k = 0; k < notificationJson.length; k++) {
-                     //    if (notificationJson[k] != null) {
-                     //        $scope.notification = {
-                     //            notificationID: notificationJson[k].NotificationInfo.NotificationID,
-                     //            message: notificationJson[k].NotificationInfo.NotificationMessage,
-                     //            day: notificationJson[k].FormattedDay,
-                     //            month: notificationJson[k].FormattedMonth
-                     //        };
-                     //        $scope.notifications.push($scope.notification);
-                     //    }
-                     //}
-
-                        
+                
                      var dataset = [{ label: "Transactions", data: $scope.datapoints, color: 'purple' }]; 
                      $.plot($("#graph"), dataset, options);
                     

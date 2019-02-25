@@ -59,7 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\AuditData.cs" />
+    <Compile Include="DAL\LookupData.cs" />
     <Compile Include="DAL\NotificationData.cs" />
+    <Compile Include="DAL\ProductData.cs" />
     <Compile Include="DAL\TransactionData.cs" />
     <Compile Include="DAL\UserData.cs" />
     <Compile Include="Data\Audit.cs">
@@ -153,7 +155,25 @@
       <DependentUpon>NotificationModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\Product.cs">
-      <DependentUpon>TransactionModel.tt</DependentUpon>
+      <DependentUpon>ProductModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ProductModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ReportType.cs">
+      <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Transaction.cs">
       <DependentUpon>TransactionModel.tt</DependentUpon>
@@ -229,6 +249,13 @@
     <None Include="Data\NotificationModel.edmx.diagram">
       <DependentUpon>NotificationModel.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="Data\ProductModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProductModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\ProductModel.edmx.diagram">
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+    </None>
     <None Include="Data\TransactionModel.edmx.diagram">
       <DependentUpon>TransactionModel.edmx</DependentUpon>
     </None>
@@ -267,6 +294,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NotificationModel.edmx</DependentUpon>
       <LastGenOutput>NotificationModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\ProductModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Data\ProductModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProductModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModel.cs</LastGenOutput>
     </Content>
     <Content Include="Data\TransactionModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

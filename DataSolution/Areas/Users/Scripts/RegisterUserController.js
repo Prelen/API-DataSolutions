@@ -1,4 +1,4 @@
-﻿angular.module('RegisterUserApp', [])
+﻿angular.module('DataSolutionApp', [])
     .controller('RegisterUserController', function ($scope, $http) {
         $(".preloader").fadeOut(); 
 

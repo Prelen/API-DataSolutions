@@ -1,4 +1,4 @@
-﻿angular.module('ResetPasswordApp', [])
+﻿angular.module('DataSolutionApp', [])
     .controller('ResetPasswordController', function ($scope, $http,$timeout,$location) {
         $(".preloader").fadeOut();
         $scope.isPasswordMatched = true;

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -59,6 +62,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -143,6 +150,12 @@
     <Compile Include="Areas\Users\Controllers\UserController.cs" />
     <Compile Include="Areas\Users\Models\HomeModel.cs" />
     <Compile Include="Areas\Users\UsersAreaRegistration.cs" />
+    <Compile Include="Connected Services\TransUnionService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TransUnionConsumer.cs" />
     <Compile Include="Views\Home\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -152,7 +165,7 @@
   <ItemGroup>
     <Content Include="Areas\External\Scripts\ContactUsController.js" />
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
-    <Content Include="Areas\Products\Scripts\TestProductController.js" />
+    <Content Include="Areas\Products\Scripts\PersonalProductController.js" />
     <Content Include="Areas\Users\Scripts\HomeController.js" />
     <Content Include="Areas\Users\Scripts\LoginController.js" />
     <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
@@ -880,6 +893,18 @@
     <Content Include="Assets\libs\toastr\build\toastr.min.js" />
     <Content Include="Assets\libs\toastr\toastr-icon.png" />
     <Content Include="Assets\libs\toastr\toastr.js" />
+    <None Include="Connected Services\TransUnionService\configuration91.svcinfo" />
+    <None Include="Connected Services\TransUnionService\configuration.svcinfo" />
+    <Content Include="Connected Services\TransUnionService\DataSolution.TransUnionService.BureauPingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\TransUnionService\DataSolution.TransUnionService.BureauResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\TransUnionService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -1118,7 +1143,8 @@
     <Content Include="Areas\Users\Views\User\Home.cshtml" />
     <Content Include="Areas\Users\Views\User\ResetPassword.cshtml" />
     <Content Include="Areas\Products\Views\web.config" />
-    <Content Include="Areas\Products\Views\Product\TestProduct.cshtml" />
+    <Content Include="Areas\Products\Views\Product\PersonalProducts.cshtml" />
+    <None Include="Connected Services\TransUnionService\Consumer.wsdl" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1934,6 +1960,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\TransUnionService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

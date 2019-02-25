@@ -238,33 +238,24 @@ namespace DataSolution.Areas.Users.Controllers
                 HomeModel homeModel = new HomeModel();
 
                 homeModel.UserInfo = user;
-                homeModel.ChartValues = new ChartOptions[10];
+              
 
-                string formattedDate = DateTime.Now.AddDays(-9).Day.ToString() + "-" + DateTime.Now.AddDays(-9).ToString("MMM");
-                homeModel.ChartValues[0] = new ChartOptions { label = formattedDate, value = 4 };
-                formattedDate = DateTime.Now.AddDays(-8).Day.ToString() + "-" + DateTime.Now.AddDays(-8).ToString("MMM");
-                homeModel.ChartValues[1] = new ChartOptions { label = formattedDate, value = 7 };
-                formattedDate = DateTime.Now.AddDays(-7).Day.ToString() + "-" + DateTime.Now.AddDays(-7).ToString("MMM");
-                homeModel.ChartValues[2] = new ChartOptions { label = formattedDate, value = 8 };
-                formattedDate = DateTime.Now.AddDays(-6).Day.ToString() + "-" + DateTime.Now.AddDays(-6).ToString("MMM");
-                homeModel.ChartValues[3] = new ChartOptions { label = formattedDate, value = 11 };
-                formattedDate = DateTime.Now.AddDays(-5).Day.ToString() + "-" + DateTime.Now.AddDays(-5).ToString("MMM");
-                homeModel.ChartValues[4] = new ChartOptions { label = formattedDate, value = 5 };
-                formattedDate = DateTime.Now.AddDays(-4).Day.ToString() + "-" + DateTime.Now.AddDays(-4).ToString("MMM");
-                homeModel.ChartValues[5] = new ChartOptions { label = formattedDate, value = 10 };
-                formattedDate = DateTime.Now.AddDays(-3).Day.ToString() + "-" + DateTime.Now.AddDays(-3).ToString("MMM");
-                homeModel.ChartValues[6] = new ChartOptions { label = formattedDate, value = 7 };
-                formattedDate = DateTime.Now.AddDays(-2).Day.ToString() + "-" + DateTime.Now.AddDays(-2).ToString("MMM");
-                homeModel.ChartValues[7] = new ChartOptions { label = formattedDate, value = 3 };
-                formattedDate = DateTime.Now.AddDays(-1).Day.ToString() + "-" + DateTime.Now.AddDays(-1).ToString("MMM");
-                homeModel.ChartValues[8] = new ChartOptions { label = formattedDate, value = 8 };
-                formattedDate = DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString("mm");
-                homeModel.ChartValues[9] = new ChartOptions { label = formattedDate, value = 6 };
+                var chartDetails = new TransactionData().GetTransactionsLadt10Days(user.UserID);
+                homeModel.ChartValues = new ChartOptions[chartDetails != null? chartDetails.Count : 0];
+                int count = 0;
+                string formattedDate = string.Empty;
+                foreach (var data in chartDetails)
+                {
+                    formattedDate = data.TransactionDate.Day.ToString() + "-" + data.TransactionDate.ToString("MMM");
+                    homeModel.ChartValues[count] = new ChartOptions { label = formattedDate, value = data.TransactionCount };
+                    count++;
+;                }
+
 
                 var audits = new AuditData().GetLast10Audit(user.UserID);
-                homeModel.AuditInfo = new AuditModelExtended[10];
+                homeModel.AuditInfo = new AuditModelExtended[audits != null ? audits.Count : 0];
 
-                int count = 0;
+                count = 0;
                 DateTime dt = DateTime.Now;
                 foreach (var audit in audits)
                 {
@@ -277,8 +268,9 @@ namespace DataSolution.Areas.Users.Controllers
                     };
                     count++;
                 }
-                homeModel.Notifications = new NotificationsModelExtended[10];
+                
                 var notifications = new NotificationData().GetNotifications(user.UserID);
+                homeModel.Notifications = new NotificationsModelExtended[notifications != null ? notifications.Count : 0];
                 count = 0;
                 foreach (var notification in notifications)
                 {

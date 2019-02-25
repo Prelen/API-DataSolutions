@@ -1,4 +1,4 @@
-﻿angular.module('ContactUsApp', [])
+﻿angular.module('DataSolutionApp', [])
     .controller('ContactUsController', function($scope, $http) {
         $scope.responseMessage = '';
         $scope.divStyle = false;

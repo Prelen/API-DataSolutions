@@ -13,6 +13,7 @@ namespace DataSolution.Domain.Model.Data
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public decimal ProductPrice { get; set; }
-
+        public int TemplateID { get; set; }
+        public int ReportTypeID { get; set; }
     }
 }

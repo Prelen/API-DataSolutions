@@ -10,6 +10,7 @@ using AutoMapper;
 using DataSolution.Domain.Interfaces.Repository;
 using DataSolution.Data.Data;
 using static DataSolution.Domain.Model.Data.TransactionModel;
+using System.Data.Entity;
 
 namespace DataSolution.Data.DAL
 {
@@ -88,7 +89,57 @@ namespace DataSolution.Data.DAL
 
         public List<TransactionsDataPoints> GetTransactionsLadt10Days(int UserID)
         {
-            return null;
+            List<TransactionsDataPoints> chartData = new List<TransactionsDataPoints>();
+            try
+            {
+                using (TransactionEntities transactions = new TransactionEntities())
+                {
+                    DateTime startDate = DateTime.Now.AddDays(-10);
+                    var trans = (from t in transactions.Transactions
+                                 where t.UserID == UserID &&
+                                 t.TransEndDate >= startDate
+                                 group t.TransID by DbFunctions.TruncateTime(t.TransEndDate) into point
+                                 select new TransactionsDataPoints
+                                 {
+                                     TransactionCount = point.ToList().Count,
+                                     TransactionDate = (DateTime)point.Key
+                                 }).ToList();
+
+                    //.ToList()
+                    //.GroupBy(t => DbFunctions.TruncateTime(t.TransEndDate))
+                    //.Select(t => new TransactionsDataPoints
+                    // {
+                    //     TransactionCount = t.Count(),
+                    //     TransactionDate = (DateTime)t.Key
+                    // });
+                    //var chartData = trans
+                    //    .GroupBy(t => DbFunctions.TruncateTime(t.TransEndDate))
+                    //    .Select(t =>  new TransactionsDataPoints
+                    //    {
+                    //        TransactionCount = t.Count(),
+                    //        TransactionDate = (DateTime)t.Key
+                    //    });
+
+                    //foreach (var item in trans)
+                    //{
+                    //    chartData.Add(new TransactionsDataPoints {
+                    //        TransactionCount = item.TransactionCount,
+                    //        TransactionDate = item.TransactionDate
+                    //    });
+                    //}
+
+                    return trans;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                log = new Logger();
+                log.LogError(UserID.ToString(), "DataSolutions.Data", "GetTransactionsLadt10Days", ex.Message);
+            }
+    
+            return chartData;
         }
     }
 
