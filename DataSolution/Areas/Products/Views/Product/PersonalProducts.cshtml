@@ -13,11 +13,8 @@
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="reporttype">Select a report:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="reporttype" ng-change="reportChange()" ng-model="reportType">
+                            <select class="form-control" id="reporttype" ng-change="reportChange()" ng-model="reportType" ng-options="rep.reportID as rep.reportName for rep in reports">
                                 <option value="0">Select a Report</option>
-                                <option value="1">Consumer Profile</option>
-                                <option value="2">Consumer Profile (with address)</option>
-                                <option value="3">Personal Trace</option>
                             </select>
                         </div>
                     </div>

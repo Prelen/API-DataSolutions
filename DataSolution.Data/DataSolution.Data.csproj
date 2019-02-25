@@ -85,6 +85,9 @@
     <Compile Include="Data\lk_AddressKeyword.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\lk_Alert.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\lk_CivilDebtCode.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
@@ -100,6 +103,9 @@
     <Compile Include="Data\lk_Default.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\lk_EnquiryReason.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\lk_Gender.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
@@ -110,6 +116,9 @@
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\lk_ProvinceCode.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\lk_SearchType.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\lk_Title.cs">

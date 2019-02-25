@@ -404,11 +404,7 @@ namespace DataSolution.Domain.Model.Services
             public string Acton { get; set; }
         }
 
-        
-        public class RequestStrikeDate
-        {
-
-        }
+       
 
     }
 }

@@ -4,13 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LookupModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LookupModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="lk_AddressKeyword">
           <Key>
             <PropertyRef Name="AddressID" />
           </Key>
           <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AddressKeyword" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lk_Alert">
+          <Key>
+            <PropertyRef Name="AlertCode" />
+          </Key>
+          <Property Name="AlertCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AlertDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="lk_CivilDebtCode">
           <Key>
@@ -49,6 +56,13 @@ warning 6002: The table/view 'DataSolution.dbo.lk_Default' does not have a prima
           <Property Name="DefaultCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="DefaultDescription" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="lk_EnquiryReason">
+          <Key>
+            <PropertyRef Name="EnquiryCode" />
+          </Key>
+          <Property Name="EnquiryCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EnquiryDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="lk_Gender">
           <Key>
             <PropertyRef Name="GenderCode" />
@@ -77,6 +91,13 @@ warning 6002: The table/view 'DataSolution.dbo.lk_Default' does not have a prima
           <Property Name="ProvinceCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ProvinceName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="lk_SearchType">
+          <Key>
+            <PropertyRef Name="SearchCode" />
+          </Key>
+          <Property Name="SearchCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SearchTypeDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="lk_Title">
           <Key>
             <PropertyRef Name="TitleCode" />
@@ -103,14 +124,17 @@ warning 6002: The table/view 'DataSolution.dbo.lnk_UserProducts' does not have a
         </EntityType>
         <EntityContainer Name="LookupModelStoreContainer">
           <EntitySet Name="lk_AddressKeyword" EntityType="Self.lk_AddressKeyword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_Alert" EntityType="Self.lk_Alert" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_CivilDebtCode" EntityType="Self.lk_CivilDebtCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Court" EntityType="Self.lk_Court" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_CourtType" EntityType="Self.lk_CourtType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_DebtReview" EntityType="Self.lk_DebtReview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_EnquiryReason" EntityType="Self.lk_EnquiryReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Gender" EntityType="Self.lk_Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_JudgementCode" EntityType="Self.lk_JudgementCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Ownership" EntityType="Self.lk_Ownership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_ProvinceCode" EntityType="Self.lk_ProvinceCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_SearchType" EntityType="Self.lk_SearchType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Title" EntityType="Self.lk_Title" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Trace" EntityType="Self.lk_Trace" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Default" EntityType="Self.lk_Default" store:Type="Tables" store:Schema="dbo">
@@ -126,8 +150,7 @@ FROM [dbo].[lk_Default] AS [lk_Default]</DefiningQuery>
 FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LookupModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -237,7 +260,31 @@ FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
           <EntitySet Name="lk_Trace" EntityType="Self.lk_Trace" />
           <EntitySet Name="lk_Default" EntityType="Self.lk_Default" />
           <EntitySet Name="lnk_UserProducts" EntityType="Self.lnk_UserProducts" />
+          <EntitySet Name="lk_Alert" EntityType="LookupModel.lk_Alert" />
+          <EntitySet Name="lk_SearchType" EntityType="LookupModel.lk_SearchType" />
+          <EntitySet Name="lk_EnquiryReason" EntityType="LookupModel.lk_EnquiryReason" />
         </EntityContainer>
+        <EntityType Name="lk_Alert">
+          <Key>
+            <PropertyRef Name="AlertCode" />
+          </Key>
+          <Property Name="AlertDescription" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AlertCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lk_SearchType">
+          <Key>
+            <PropertyRef Name="SearchCode" />
+          </Key>
+          <Property Name="SearchCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SearchTypeDescription" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lk_EnquiryReason">
+          <Key>
+            <PropertyRef Name="EnquiryCode" />
+          </Key>
+          <Property Name="EnquiryCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EnquiryDescription" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -345,6 +392,30 @@ FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
               <MappingFragment StoreEntitySet="lnk_UserProducts">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_Alert">
+            <EntityTypeMapping TypeName="LookupModel.lk_Alert">
+              <MappingFragment StoreEntitySet="lk_Alert">
+                <ScalarProperty Name="AlertCode" ColumnName="AlertCode" />
+                <ScalarProperty Name="AlertDescription" ColumnName="AlertDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_SearchType">
+            <EntityTypeMapping TypeName="LookupModel.lk_SearchType">
+              <MappingFragment StoreEntitySet="lk_SearchType">
+                <ScalarProperty Name="SearchTypeDescription" ColumnName="SearchTypeDescription" />
+                <ScalarProperty Name="SearchCode" ColumnName="SearchCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_EnquiryReason">
+            <EntityTypeMapping TypeName="LookupModel.lk_EnquiryReason">
+              <MappingFragment StoreEntitySet="lk_EnquiryReason">
+                <ScalarProperty Name="EnquiryDescription" ColumnName="EnquiryDescription" />
+                <ScalarProperty Name="EnquiryCode" ColumnName="EnquiryCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

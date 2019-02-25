@@ -150,11 +150,17 @@
     <Compile Include="Areas\Users\Controllers\UserController.cs" />
     <Compile Include="Areas\Users\Models\HomeModel.cs" />
     <Compile Include="Areas\Users\UsersAreaRegistration.cs" />
+    <Compile Include="Connected Services\TransUnionCommercialService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\TransUnionService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Services\TransUnionCommercialService.cs" />
     <Compile Include="Services\TransUnionConsumer.cs" />
     <Compile Include="Views\Home\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -893,8 +899,21 @@
     <Content Include="Assets\libs\toastr\build\toastr.min.js" />
     <Content Include="Assets\libs\toastr\toastr-icon.png" />
     <Content Include="Assets\libs\toastr\toastr.js" />
+    <None Include="Connected Services\TransUnionCommercialService\Commercial.wsdl" />
+    <Content Include="Connected Services\TransUnionCommercialService\DataSolution.TransUnionCommercialService.BMSAlertResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\TransUnionCommercialService\DataSolution.TransUnionCommercialService.CommercialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Connected Services\TransUnionService\configuration91.svcinfo" />
     <None Include="Connected Services\TransUnionService\configuration.svcinfo" />
+    <None Include="Connected Services\TransUnionCommercialService\configuration91.svcinfo" />
+    <None Include="Connected Services\TransUnionCommercialService\configuration.svcinfo" />
+    <None Include="Connected Services\TransUnionCommercialService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\TransUnionService\DataSolution.TransUnionService.BureauPingResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1962,6 +1981,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\TransUnionCommercialService\" />
     <WCFMetadataStorage Include="Connected Services\TransUnionService\" />
   </ItemGroup>
   <PropertyGroup>

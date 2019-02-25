@@ -38,5 +38,8 @@ namespace DataSolution.Data.Data
         public DbSet<lk_Trace> lk_Trace { get; set; }
         public DbSet<lk_Default> lk_Default { get; set; }
         public DbSet<lnk_UserProducts> lnk_UserProducts { get; set; }
+        public DbSet<lk_Alert> lk_Alert { get; set; }
+        public DbSet<lk_SearchType> lk_SearchType { get; set; }
+        public DbSet<lk_EnquiryReason> lk_EnquiryReason { get; set; }
     }
 }

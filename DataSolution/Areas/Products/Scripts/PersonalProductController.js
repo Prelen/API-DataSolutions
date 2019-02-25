@@ -14,28 +14,31 @@
             $scope.provinces = [];
             $scope.province = {};
             $scope.GetProvinces();
+            $scope.reports = [];
+            $scope.report = {};
             $scope.selectedProvince = '0';
             $scope.functionCall = '';
             $scope.params = {};
+            $scope.GetReports();
         };
 
         $scope.callProduct = function () {
             $scope.isProcessing = true;
             switch ($scope.reportType) {
-                case "1":
+                case 1:
                     $scope.functionCall = 'GetConsumerProfile';
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, ProductID: $scope.reportType
                     };
                     break;
-                case "2":
+                case 2:
                     $scope.functionCall = 'GetConsumerProfileWithAddress';
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, ProductID: $scope.reportType,
                         AddressLin1: $scope.address1, AddressLine2: $scope.address2, Suburb: $scope.suburb, City: $scope.city, ProvinceCode: $scope.selectedProvince
                     };
                     break;
-                case "3":
+                case 3:
                     $scope.functionCall = 'PersonalTraceOrder';
                     $scope.params = {
                         IDNumber: $scope.idNumber, ProductID: $scope.reportType
@@ -67,25 +70,25 @@
 
         $scope.reportChange = function () {
             switch ($scope.reportType) {
-                case '0':
+                case 0:
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = false;
                     $scope.showButton = false;
                     break;
-                case '1':
+                case 1 :
                     $scope.consumerprofile = true;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = false;
                     $scope.showButton = true;
                     break;
-                case '2':
+                case 2 :
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = true;
                     $scope.personaltrace = false;
                     $scope.showButton = true;
                     break;
-                case '3':
+                case 3:
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = true;
@@ -125,6 +128,39 @@
                     }
                 }
 
+            });
+        };
+
+        $scope.GetReports = function () {
+            $http(
+                {
+                    method: 'GET',
+                    url: '/Products/Product/GetConsumerProducts',
+                    params: {
+                        ReportType: $scope.reportType
+                    }
+                }
+
+            ).then(function (response) {
+                if (response.data != null) {
+                    var json = JSON.stringify(response.data);
+                    var reportlist = JSON.parse(json);
+
+                    $scope.report = {
+                        reportID: '0',
+                        reportName: 'Select a report'
+                    };
+                    $scope.reports.push($scope.report);
+
+                    for (var i = 0; i < reportlist.length; i++) {
+                        $scope.report = {
+                            reportID: reportlist[i].ProductID,
+                            reportName: reportlist[i].ProductName
+                        };
+                        $scope.reports.push($scope.report);
+                    }
+                    
+                }
             });
         };
     });

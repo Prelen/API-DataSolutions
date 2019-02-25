@@ -38,7 +38,7 @@ namespace DataSolution.Data.DAL
                              select new ProductModel
                              {
                                  ProductID = p.ProductID,
-                                 ProductDescription = p.ProductDescription
+                                 ProductName = p.ProductName
                              }).ToList();
             }
 

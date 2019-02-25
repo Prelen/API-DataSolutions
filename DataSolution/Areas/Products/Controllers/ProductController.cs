@@ -128,9 +128,10 @@ namespace DataSolution.Areas.Products.Controllers
             return result;
         }
 
-        public JsonResult GetProducts(int ReportType)
+        public JsonResult GetConsumerProducts()
         {
-            return Json("", JsonRequestBehavior.AllowGet);
+            var result = new ProductData().GetProductsByType(1);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetProvinces()
