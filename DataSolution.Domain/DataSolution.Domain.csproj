@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
     <Compile Include="Interfaces\Service\IPDFConverter.cs" />
     <Compile Include="Interfaces\Service\ITransunionAPI.cs" />
+    <Compile Include="Interfaces\Service\ITransunionCommercialAPI.cs" />
     <Compile Include="Interfaces\Utilities\Encryption\IEncryption.cs" />
     <Compile Include="Interfaces\Utilities\Logging\ILogging.cs" />
     <Compile Include="Interfaces\Utilities\Mail\IMail.cs" />
