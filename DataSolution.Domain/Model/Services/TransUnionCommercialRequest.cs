@@ -106,7 +106,7 @@ namespace DataSolution.Domain.Model.Services
             public string FirstName { get; set; }
             public string Surname { get; set; }
             public string Initials { get; set; }
-            public string IDNumber { get; set; }
+            public string SAID { get; set; }
             public string BirthDate { get; set; }
             public string OtherID { get; set; }
             public string AddressLine { get; set; }
@@ -292,6 +292,37 @@ namespace DataSolution.Domain.Model.Services
             public string EnquiryReason { get; set; }
             public string CreditAmount { get; set; }
             public string Email { get; set; }
+        }
+
+        public class CommercialModuleRequest
+        {
+            public string ITNumber { get; set; }
+            public List<ModuleProduct> ModuleProductCodes;
+            public string EnquiryReason { get; set; }
+            public string EnquiryAmount { get; set; }
+            public string Terms { get; set; }
+            public string UserOnTicket { get; set; }
+            public string ContactForename { get; set; }
+            public string ContactSurname { get; set; }
+            public string ContactPhoneCode { get; set; }
+            public string ContactPhoneNo { get; set; }
+            public string AdditionalClientReference { get; set; }
+            public string SubjectPhoneCode { get; set; }
+            public string SubjectPhoneNo { get; set; }
+            public string SubjectNameOnTicket { get; set; }
+            public string SubjectAddress { get; set; }
+            public string SubjectSuburb { get; set; }
+            public string SubjectCity { get; set; }
+            public string SubjectPostCode { get; set; }
+            public string InvestigateOption { get; set; }
+            public string BankAccountNo { get; set; }
+            public string BankAbbreviation { get; set; }
+            public string BankBranch { get; set; }
+            public string BankBranchCode { get; set; }
+            public string SpecialInstructions { get; set; }
+            public string BankCreditAmount { get; set; }
+            public string BankTermsGiven { get; set; }
+            public string BankAccountHolder { get; set; }
         }
     }
 }
