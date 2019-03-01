@@ -85,8 +85,6 @@ namespace DataSolution.Domain.Model.Services
             public string ContactSurname { get; set; }
             public string ContactPhoneCode { get; set; }
             public string ContactPhoneNo { get; set; }
-            public string ContactFaxCode { get; set; }
-            public string ContactFaxNo { get; set; }
             public string AdditionalClientReference { get; set; }
             public string SubjectPhoneCode { get; set; }
             public string SubjectPhoneNo { get; set; }

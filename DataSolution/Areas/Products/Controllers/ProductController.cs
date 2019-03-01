@@ -139,5 +139,15 @@ namespace DataSolution.Areas.Products.Controllers
             var provinces = new LookupData().GetAllProvinces();
             return Json(provinces, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult CommercialProducts()
+        {
+            if (Session["User"] is UserModel user)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Login", "User", new { area = "Users" });
+        }
     }
 }

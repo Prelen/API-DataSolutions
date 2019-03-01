@@ -899,6 +899,7 @@
     <Content Include="Assets\libs\toastr\build\toastr.min.js" />
     <Content Include="Assets\libs\toastr\toastr-icon.png" />
     <Content Include="Assets\libs\toastr\toastr.js" />
+    <Content Include="Areas\Products\Views\Product\CommercialProducts.cshtml" />
     <None Include="Connected Services\TransUnionCommercialService\Commercial.wsdl" />
     <Content Include="Connected Services\TransUnionCommercialService\DataSolution.TransUnionCommercialService.BMSAlertResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
