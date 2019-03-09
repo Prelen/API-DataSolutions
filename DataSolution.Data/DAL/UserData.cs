@@ -54,7 +54,12 @@ namespace DataSolution.Data.DAL
                                LastLogin = usr.LastLogIn,
                                LoginCount = usr.LoginCount,
                                IsLocked = usr.IsLocked,
-                               MasterOrganization = usr.MasterOrganization
+                               MasterOrganization = usr.MasterOrganization,
+                               FirstName = usr.FirstName,
+                               Surname = usr.Surname,
+                               Email = usr.Email,
+                               WorkNo = usr.BusinessNo,
+                               MobileNo = usr.MobileNo
                            };
                 if (UserID != null)
                     usrs = usrs.ToList().AsQueryable()
@@ -220,6 +225,15 @@ namespace DataSolution.Data.DAL
 
                         if (User.Surname != null)
                             user.Surname = User.Surname;
+
+                        if (User.Email != null)
+                            user.Email = User.Email;
+
+                        if (User.MobileNo != null)
+                            user.MobileNo = User.MobileNo;
+
+                        if (User.WorkNo != null)
+                            user.BusinessNo = User.WorkNo;
 
                         users.SaveChanges();
                         result = true;

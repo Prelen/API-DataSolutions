@@ -171,7 +171,12 @@
   <ItemGroup>
     <Content Include="Areas\External\Scripts\ContactUsController.js" />
     <Content Include="Areas\External\Views\External\HtmlPage1.html" />
+    <Content Include="Areas\Products\Scripts\CommercialProductController.js" />
+    <Content Include="Areas\Products\Scripts\CommercialDatepicker.js" />
+    <Content Include="Areas\Products\Scripts\PersonalDatePicker.js" />
     <Content Include="Areas\Products\Scripts\PersonalProductController.js" />
+    <Content Include="Areas\Users\Scripts\ChangeDetailsController.js" />
+    <Content Include="Areas\Users\Scripts\ChangePasswordController.js" />
     <Content Include="Areas\Users\Scripts\HomeController.js" />
     <Content Include="Areas\Users\Scripts\LoginController.js" />
     <Content Include="Areas\Users\Scripts\RegisterUserController.js" />
@@ -900,6 +905,9 @@
     <Content Include="Assets\libs\toastr\toastr-icon.png" />
     <Content Include="Assets\libs\toastr\toastr.js" />
     <Content Include="Areas\Products\Views\Product\CommercialProducts.cshtml" />
+    <Content Include="Areas\Users\Views\User\LogOff.cshtml" />
+    <Content Include="Areas\Users\Views\User\ChangeDetails.cshtml" />
+    <Content Include="Areas\Users\Views\User\ChangePassword.cshtml" />
     <None Include="Connected Services\TransUnionCommercialService\Commercial.wsdl" />
     <Content Include="Connected Services\TransUnionCommercialService\DataSolution.TransUnionCommercialService.BMSAlertResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -2025,7 +2033,7 @@
     </ItemGroup>
     <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
     <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
-</Target>
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

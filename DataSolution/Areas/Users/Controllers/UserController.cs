@@ -321,9 +321,69 @@ namespace DataSolution.Areas.Users.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult LogOff()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login");
+        }
 
 
+        public ActionResult ChangeDetails()
+        {
+            if (Session["User"] is UserModel user)
+                return View();
+            else
+                return RedirectToAction("Login");
+        }
 
+        public JsonResult GetUserDetails()
+        {
+            List<UserModel> details = new List<UserModel>();
+            if (Session["User"] is UserModel user)
+            {
+                 details = new UserData().GetAllUsers(user.UserID);
+            }
 
+            return Json(details, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveUserDetails(string FirstName,string Surname,string CompanyName,string Email,string MobileNo,string BusinessNo)
+        {
+            bool result = false;
+            if (Session["User"] is UserModel user)
+            {
+                user.FirstName = FirstName;
+                user.Surname = Surname;
+                user.OrganizationName = CompanyName;
+                user.Email = Email;
+                user.MobileNo = MobileNo;
+                user.WorkNo = BusinessNo;
+                result = new UserData().UpdateUser(user, true);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChangePassword()
+        {
+            if (Session["User"] is UserModel user)
+                return View();
+            else
+                return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public JsonResult UpdatePassword(string NewPassword)
+        {
+            bool result = false;
+            if (Session["User"] is UserModel user)
+            {
+                user.Password = new DataEncryption().Encrypt(NewPassword);
+                result = new UserData().UpdateUser(user, true);
+            }
+
+           return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

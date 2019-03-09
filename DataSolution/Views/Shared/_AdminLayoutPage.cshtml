@@ -114,23 +114,23 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Home","User", new { area = "Users"})" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Home</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Home","User", new { area = "Users"})" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-menu"></i><span class="hide-menu">Producs</span></a>
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-box-open"></i><span class="hide-menu">Producs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="@Url.Action("PersonalProducts","Product", new { area = "Products"})" class="sidebar-link"><i class="mdi mdi-pencil"></i><span class="hide-menu">Consumer</span></a></li>
-                                <li class="sidebar-item"><a href="@Url.Action("CommercialProducts","Product", new { area = "Products"})" class="sidebar-link"><i class="mdi mdi-pencil"></i><span class="hide-menu">Commercial</span></a></li>
+                                <li class="sidebar-item"><a href="@Url.Action("PersonalProducts","Product", new { area = "Products"})" class="sidebar-link"><i class="fas fa-address-card"></i><span class="hide-menu">Consumer</span></a></li>
+                                <li class="sidebar-item"><a href="@Url.Action("CommercialProducts","Product", new { area = "Products"})" class="sidebar-link"><i class="fas fa-briefcase"></i><span class="hide-menu">Commercial</span></a></li>
                             </ul>
                         </li>
                         @* <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("Services","External", new { area = "External"})" aria-expanded="false"><i class="mdi mdi-move-resize-variant"></i><span class="hide-menu">Our Services</span></a></li>*@
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("ContactUs","External", new { area = "External"})" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Contact Us</span></a></li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-key"></i><span class="hide-menu">User Management </span></a>
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fas fa-users"></i><span class="hide-menu">User Management</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                <li class="sidebar-item"><a href="@Url.Action("Login","User", new { area = "Users"})" class="sidebar-link"><i class="mdi mdi-account-key"></i><span class="hide-menu"> Login </span></a></li>
-                                <li class="sidebar-item"><a href="@Url.Action("RegisterUser","User", new { area = "Users"})" class="sidebar-link"><i class="mdi mdi-pencil"></i><span class="hide-menu"> Register </span></a></li>
+                                <li class="sidebar-item"><a href="@Url.Action("ChangeDetails","User", new { area = "Users"})" class="sidebar-link"><i class="mdi mdi-account"></i><span class="hide-menu">Change Details</span></a></li>
+                                <li class="sidebar-item"><a href="@Url.Action("ChangePassword","User", new { area = "Users"})" class="sidebar-link"><i class="fas fa-key"></i><span class="hide-menu">Change Password</span></a></li>
                             </ul>
                         </li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="@Url.Action("LogOff","User", new { area = "Users"})" aria-expanded="false"><i class="fas fa-power-off"></i><span class="hide-menu">Log Off</span></a></li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->

@@ -35,6 +35,7 @@ namespace DataSolution.Data.DAL
                  products = (from p in product.Products
                              join m in product.ReportTypes
                              on p.ReportTypeID equals m.ReportTypeID
+                             where m.ReportTypeID == ReportTypeID
                              select new ProductModel
                              {
                                  ProductID = p.ProductID,

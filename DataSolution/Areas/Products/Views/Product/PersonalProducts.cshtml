@@ -1,6 +1,6 @@
 ﻿
 @{
-    
+
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="card-body" ng-show="consumerprofileaddress">
-                        <h4 class="card-header">Consumer Profile (with address)</h4>
+                        <h4 class="card-header">Consumer Profile</h4>
                         <div class="form-group row">
                             <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
                             <div class="col-sm-9">
@@ -66,7 +66,7 @@
                             <div class="col-sm-9">
                                 <input class="form-control" id="city" type="text" placeholder="City" required ng-model="city">
                             </div>
-                            <label class="col-sm-3 text-right control-label col-form-label" for="province" >Province:</label>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="province">Province:</label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="province" ng-model="selectedProvince" ng-options="prov.provinceCode as prov.provinceName for prov in provinces">
                                     <option value="0">Select a province</option>
@@ -77,9 +77,37 @@
                     <div class="card-body" ng-show="personaltrace">
                         <h4 class="card-header">Personal Trace</h4>
                         <div class="form-group row">
+                            <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="fname" type="text" placeholder="First Name" required ng-model="firstname">
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="sname" type="text" placeholder="Surname" required ng-model="surname">
+                            </div>
                             <label class="col-sm-3 text-right control-label col-form-label" for="idnumber">ID Number:</label>
                             <div class="col-sm-9">
                                 <input class="form-control" id="idnumber" type="text" placeholder="ID Number" required ng-model="idNumber">
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="dtDOB">Date of Birth:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="dtDOB" type="text" placeholder="dd/mm/yyyy"  ng-model="dateofbirth">
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="address1">Address Line 1:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="address1" type="text" placeholder="Address Line 1" required ng-model="address1">
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="address2"></label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="address2" type="text" placeholder="Address Line 2" ng-model="address2" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="suburb">Suburb:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="suburb" type="text" placeholder="Suburb" ng-model="suburb" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="suburb">Contact Number:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="suburb" type="text" placeholder="Contact Number" ng-model="contactNo" required>
                             </div>
                         </div>
                     </div>
@@ -93,11 +121,15 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-  </div>
 </form>
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Areas/Products/Scripts/PersonalProductController.js"></script>
+<script src="~/Assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/Assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<link href="~/Assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 

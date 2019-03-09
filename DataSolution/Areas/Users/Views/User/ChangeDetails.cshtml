@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "ChangeDetails";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Change Details</h2>
+<form ng-app="DataSolutionApp" ng-controller="ChangeDetailsController" ng-init="pageLoad();">
+    <div class="row">
+        <div class="col-md6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="fname" type="text" placeholder="First Name" required ng-model="firstName">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="sname" type="text" placeholder="Surname" required ng-model="surname">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="compname">Company Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="compname" type="text" placeholder="Company Name" required ng-model="companyName">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="emailaddr">Email:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="emailaddr" type="email" placeholder="Email" required ng-model="email">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="mobileno">Mobile No:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="mobileno" type="text" placeholder="Mobile No" ng-model="mobileNo">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="businessno">Business No:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="businessno" type="text" placeholder="Business No" ng-model="businessNo">
+                        </div>
+                    </div>
+                    <div class="row border-top">
+                        <div class="col-sm-9">
+                            <div class="p-t-10">
+                                <button ng-class="{true: 'btn btn-lg btn-success', false: 'btn  btn-lg btn-info'}[isProcessing === true]" type="button"  ng-click="saveDetails();" ng-disabled="isProcessing">
+                                    <i class="fa fa-spinner fa-spin" ng-show="isProcessing"></i>&nbsp;{{buttonText}}
+                                </button>
+                                <div role="alert" id="recoverMessage" ng-class="{true: 'alert alert-success', false: 'alert alert-danger'}[responseResult === true]" ng-show="toggleMessage">{{ responseMessage }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Areas/Users/Scripts/ChangeDetailsController.js"></script>

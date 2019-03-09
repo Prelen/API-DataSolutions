@@ -235,6 +235,135 @@ namespace DataSolution.Services
         }
 
 
+        public async Task<bool> ProcessRequestTrans41Async(TransunionRequest.RequestTrans01 Request, string UserID, int ProductID)
+        {
+            startDate = DateTime.Now;
+            log = new Logger();
+
+            try
+            {
+
+                var config = new MapperConfiguration(
+                          cfg =>
+                          {
+                              cfg.CreateMap<RequestTrans01, BureauEnquiry41>()
+                            .ForMember(x => x.ul_long_score, y => y.MapFrom(z => z.LongScore))
+                            .ForMember(x => x.ul_medium_score, y => y.MapFrom(z => z.MediumScore))
+                            .ForMember(x => x.ul_short_score, y => y.MapFrom(z => z.ShortScore))
+                            .ForMember(x => x.ul_average_score, y => y.MapFrom(z => z.AverageScore));
+                          }
+                          );
+
+                var mapper = config.CreateMapper();
+                var enquiry41 = mapper.Map<BureauEnquiry41>(Request);
+                enquiry41.SecurityCode = securityCode;
+                enquiry41.SubscriberCode = subNo;
+                enquiry41.EnquirerContactName = "Prelen Nair";
+                enquiry41.EnquirerContactPhoneNo = "0832253698";
+                enquiry41.PostalCode = "2188";
+                destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                var response = await client.ProcessRequestTrans41Async(enquiry41, destination);
+
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", response.ErrorCode + " " + response.ErrorMessage);
+
+                // Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<bool> IndividualTraceSearchAsync(TransunionRequest.IndividualTraceSearchRequest Request, string UserID, int ProductID)
+        {
+            startDate = DateTime.Now;
+
+            log = new Logger();
+            try
+            {
+
+
+                var config = new MapperConfiguration(
+                     cfg =>
+                     {
+                         cfg.CreateMap<IndividualTraceSearchRequest, IndividualTraceSearchInput>()
+                        .ForMember(x => x.TicketNumber, y => y.MapFrom(z => z.TicketNo))
+                        .ForMember(x => x.ReportNumber, y => y.MapFrom(z => z.ReportNo))
+                        .ForMember(x => x.UserEmail, y => y.MapFrom(z => z.Email))
+                        .ForMember(x => x.ConsumerNumber, y => y.MapFrom(z => z.ConsumerNo))
+                        .ForMember(x => x.TelephoneAreaCode, y => y.MapFrom(z => z.PhoneCode))
+                        .ForMember(x => x.TelephoneNumber, y => y.MapFrom(z => z.TelNo))
+                        .ForMember(x => x.CellNumber, y => y.MapFrom(z => z.CellNo))
+                        .ForMember(x => x.AddressStreetNumber, y => y.MapFrom(z => z.StreetAddress))
+                        .ForMember(x => x.AddressSuburb, y => y.MapFrom(z => z.Suburb))
+                        .ForMember(x => x.AddressTown, y => y.MapFrom(z => z.Town))
+                        .ForMember(x => x.AddressPostalCode, y => y.MapFrom(z => z.PostalCode))
+                        .ForMember(x => x.IdentityNumber, y => y.MapFrom(z => z.IDNo))
+                        .ForMember(x => x.DateOfBirth, y => y.MapFrom(z => z.DateOfBirth)); ;
+                     }
+                     );
+
+                var mapper = config.CreateMapper();
+
+                var individualTrace = mapper.Map<IndividualTraceSearchInput>(Request);
+                individualTrace.SubscriberCode = subNo;
+                individualTrace.SecurityCode = securityCode;
+                individualTrace.SearchType = "01";
+                individualTrace.SearchReason = "61";
+                
+
+                var response = await client.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
+                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+
+                if (!result)
+                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.IndividualTraceSearchAsync", response.ErrorCode + " " + response.ErrorMessage);
+
+
+                //Save Transaction
+                endDate = DateTime.Now;
+                transData = new TransactionModel.TransactionData
+                {
+                    EndDate = endDate,
+                    IsSuccessful = result,
+                    Message = response.ErrorMessage,
+                    ProductID = ProductID,
+                    StartDate = startDate,
+                    UserID = Convert.ToInt32(UserID)
+                };
+
+                SaveTransaction(transData);
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController,IndividualTraceSearchAsync", ex.Message);
+            }
+
+            return result;
+
+        }
+
 
         private bool SaveTransaction(TransactionModel.TransactionData Transaction)
         {

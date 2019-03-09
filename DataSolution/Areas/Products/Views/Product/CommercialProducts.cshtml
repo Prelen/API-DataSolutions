@@ -1,11 +1,11 @@
 ﻿
 @{
-   
+
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
 <h2>Commercial Products</h2>
-<form>
+<form ng-app="DataSolutionApp" ng-controller="CommercialProductController" ng-init="pageLoad()">
     <div class="row">
         <div class="col-md6">
             <div class="card">
@@ -13,7 +13,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="reporttype">Select a report:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="reporttype">
+                            <select class="form-control" id="reporttype" ng-model="selectedReport" ng-options="rep.reportID as rep.reportName for rep in reports">
                                 <option value="0">Select a Report</option>
                             </select>
                         </div>
@@ -21,24 +21,14 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-header">Retrieve BMS Alert</h4>
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label" for="startdate">Start Date:</label>
+                    <div class="form-group row date" id="dtpicker1">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="dtstartdate">Start Date:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="startdate" type="text" placeholder="mm/dd/yyyy">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
+                            <input class="form-control" id="dtstartdate" type="text" placeholder="mm/dd/yyyy" readonly ng-model="startDate">
                         </div>
                         <label class="col-sm-3 text-right control-label col-form-label" for="enddate">End Date:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="enddate" type="text" placeholder="mm/dd/yyyy">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
+                            <input class="form-control" id="dtenddate" type="text" placeholder="mm/dd/yyyy" readonly ng-model="endDate">
                         </div>
                     </div>
                 </div>
@@ -181,7 +171,7 @@
                             <input class="form-control" id="traderef" type="text" placeholder="Trade Reference" required>
                         </div>
                     </div>
-                  </div>
+                </div>
                 <div class="card-body">
                     <h4 class="card-header">Principal Request</h4>
                     <div class="form-group row">
@@ -248,229 +238,499 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-header">Principal Module</h4>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="fname" type="text" placeholder="First Name" required>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="sname" type="text" placeholder="Surname" required>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="idnum">ID Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="idnum" type="text" placeholder="ID Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="otherid">Other ID:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="otherid" type="text" placeholder="Other ID">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="birthdate">Birth Date:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="birthdate" type="text" placeholder="dd/mm/yyyy" readonly>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="address1">Address:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="address1" type="text" placeholder="Address">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="suburb">Suburb:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="suburb" type="text" placeholder="Suburb">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="city" type="text" placeholder="City">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Post Code:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="postcode" type="text" placeholder="Post Code">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Post Code:</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="enquiry">
-                            <option value="0">Select an Enquiry</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Enquiry Amount:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="postcode" type="text" placeholder="Post Code">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="bussname">Business Name:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="bussname" type="text" placeholder="Business Name">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="busregno">Registration Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="busregno" type="text" placeholder="Registration Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="busvatno">VAT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="busvatno" type="text" placeholder="VAT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="busemail">Email:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="busemail" type="email" placeholder="Email">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="busvatno">VAT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="busvatno" type="text" placeholder="VAT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="products">Products:</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="products">
-                            <option value="0">Select an Enquiry</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="busacc">Accounts</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="busacc">
-                            <option value="0">Select an Account</option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="fname" type="text" placeholder="First Name" required>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="sname">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="sname" type="text" placeholder="Surname" required>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="idnum">ID Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="idnum" type="text" placeholder="ID Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="otherid">Other ID:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="otherid" type="text" placeholder="Other ID">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="birthdate">Birth Date:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="birthdate" type="text" placeholder="dd/mm/yyyy" readonly>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="address1">Address:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="address1" type="text" placeholder="Address">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="suburb">Suburb:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="suburb" type="text" placeholder="Suburb">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="city" type="text" placeholder="City">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Post Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="postcode" type="text" placeholder="Post Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Post Code:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enquiry">
+                                <option value="0">Select an Enquiry</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="postcode">Enquiry Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="postcode" type="text" placeholder="Post Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussname">Business Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussname" type="text" placeholder="Business Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busregno">Registration Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busregno" type="text" placeholder="Registration Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busvatno">VAT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busvatno" type="text" placeholder="VAT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busemail">Email:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busemail" type="email" placeholder="Email">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busvatno">VAT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busvatno" type="text" placeholder="VAT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="products">Products:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="products">
+                                <option value="0">Select an Enquiry</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busacc">Accounts</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="busacc">
+                                <option value="0">Select an Account</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <h4 class="card-header">Principal Module</h4>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="itnumber">IT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="itnumber" type="text" placeholder="IT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="modproduct">Product</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="modproduct">
-                            <option value="0">Select an Product</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="itnumber">IT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="itnumber" type="text" placeholder="IT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="prodreason">Reason:</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="prodreason">
-                            <option value="0">Select a Reason</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="amount">Amount:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="amount" type="text" placeholder="Amount">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="fanem">First name:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="fanem" type="text" placeholder="First Name">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="sanem">Surname:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="sanem" type="text" placeholder="Surname">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="phcode">Phone Code:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="phcode" type="text" placeholder="Phone Code">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="phnumber">Phone Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="phnumber" type="text" placeholder="Phone Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="phnumber">Phone Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="phnumber" type="text" placeholder="Phhone Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="addrss">Address:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="addrss" type="text" placeholder="Address">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="subrb">Suburb:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="subrb" type="text" placeholder="Suburb">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="subrb">Suburb:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="subrb" type="text" placeholder="Suburb">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="city" type="text" placeholder="City">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="city" type="text" placeholder="City">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="investiagte">Investigate:</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="investiagte">
-                            <option value="0">Select a Investigate</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="acchlder">Account Holder:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="acchlder" type="text" placeholder="Account Holder">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="accnums">Account Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="accnums" type="text" placeholder="Account Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="bnkabv">Bank:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="bnkabv" type="text" placeholder="Bank">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="bnkbranch">Branch:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="bnkbranch" type="text" placeholder="Branch">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="bnkbranchcode">Branch Code:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="bnkbranchcode" type="text" placeholder="Branch Code">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="spclinst">Special Instruction:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="spclinst" type="text" placeholder="Special Instruction">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="crdamount">Credit Amount:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="crdamount" type="text" placeholder="Credit Amount">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="termamt">Terms:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="termamt" type="text" placeholder="Terms">
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="itnumber">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="itnumber" type="text" placeholder="IT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="modproduct">Product</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="modproduct">
+                                <option value="0">Select an Product</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="itnumber">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="itnumber" type="text" placeholder="IT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="prodreason">Reason:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="prodreason">
+                                <option value="0">Select a Reason</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="amount">Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="amount" type="text" placeholder="Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="fanem">First name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="fanem" type="text" placeholder="First Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="sanem">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="sanem" type="text" placeholder="Surname">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="phcode">Phone Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="phcode" type="text" placeholder="Phone Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="phnumber">Phone Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="phnumber" type="text" placeholder="Phone Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="phnumber">Phone Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="phnumber" type="text" placeholder="Phhone Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="addrss">Address:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="addrss" type="text" placeholder="Address">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="subrb">Suburb:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="subrb" type="text" placeholder="Suburb">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="subrb">Suburb:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="subrb" type="text" placeholder="Suburb">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="city" type="text" placeholder="City">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="city">City:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="city" type="text" placeholder="City">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="investiagte">Investigate:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="investiagte">
+                                <option value="0">Select a Investigate</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="acchlder">Account Holder:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="acchlder" type="text" placeholder="Account Holder">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="accnums">Account Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="accnums" type="text" placeholder="Account Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bnkabv">Bank:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bnkabv" type="text" placeholder="Bank">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bnkbranch">Branch:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bnkbranch" type="text" placeholder="Branch">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bnkbranchcode">Branch Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bnkbranchcode" type="text" placeholder="Branch Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="spclinst">Special Instruction:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="spclinst" type="text" placeholder="Special Instruction">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="crdamount">Credit Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="crdamount" type="text" placeholder="Credit Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="termamt">Terms:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="termamt" type="text" placeholder="Terms">
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <label class="col-sm-3 text-right control-label col-form-label" for="srchtype">Search Type:</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" id="srchtype">
-                            <option value="0">Select a Investigate</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="subjname">Name:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="subjname" type="text" placeholder="Name">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="companyregno">Registration Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="companyregno" type="text" placeholder="Registration Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="companyitno">IT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="companyitno" type="text" placeholder="IT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="companydunsno">DUNS Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="companydunsno" type="text" placeholder="DUNS Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="companyvatno">VAT Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="companyvatno" type="text" placeholder="VAT Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="cmpybankaccno">Bank Account Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="cmpybankaccno" type="text" placeholder="Bank Account Number">
-                    </div>
-                    <label class="col-sm-3 text-right control-label col-form-label" for="cmpytradingno">Trading Number:</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" id="cmpytradingno" type="text" placeholder="Trading Number">
+                    <h4 class="card-header">Business Transaction 01</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="srchtype">Search Type:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="srchtype">
+                                <option value="0">Select a Investigate</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="subjname">Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="subjname" type="text" placeholder="Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="companyregno">Registration Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="companyregno" type="text" placeholder="Registration Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="companyitno">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="companyitno" type="text" placeholder="IT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="companydunsno">DUNS Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="companydunsno" type="text" placeholder="DUNS Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="companyvatno">VAT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="companyvatno" type="text" placeholder="VAT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="cmpybankaccno">Bank Account Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="cmpybankaccno" type="text" placeholder="Bank Account Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="cmpytradingno">Trading Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="cmpytradingno" type="text" placeholder="Trading Number">
+                        </div>
                     </div>
                 </div>
+                <div class="card-body">
+                    <h4 class="card-header">Business Transaction A1</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busitnum">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busitnum" type="text" placeholder="IT Number">
+                        </div>
+                    </div>
                 </div>
+                <div class="card-body">
+                    <h4 class="card-header">Business Transaction 15</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busitnum">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busitnum" type="text" placeholder="IT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="srchmodules">Modules:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="srchmodules">
+                                <option value="0">Select a Module</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busitnum">IT Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busitnum" type="text" placeholder="IT Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="enqryreason">Enquiry Reason:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqryreason">
+                                <option value="0">Select a Enquiry Reason</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busamount">Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busamount" type="text" placeholder="Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busterms">Terms:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busterms" type="text" placeholder="Terms">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busfname">First Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busfname" type="text" placeholder="First Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussname">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussurname" type="text" placeholder="Surname">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busphcode">Phone Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busphcode" type="text" placeholder="Phone Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busphnumber">Phone Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busphnumber" type="text" placeholder="Phone Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busaddress">Address:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busaddress" type="text" placeholder="Address">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussuburb">Suburb:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussuburb" type="text" placeholder="Suburb">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="buscity">City:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="buscity" type="text" placeholder="City">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="buspostcode">Postal Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="buspostcode" type="text" placeholder="Postal Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="buspostcode">Investigate Option:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqryreason">
+                                <option value="0">Select a Investigate Option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="accholder">Account Holder:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="accholder" type="text" placeholder="Bank Account Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busaccnumacc">Bank Account Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busaccnumacc" type="text" placeholder="Bank Account Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busaccname">Bank Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busaccname" type="text" placeholder="Bank Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busaccbranch">Bank Branch:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busaccbranch" type="text" placeholder="Bank Branch">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busaccbranchcode">Bank Branch Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busaccbranchcode" type="text" placeholder="Bank Branch Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="buscrdamount">Credit Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="buscrdamount" type="text" placeholder="Credit Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="buscrdterms">Terms:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="buscrdterms" type="text" placeholder="Terms">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-header">Business Transaction 21</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="modprod">Module Product:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="modprod">
+                                <option value="0">Select a Module Product</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="enqreason">Enquiry Reason:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqreason">
+                                <option value="0">Select a Enquiry Reason</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personamnt">Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personamnt" type="text" placeholder="Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personfname">First Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personfname" type="text" placeholder="Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personsname">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personsname" type="text" placeholder="Surname">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personphcode">Phone Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personphcode" type="text" placeholder="Phone Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personphnum">Phone Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personphnum" type="text" placeholder="Phone Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personaddress">Address:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personaddress" type="text" placeholder="Address">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personsuburb">Suburb:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personsuburb" type="text" placeholder="Suburb">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personcity">City:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personcity" type="text" placeholder="City">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personcode">Postal Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="personcode" type="text" placeholder="Postal Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personcode">Investigate:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqreason">
+                                <option value="0">Select an Investigation Type</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persholder">Account Holder:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persholder" type="text" placeholder="Account Holder">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persaccnum">Account Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persaccnum" type="text" placeholder="Account Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persbankaname">Bank:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persbankaname" type="text" placeholder="Bank">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persbankbranch">Bank Branch:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persbankbranch" type="text" placeholder="Bank Branch">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persbankbranchcode">Bank Branch Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persbankbranchcode" type="text" placeholder="Bank Branch Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="persbankbranchcode">Bank Branch Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="persbankbranchcode" type="text" placeholder="Bank Branch Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="crdtamnt">Credit Amount:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="crdtamnt" type="text" placeholder="Credit Amount">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="trms">Terms:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="trms" type="text" placeholder="Terms">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-header">Business Transaction 32</h4>
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label" for="busfname">First Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="busfname" type="text" placeholder="First Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussname">Surname:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussname" type="text" placeholder="Surname">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussphcode">Phone Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussphcode" type="text" placeholder="Phone Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussphnum">Phone Number:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussphnum" type="text" placeholder="Phone Number">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="bussname">Business Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="bussname" type="text" placeholder="Business Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="trdingname">Trading Name:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="trdingname" type="text" placeholder="Trading Name">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="trdbrnchcode">Branch Code:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="trdbrnchcode" type="text" placeholder="Branch Code">
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personcode">Enquiry Reason:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqreason">
+                                <option value="0">Select an Enquiry Reason</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="personcode">Module:</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="enqreason">
+                                <option value="0">Select a Module</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border-top" ng-show="showButton">
+                    <div class="col-12">
+                        <div class="p-t-20">
+                            <button ng-class="{true: 'btn btn-lg btn-success', false: 'btn  btn-lg btn-info'}[isProcessing === true]" type="button" ng-click="callProduct();">
+                                <i class="fa fa-spinner fa-spin" ng-show="isProcessing"></i>&nbsp;{{buttonText}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
     </div>
 </form>
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/Assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Assets/libs/quill/dist/quill.min.js"></script>
+<script src="~/Areas/Products/Scripts/CommercialProductController.js"></script>
+<script src="~/Areas/Products/Scripts/CommercialDatepicker.js"></script>
+<link href="~/Assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />

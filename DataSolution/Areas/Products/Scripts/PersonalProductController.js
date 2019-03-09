@@ -1,9 +1,10 @@
 ﻿angular.module('DataSolutionApp', [])
     .controller('PersonalProductController', function ($scope,$http) {
-        $(".preloader").fadeOut();
+  
         
 
         $scope.pageLoad = function () {
+            $(".preloader").fadeOut();
             $scope.consumerprofile = false;
             $scope.consumerprofileaddress = false;
             $scope.personaltrace = false;
@@ -20,6 +21,10 @@
             $scope.functionCall = '';
             $scope.params = {};
             $scope.GetReports();
+            $scope.divTitle = '';
+            $scope.contactNo = '';
+            $scope.dateofbirth = '';
+         
         };
 
         $scope.callProduct = function () {
@@ -30,18 +35,22 @@
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, ProductID: $scope.reportType
                     };
+                    
                     break;
                 case 2:
-                    $scope.functionCall = 'GetConsumerProfileWithAddress';
+                    $scope.functionCall = 'PersonalReport';
                     $scope.params = {
-                        FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, ProductID: $scope.reportType,
-                        AddressLin1: $scope.address1, AddressLine2: $scope.address2, Suburb: $scope.suburb, City: $scope.city, ProvinceCode: $scope.selectedProvince
+                        FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, AddressLine1: $scope.address1,
+                        AddressLin2: $scope.address2, AddressLine2: $scope.address2, Suburb: $scope.suburb, City: $scope.city, Province: $scope.selectedProvince
                     };
+                   
                     break;
                 case 3:
                     $scope.functionCall = 'PersonalTraceOrder';
                     $scope.params = {
-                        IDNumber: $scope.idNumber, ProductID: $scope.reportType
+                        FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, AddressLine1: $scope.address1,
+                        AddressLin2: $scope.address2, AddressLine2: $scope.address2, Suburb: $scope.suburb, DateOfBirth: $scope.dateofbirth,
+                        ContactNo: $scope.contactNo
                     };
                     break;
                 default:
@@ -52,7 +61,7 @@
 
             $http(
                 {
-                    method: 'GET',
+                    method: 'POST',
                     url: funcurl,
                     params: $scope.params
 
@@ -137,7 +146,7 @@
                     method: 'GET',
                     url: '/Products/Product/GetConsumerProducts',
                     params: {
-                        ReportType: $scope.reportType
+                        ProductType: 1
                     }
                 }
 

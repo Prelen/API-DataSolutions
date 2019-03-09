@@ -1,5 +1,6 @@
 ﻿using DataSolution.Data.DAL;
 using DataSolution.Domain.Model.Data;
+using DataSolution.Domain.Model.Services;
 using DataSolution.Services;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static DataSolution.Domain.Model.Services.TransUnionCommercialRequest;
 using static DataSolution.Domain.Model.Services.TransunionRequest;
+using RequestTrans01 = DataSolution.Domain.Model.Services.TransunionRequest.RequestTrans01;
 
 
 namespace DataSolution.Areas.Products.Controllers
 {
     public class ProductController : Controller
     {
+        private bool result;
         // GET: Products/Product
         public ActionResult Index()
         {
@@ -44,10 +48,11 @@ namespace DataSolution.Areas.Products.Controllers
                 return RedirectToAction("Login", "User", new { area = "Users" });
         }
 
+        [HttpPost]
         public async Task<JsonResult> GetConsumerProfile(string FirstName,string Surname,string IDNumber,string ProductID)
         {
 
-            bool result = false;
+             result = false;
             UserModel user = Session["User"] as UserModel;
 
             string userID = user.UserID.ToString();
@@ -61,23 +66,16 @@ namespace DataSolution.Areas.Products.Controllers
 
 
              result = await new TransUnionConsumer().GetConsumerProfile(request, userID, Convert.ToInt32(ProductID));
-            
-       
-            var audit = new AuditModel
-            {
-                ActivityDescription = "You requested a Consumer Profile report.",
-                AuditDate = DateTime.Now,
-                UserID = 4
-            };
 
-            result = new AuditData().InsertAudit(audit);
+            SaveAudit("You requested a Consumer Profile report.", user.UserID);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public async Task<bool> GetConsumerProfileWithAddress(string FirstName, string Surname, string IDNumber, string ProductID,string AddressLin1, string AddressLine2,
             string Suburb,string City,string ProvinceCode)
         {
-            bool result = false;
+             result = false;
             UserModel user = Session["User"] as UserModel;
             string userID = user.UserID.ToString();
             BureauEnquiry37Request request = new BureauEnquiry37Request
@@ -94,43 +92,40 @@ namespace DataSolution.Areas.Products.Controllers
 
             result = await new TransUnionConsumer().GetConsumerProfileWithAddress(request, userID, Convert.ToInt32(ProductID));
 
-            var audit = new AuditModel
-            {
-                ActivityDescription = "You requested a Consumer Profile report (with Address).",
-                AuditDate = DateTime.Now,
-                UserID = 4
-            };
-
-            result = new AuditData().InsertAudit(audit);
+            SaveAudit("You requested a Consumer Profile report (with Address).", user.UserID);
 
             return result;
         }
 
-        public async Task<bool> PersonalTraceOrder(string IDNumber,string ProductID)
+        [HttpPost]
+        public async Task<bool> PersonalTraceOrder(string FirstName, string Surname, string IDNumber, string ProductID, string AddressLine1, string AddressLine2,
+            string Suburb,string DateOfBirth, string ContactNo)
         {
-            bool result = false;
+             result = false;
             UserModel user = Session["User"] as UserModel;
             string userID = user.UserID.ToString();
-            TraceOrder68Request request = new TraceOrder68Request
+            TransunionRequest.IndividualTraceSearchRequest request = new TransunionRequest.IndividualTraceSearchRequest 
             {
-                IDNo1 = IDNumber
+                Forename = FirstName,
+                Surname = Surname,
+                IDNo = IDNumber,
+                AddressLine1 = AddressLine1,
+                AddressLine2 = AddressLine2,
+                Suburb = Suburb,
+                DateOfBirth = DateOfBirth,
+                TelNo = ContactNo
+                
             };
 
-            result = await new TransUnionConsumer().PersonalTraceOrder(request, userID, Convert.ToInt32(ProductID));
-            var audit = new AuditModel
-            {
-                ActivityDescription = "You requested a Personal Trace report.",
-                AuditDate = DateTime.Now,
-                UserID = 4
-            };
+            result = await new TransUnionConsumer().IndividualTraceSearchAsync(request, userID, 2);
+            SaveAudit("You requested a Personal Trace report.", user.UserID);
 
-            result = new AuditData().InsertAudit(audit);
             return result;
         }
 
-        public JsonResult GetConsumerProducts()
+        public JsonResult GetConsumerProducts(int ProductType)
         {
-            var result = new ProductData().GetProductsByType(1);
+            var result = new ProductData().GetProductsByType(ProductType);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -148,6 +143,67 @@ namespace DataSolution.Areas.Products.Controllers
             }
             else
                 return RedirectToAction("Login", "User", new { area = "Users" });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> BMSAlert(string StarDate,string EndDate)
+        {
+             result = false;
+           
+            UserModel user = Session["User"] as UserModel;
+            BMSAlertsRetrieveRequest request = new BMSAlertsRetrieveRequest
+            {
+                startDate = Convert.ToDateTime(StarDate),
+                endDate = Convert.ToDateTime(EndDate),
+                alertType = "BankCodes"
+            };
+
+            result = await new Services.TransUnionCommercialService().BMSRetrieveAlert(request, user.UserID, 2);
+
+     
+            SaveAudit("You requested a BMS Alert report.", user.UserID);
+
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<bool> PersonalReport(string FirstName,string Surname,string IDNumber, string AddressLine1,string AddressLin2,string Suburb,string City,
+            string Province)
+        {
+            result = false;
+
+            UserModel user = Session["User"] as UserModel;
+            TransunionRequest.RequestTrans01 trans01 = new RequestTrans01
+            {
+                Forename1 = FirstName,
+                Surname = Surname,
+                IdentityNo1 = IDNumber,
+                AddressLine1 = AddressLine1,
+                AddressLine2 = AddressLin2,
+                Suburb = Suburb,
+                City = City,
+                ProvinceCode = Province
+            };
+
+            result = await new TransUnionConsumer().ProcessRequestTrans41Async(trans01, user.UserID.ToString(), 2);
+
+            SaveAudit("You requested a Personal report+.", user.UserID);
+            return result;
+        }
+
+        private bool SaveAudit(string Description,int UserID)
+        {
+            result = false;
+            var audit = new AuditModel
+            {
+                ActivityDescription = Description,
+                AuditDate = DateTime.Now,
+                UserID = UserID
+            };
+
+            result = new AuditData().InsertAudit(audit);
+
+            return result;
         }
     }
 }
