@@ -21,5 +21,6 @@ namespace DataSolution.Data.Data
         public Nullable<decimal> ProductPrice { get; set; }
         public Nullable<int> TemplateID { get; set; }
         public Nullable<int> ReportTypeID { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     }
 }

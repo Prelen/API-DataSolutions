@@ -35,10 +35,11 @@ namespace DataSolution.Data.DAL
                  products = (from p in product.Products
                              join m in product.ReportTypes
                              on p.ReportTypeID equals m.ReportTypeID
-                             where m.ReportTypeID == ReportTypeID
+                             where m.ReportTypeID == ReportTypeID &&
+                             p.IsActive == true
                              select new ProductModel
                              {
-                                 ProductID = p.ProductID,
+                                 ProductCode = p.ProductCode,
                                  ProductName = p.ProductName
                              }).ToList();
             }

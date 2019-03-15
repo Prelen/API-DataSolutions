@@ -56,6 +56,13 @@ warning 6002: The table/view 'DataSolution.dbo.lk_Default' does not have a prima
           <Property Name="DefaultCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="DefaultDescription" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="lk_EnquireReason">
+          <Key>
+            <PropertyRef Name="EnqCode" />
+          </Key>
+          <Property Name="EnqCode" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="EnquireReason" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="lk_EnquiryReason">
           <Key>
             <PropertyRef Name="EnquiryCode" />
@@ -129,6 +136,7 @@ warning 6002: The table/view 'DataSolution.dbo.lnk_UserProducts' does not have a
           <EntitySet Name="lk_Court" EntityType="Self.lk_Court" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_CourtType" EntityType="Self.lk_CourtType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_DebtReview" EntityType="Self.lk_DebtReview" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lk_EnquireReason" EntityType="Self.lk_EnquireReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_EnquiryReason" EntityType="Self.lk_EnquiryReason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_Gender" EntityType="Self.lk_Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="lk_JudgementCode" EntityType="Self.lk_JudgementCode" Schema="dbo" store:Type="Tables" />
@@ -263,6 +271,7 @@ FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
           <EntitySet Name="lk_Alert" EntityType="LookupModel.lk_Alert" />
           <EntitySet Name="lk_SearchType" EntityType="LookupModel.lk_SearchType" />
           <EntitySet Name="lk_EnquiryReason" EntityType="LookupModel.lk_EnquiryReason" />
+          <EntitySet Name="lk_EnquireReason" EntityType="LookupModel.lk_EnquireReason" />
         </EntityContainer>
         <EntityType Name="lk_Alert">
           <Key>
@@ -284,6 +293,13 @@ FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
           </Key>
           <Property Name="EnquiryCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EnquiryDescription" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="lk_EnquireReason">
+          <Key>
+            <PropertyRef Name="EnqCode" />
+          </Key>
+          <Property Name="EnqCode" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="EnquireReason" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -416,6 +432,14 @@ FROM [dbo].[lnk_UserProducts] AS [lnk_UserProducts]</DefiningQuery>
               <MappingFragment StoreEntitySet="lk_EnquiryReason">
                 <ScalarProperty Name="EnquiryDescription" ColumnName="EnquiryDescription" />
                 <ScalarProperty Name="EnquiryCode" ColumnName="EnquiryCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lk_EnquireReason">
+            <EntityTypeMapping TypeName="LookupModel.lk_EnquireReason">
+              <MappingFragment StoreEntitySet="lk_EnquireReason">
+                <ScalarProperty Name="EnquireReason" ColumnName="EnquireReason" />
+                <ScalarProperty Name="EnqCode" ColumnName="EnqCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

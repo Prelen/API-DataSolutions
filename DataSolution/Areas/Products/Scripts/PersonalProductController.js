@@ -29,15 +29,17 @@
 
         $scope.callProduct = function () {
             $scope.isProcessing = true;
+            var dt = new Date($scope.dateofbirth);
+            var newDate = dt.getDate() + "/" + (dt.getMonth() + 1 )+ "/" + dt.getFullYear();
             switch ($scope.reportType) {
-                case 1:
+                case 'CP':
                     $scope.functionCall = 'GetConsumerProfile';
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, ProductID: $scope.reportType
                     };
                     
                     break;
-                case 2:
+                case 'CPA':
                     $scope.functionCall = 'PersonalReport';
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, AddressLine1: $scope.address1,
@@ -45,11 +47,11 @@
                     };
                    
                     break;
-                case 3:
+                case 'CTRC':
                     $scope.functionCall = 'PersonalTraceOrder';
                     $scope.params = {
                         FirstName: $scope.firstname, Surname: $scope.surname, IDNumber: $scope.idNumber, AddressLine1: $scope.address1,
-                        AddressLin2: $scope.address2, AddressLine2: $scope.address2, Suburb: $scope.suburb, DateOfBirth: $scope.dateofbirth,
+                        AddressLin2: $scope.address2, AddressLine2: $scope.address2, Suburb: $scope.suburb, DateOfBirth: newDate,
                         ContactNo: $scope.contactNo
                     };
                     break;
@@ -79,25 +81,25 @@
 
         $scope.reportChange = function () {
             switch ($scope.reportType) {
-                case 0:
+                case '0':
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = false;
                     $scope.showButton = false;
                     break;
-                case 1 :
+                case 'CP' :
                     $scope.consumerprofile = true;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = false;
                     $scope.showButton = true;
                     break;
-                case 2 :
+                case 'CPA' :
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = true;
                     $scope.personaltrace = false;
                     $scope.showButton = true;
                     break;
-                case 3:
+                case 'CTRC':
                     $scope.consumerprofile = false;
                     $scope.consumerprofileaddress = false;
                     $scope.personaltrace = true;
@@ -163,7 +165,7 @@
 
                     for (var i = 0; i < reportlist.length; i++) {
                         $scope.report = {
-                            reportID: reportlist[i].ProductID,
+                            reportID: reportlist[i].ProductCode.trim(),
                             reportName: reportlist[i].ProductName
                         };
                         $scope.reports.push($scope.report);

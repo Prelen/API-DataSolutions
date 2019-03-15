@@ -1,6 +1,8 @@
-﻿$("#dtDOB").datepicker({
-    autoclose: true,
-    todayHighlight: true,
-    format: 'dd/mm/yyyy',
-    orientation: 'bottom'
+﻿
+
+$("#dtDOB").change(function () {
+    var dtEntered = $("#dtDOB").val();
+    var dt = new Date(dtEntered);
+    var ret = dt.getDate() + "/" + dt.getMonth() + "/" + dt.getFullYear();
+    $("#dtDOB").val(ret);
 });

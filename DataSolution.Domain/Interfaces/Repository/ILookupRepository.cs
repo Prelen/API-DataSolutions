@@ -13,5 +13,6 @@ namespace DataSolution.Domain.Interfaces.Repository
         List<ProvinceModel> GetAllProvinces();
         List<AlertModel> GetAllAlertTypes();
         List<SearchTypeModel> GetSearchTypes();
+    
     }
 }

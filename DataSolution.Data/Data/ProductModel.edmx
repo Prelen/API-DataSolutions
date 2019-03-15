@@ -16,6 +16,7 @@
           <Property Name="ProductPrice" Type="decimal" Precision="8" Scale="2" />
           <Property Name="TemplateID" Type="int" />
           <Property Name="ReportTypeID" Type="int" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityType Name="ReportType">
           <Key>
@@ -43,6 +44,7 @@
           <Property Name="ProductPrice" Type="Decimal" Precision="8" Scale="2" />
           <Property Name="TemplateID" Type="Int32" />
           <Property Name="ReportTypeID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="ProductEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -64,6 +66,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ProductModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ReportTypeID" ColumnName="ReportTypeID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />

@@ -150,6 +150,11 @@
     <Compile Include="Areas\Users\Controllers\UserController.cs" />
     <Compile Include="Areas\Users\Models\HomeModel.cs" />
     <Compile Include="Areas\Users\UsersAreaRegistration.cs" />
+    <Compile Include="Connected Services\PDFService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\TransUnionCommercialService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -162,6 +167,7 @@
     </Compile>
     <Compile Include="Services\TransUnionCommercialService.cs" />
     <Compile Include="Services\TransUnionConsumer.cs" />
+    <Compile Include="Services\TransUnionPDFService.cs" />
     <Compile Include="Views\Home\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -908,7 +914,24 @@
     <Content Include="Areas\Users\Views\User\LogOff.cshtml" />
     <Content Include="Areas\Users\Views\User\ChangeDetails.cshtml" />
     <Content Include="Areas\Users\Views\User\ChangePassword.cshtml" />
+    <None Include="Connected Services\PDFService\ReportRequestService.wsdl" />
+    <None Include="Connected Services\PDFService\ReportRequestService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PDFService\ReportRequestService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PDFService\ReportRequestService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\TransUnionCommercialService\Commercial.wsdl" />
+    <None Include="Connected Services\PDFService\ReportRequestService.disco" />
+    <None Include="Connected Services\PDFService\configuration91.svcinfo" />
+    <None Include="Connected Services\PDFService\configuration.svcinfo" />
+    <None Include="Connected Services\PDFService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\TransUnionCommercialService\DataSolution.TransUnionCommercialService.BMSAlertResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1173,6 +1196,9 @@
     <Content Include="Areas\Products\Views\web.config" />
     <Content Include="Areas\Products\Views\Product\PersonalProducts.cshtml" />
     <None Include="Connected Services\TransUnionService\Consumer.wsdl" />
+    <Content Include="Properties\DataSources\DataSolution.Service.PDFService.ClientRequestProcess.datasource" />
+    <Content Include="Properties\DataSources\DataSolution.Service.PDFService.ClientResultProcess.datasource" />
+    <Content Include="Properties\DataSources\DataSolution.Service.PDFService.RequestHistory.datasource" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1990,6 +2016,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\PDFService\" />
     <WCFMetadataStorage Include="Connected Services\TransUnionCommercialService\" />
     <WCFMetadataStorage Include="Connected Services\TransUnionService\" />
   </ItemGroup>

@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Retrieve BMS Alert</h4>
                     <div class="form-group row date" id="dtpicker1">
                         <label class="col-sm-3 text-right control-label col-form-label" for="dtstartdate">Start Date:</label>
@@ -37,41 +37,46 @@
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="searchtype">Search Type:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="searchtype">
+                            <select class="form-control" id="searchtype" ng-model="selectedCriteria" ng-options="srch.searchID as srch.searchName for srch in searchTypes">
                                 <option value="0">Select a Search type</option>
                             </select>
                         </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="searchName">Name:</label>
+                        <label class="col-sm-3 text-right control-label col-form-label" for="searchcriteria">Search Criteria:</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="searchName" type="text" placeholder="Name" required>
+                            <input class="form-control" id="searchcriteria" type="text" placeholder="Search Criteria" required>
                         </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="regno">Registration No:</label>
+
+                        <label class="col-sm-3 text-right control-label col-form-label" for="regno">Enquiry Type</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="regno" type="text" placeholder="Registration No" required>
+                            <select class="form-control" id="searchtype" ng-model="selectedEnquiryReason" ng-options="enq.enqID as enq.enqDescription for enq in enquires">
+                                <option value="0">Select a Enquiry type</option>
+                            </select>
                         </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="itno">IT No:</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" id="itno" type="text" placeholder="IT No" required>
-                        </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="dunsno">DUNS No:</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" id="dunsno" type="text" placeholder="DUNS No" required>
-                        </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="vatno">VAT No:</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" id="vatno" type="text" placeholder="VAT No" required>
-                        </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="bankacc">Bank Account:</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" id="bankacc" type="text" placeholder="Bank Account" required>
-                        </div>
-                        <label class="col-sm-3 text-right control-label col-form-label" for="tradingno">Trading No:</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" id="tradingno" type="text" placeholder="Trading No" required>
-                        </div>
+                        <!--
+                            <label class="col-sm-3 text-right control-label col-form-label" for="itno">IT No:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="itno" type="text" placeholder="IT No" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="dunsno">DUNS No:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="dunsno" type="text" placeholder="DUNS No" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="vatno">VAT No:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="vatno" type="text" placeholder="VAT No" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="bankacc">Bank Account:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="bankacc" type="text" placeholder="Bank Account" required>
+                            </div>
+                            <label class="col-sm-3 text-right control-label col-form-label" for="tradingno">Trading No:</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="tradingno" type="text" placeholder="Trading No" required>
+                            </div>
+                          -->
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Mailbox Request</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="ticketno">Ticket No:</label>
@@ -80,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Module Availability</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="itno">IT No:</label>
@@ -89,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Module Investigation</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="moduleproduct">Module Products:</label>
@@ -172,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Principal Request</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="initials">Initials:</label>
@@ -236,7 +241,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Principal Module</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="fname">First Name:</label>
@@ -319,7 +324,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Principal Module</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="itnumber">IT Number:</label>
@@ -426,7 +431,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Business Transaction 01</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="srchtype">Search Type:</label>
@@ -465,7 +470,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Business Transaction A1</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="busitnum">IT Number:</label>
@@ -474,7 +479,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Business Transaction 15</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="busitnum">IT Number:</label>
@@ -575,7 +580,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Business Transaction 21</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="modprod">Module Product:</label>
@@ -666,7 +671,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="display:none">
                     <h4 class="card-header">Business Transaction 32</h4>
                     <div class="form-group row">
                         <label class="col-sm-3 text-right control-label col-form-label" for="busfname">First Name:</label>

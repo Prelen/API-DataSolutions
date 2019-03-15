@@ -15,7 +15,7 @@ using static DataSolution.Domain.Model.Services.TransUnionCommercialRequest;
 
 namespace DataSolution.Services
 {
-    public class TransUnionCommercialService : ITransunionCommercialAPI
+    public class TransUnionCommercialService 
     {
         DataSolution.TransUnionCommercialService.CommercialSoapClient client = new DataSolution.TransUnionCommercialService.CommercialSoapClient();
         readonly string subNo = ConfigurationManager.AppSettings["TransunionSub"].ToString();
@@ -67,9 +67,10 @@ namespace DataSolution.Services
             }
             return result;
         }
-        public async Task<bool> BusinessSearch(BusinessSearchRequest Request, int UserID,int ProductID)
+        public async Task<string> BusinessSearch(BusinessSearchRequest Request, int UserID,int ProductID)
         {
             bool result = false;
+            string itNumber = string.Empty;
             try
             {
                 var config = new MapperConfiguration(
@@ -82,9 +83,17 @@ namespace DataSolution.Services
                 var business = mapper.Map<BusinessSearch>(Request);
                 business.SubscriberCode = subNo;
                 business.SecurityCode = securityCode;
+                
                 var response = await client.BusinessSearchAsync(business);
-                result = response.ErrorCode.Trim() != string.Empty ? true : false;
-                if (!result)
+                result = response.ErrorCode == null ? true : false;
+                if (result)
+                {
+                    if (response.FirstResponse != null)
+                    {
+                        itNumber = response.FirstResponse.ITNumber;
+                    }
+                }
+                 else
                     log.LogError(UserID.ToString(), "DataSolution.Services", "BMSRetrieveAlert",response.ErrorCode + ":" +  response.ErrorMessage);
 
 
@@ -108,7 +117,7 @@ namespace DataSolution.Services
                 log.LogError(UserID.ToString(), "DataSolutions.Web", "TransUnionCommercialService.BusinessSearch", ex.Message);
             }
 
-            return result;
+            return itNumber;
         }
         public async Task<bool> ForensicRequest(ForensicRequest Request, int UserID, int ProductID)
         {

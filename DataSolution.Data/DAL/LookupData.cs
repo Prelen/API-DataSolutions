@@ -75,6 +75,7 @@ namespace DataSolution.Data.DAL
                 using (LookupEntities lookup = new LookupEntities())
                 {
                     searchType = (from l in lookup.lk_SearchType
+                                  orderby l.SearchCode descending
                                   select new SearchTypeModel
                                   {
                                       SearchCode = l.SearchCode,
@@ -99,6 +100,7 @@ namespace DataSolution.Data.DAL
                 using (LookupEntities lookup = new LookupEntities())
                 {
                     enquiryReasons = (from l in lookup.lk_EnquiryReason
+                                      orderby l.EnquiryDescription descending
                                       select new EnquiryReasonModel
                                       {
                                           EnquiryCode = l.EnquiryCode,
@@ -115,5 +117,24 @@ namespace DataSolution.Data.DAL
 
             return enquiryReasons;
         }
+
+        public List<EnquiryReasonModel> GetEnquirerReason()
+        {
+            List<EnquiryReasonModel> results = new List<EnquiryReasonModel>();
+
+            using (LookupEntities lookup = new LookupEntities())
+            {
+                results = (from l in lookup.lk_EnquireReason
+                           orderby l.EnquireReason descending
+                           select new EnquiryReasonModel
+                           {
+                               EnquiryCode = l.EnqCode,
+                               EnquiryDescription = l.EnqCode
+                           }).ToList();
+            }
+
+            return results;
+        }
+
     }
 }

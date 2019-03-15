@@ -41,5 +41,6 @@ namespace DataSolution.Data.Data
         public DbSet<lk_Alert> lk_Alert { get; set; }
         public DbSet<lk_SearchType> lk_SearchType { get; set; }
         public DbSet<lk_EnquiryReason> lk_EnquiryReason { get; set; }
+        public DbSet<lk_EnquireReason> lk_EnquireReason { get; set; }
     }
 }

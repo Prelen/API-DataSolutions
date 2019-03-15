@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TUDirectReportServiceLogic.Processing" />
+  <xs:element name="RequestReportLink">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="MFSecCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UserEmail" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Ticket" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestReportLinkResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TUDirectReportServiceLogic.Processing" minOccurs="0" name="RequestReportLinkResult" nillable="true" type="q1:ClientRequestProcess" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestReportBytes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="MFSecCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UserEmail" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Ticket" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestReportBytesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TUDirectReportServiceLogic.Processing" minOccurs="0" name="RequestReportBytesResult" nillable="true" type="q2:ClientRequestProcess" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestHistoryList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SubscriberNo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="UserEmail" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="MFSecCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestHistoryListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TUDirectReportServiceLogic.Processing" minOccurs="0" name="RequestHistoryListResult" nillable="true" type="q3:ArrayOfRequestHistory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PDFReportResultProcess">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReportCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PDFReportResultProcessResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/TUDirectReportServiceLogic.Processing" minOccurs="0" name="PDFReportResultProcessResult" nillable="true" type="q4:ClientResultProcess" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

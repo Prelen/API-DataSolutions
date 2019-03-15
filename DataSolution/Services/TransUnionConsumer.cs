@@ -14,6 +14,8 @@ using DataSolution.Domain.Model.Data;
 using DataSolution.Data.DAL;
 using DataSolution.Service.TransunionConsumer;
 using System.Configuration;
+using System.Net;
+using System.ServiceModel;
 
 namespace DataSolution.Services
 {
@@ -61,7 +63,7 @@ namespace DataSolution.Services
                 enquiry13.EnquirerContactPhoneNo = "083225398";
                 var response = await client.ProcessRequestTrans13Async(enquiry13);
                
-                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                result = response.ErrorCode == null ? true : false;
 
                 if (!result)
                     log.LogError(UserID, "DataSolutions.Web", "TransUnionConsumer.GetConsumerProfile", response.ErrorCode + " " + response.ErrorMessage);
@@ -120,6 +122,20 @@ namespace DataSolution.Services
                 bureauEnquiry37.EnquirerContactPhoneNo = "083225398";
 
                 destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                /* Begin Proxy code*/
+                //BasicHttpBinding binding = new BasicHttpBinding("ConsumerSoap");
+                //binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                //binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Basic;
+                //binding.UseDefaultWebProxy = false;
+                //binding.ProxyAddress = new Uri("http://proxy.ntcweb.co.za:8080");
+                //EndpointAddress endpoint = new EndpointAddress("https://securetest.transunion.co.za/TUBureau118/Consumer.asmx");
+                //ConsumerSoapClient soap = new ConsumerSoapClient(binding, endpoint);
+                //soap.ClientCredentials.UserName.UserName = "svcwssdotnet";
+                //soap.ClientCredentials.UserName.Password = "svcW$$d0tn3t";
+                //var response = await client.ProcessRequestTrans37Async(bureauEnquiry37, destination);
+                /*End Proxy Code*/
+
 
                 var response = await client.ProcessRequestTrans37Async(bureauEnquiry37, destination);
                 result = response.ErrorCode.Trim() == string.Empty ? true : false;
@@ -193,20 +209,44 @@ namespace DataSolution.Services
                 var trace = mapper.Map<IndividualTraceProductOrder68>(Request);
                 trace.SecurityCode = securityCode;
                 trace.SubscriberCode = subNo;
-                trace.ClientReference = "Test1";
-                trace.ClientRequestID = "1";
-                trace.BatchNumber = "1";
-                trace.ConsumerNumber = subNo;
-                trace.ReportNo = "1";
-                trace.TicketNo = "1";
-                
+                var products = new List<ModuleProductCode>();
+                var module = new ModuleProductCode();
+                module.Code = "6502";
+                products.Add(module);
+                module = new ModuleProductCode();
+                module.Code = "6503";
+                products.Add(module);
+                module = new ModuleProductCode();
+                module.Code = "6504";
+                products.Add(module);
+                module = new ModuleProductCode();
+                module.Code = "6505";
+                products.Add(module);
+                trace.ModuleProducts = products.ToArray();
 
-               // trace.ModuleProducts = productCode;
+                /* Begin Proxy code*/
+                //BasicHttpBinding binding = new BasicHttpBinding("ConsumerSoap");
+                //binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                //binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Basic;
+                //binding.UseDefaultWebProxy = false;
+                //binding.ProxyAddress = new Uri("http://proxy.ntcweb.co.za:8080");
+                //EndpointAddress endpoint = new EndpointAddress("https://securetest.transunion.co.za/TUBureau118/Consumer.asmx");
+                //ConsumerSoapClient soap = new ConsumerSoapClient(binding, endpoint);
+                //soap.ClientCredentials.UserName.UserName = "svcwssdotnet";
+                //soap.ClientCredentials.UserName.Password = "svcW$$d0tn3t";
+                //var response = await soap.ProcessRequestIndividualTraceProductOrderTrans05Async(trace);
+                /*End Proxy Code*/
+
 
                 var response = await client.ProcessRequestIndividualTraceProductOrderTrans05Async(trace);
-                result = response.ErrorCode.Trim() == string.Empty ? true : false;
+                result = response.ErrorCode == null ? true : false;
 
-                if (!result)
+                if (result)
+                {
+                    string str = await new TransUnionPDFService().GetReportLink(UserID, subNo, securityCode, Request.TicketNo);
+                    bool x = await new TransUnionPDFService().ConvertPDFAsync("Prelen", "Prelen@gmail.com", Request.TicketNo, UserID);
+                }
+                else
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.TraceOrder68Async", response.ErrorCode + " " + response.ErrorMessage);
                 //Save Transaction
 
@@ -260,15 +300,45 @@ namespace DataSolution.Services
                 enquiry41.SubscriberCode = subNo;
                 enquiry41.EnquirerContactName = "Prelen Nair";
                 enquiry41.EnquirerContactPhoneNo = "0832253698";
-                enquiry41.PostalCode = "2188";
+                
                 destination = environment == "Test" ? Destination.Test : Destination.Live;
+
+                /* Begin Proxy code*/
+                //BasicHttpBinding binding = new BasicHttpBinding("ConsumerSoap");
+                //binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                //binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Basic;
+                //binding.UseDefaultWebProxy = false;
+                //binding.ProxyAddress = new Uri("http://proxy.ntcweb.co.za:8080");
+                //EndpointAddress endpoint = new EndpointAddress("https://securetest.transunion.co.za/TUBureau118/Consumer.asmx");
+                //ConsumerSoapClient soap = new ConsumerSoapClient(binding, endpoint);
+                //soap.ClientCredentials.UserName.UserName = "svcwssdotnet";
+                //soap.ClientCredentials.UserName.Password = "svcW$$d0tn3t";
+                //var response = await soap.ProcessRequestTrans41Async(enquiry41, destination);
+                /*End Proxy Code*/
+
+
 
                 var response = await client.ProcessRequestTrans41Async(enquiry41, destination);
 
-                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                result = response.ErrorCode == null ? true : false;
 
-                if (!result)
-                    log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", response.ErrorCode + " " + response.ErrorMessage);
+                if (result)
+                {
+                    string ticketno = "";
+                    if (response.TicketSuccessConfirmationFR != null)
+                    {
+                        ticketno = response.TicketSuccessConfirmationFR.TicketNumber;
+                        
+                    }
+                    if (response.TraceInformationTI != null)
+                    {
+                        ticketno = response.TraceInformationTI[0].OTicketNumber;
+                    }
+                    bool x = await new TransUnionPDFService().ConvertPDFAsync("Prelen", "Prelen@gmail.com", ticketno, UserID);
+                    string str = await new TransUnionPDFService().GetReportLink(UserID, subNo, securityCode, ticketno);
+                }
+                else
+                log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.ProcessRequestTrans41Async", response.ErrorCode + " " + response.ErrorMessage);
 
                 // Save Transaction
                 endDate = DateTime.Now;
@@ -329,12 +399,53 @@ namespace DataSolution.Services
                 individualTrace.SecurityCode = securityCode;
                 individualTrace.SearchType = "01";
                 individualTrace.SearchReason = "61";
-                
 
-                var response = await client.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
-                result = response.ErrorCode.Trim() != string.Empty ? true : false;
+                /* Begin Proxy code*/
+                //BasicHttpBinding binding = new BasicHttpBinding("ConsumerSoap"); 
+                //binding.Security.Mode = BasicHttpSecurityMode.Transport;
+                //binding.Security.Transport.ProxyCredentialType = HttpProxyCredentialType.Basic;
+                //binding.UseDefaultWebProxy = false;
+                //binding.ProxyAddress = new Uri("http://proxy.ntcweb.co.za:8080");
+                //EndpointAddress endpoint = new EndpointAddress("https://securetest.transunion.co.za/TUBureau118/Consumer.asmx");
+                //ConsumerSoapClient soap = new ConsumerSoapClient(binding, endpoint);
+                //soap.ClientCredentials.UserName.UserName = "svcwssdotnet";
+                //soap.ClientCredentials.UserName.Password = "svcW$$d0tn3t";
+                //var response = await soap.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
+                /*End Proxy Code*/
 
-                if (!result)
+                  var response = await client.ProcessRequestIndividualTraceSearchInputAsync(individualTrace);
+
+
+                result = response.ErrorCode == null ? true : false;
+
+                if (result)
+                {
+                    string ticketno = string.Empty;
+                    string consumerno = string.Empty;
+                    if (response.TraceInformationTI != null)
+                    {
+                        ticketno  = response.TraceInformationTI[0].OTicketNumber;
+                    }
+
+                    if (response.TraceDetailsTD != null)
+                    {
+                        consumerno = response.TraceDetailsTD[0].OConsumerNumber;
+                    }
+
+                    TransunionRequest.TraceOrder68Request trace68 = new TraceOrder68Request
+                    {
+                        TicketNo = ticketno,
+                        ConsumerNo = consumerno,
+                        IDNo1 = individualTrace.IdentityNumber,
+                        AddressLine1 = individualTrace.AddressLine1,
+                        AddressLine2 = individualTrace.AddressLine2,
+                        Suburb = individualTrace.AddressSuburb,
+                        CellNo = Request.CellNo
+                    };
+
+                    var products = await PersonalTraceOrder(trace68, UserID, ProductID);
+                }
+                else
                     log.LogError(UserID, "DataSolutions.Services", "TransunionAPIController.IndividualTraceSearchAsync", response.ErrorCode + " " + response.ErrorMessage);
 
 

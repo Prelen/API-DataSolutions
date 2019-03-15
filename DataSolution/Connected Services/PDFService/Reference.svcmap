@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b59f15ea-7a6a-4b4f-b653-64d1edd4700f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ReportRequestService.xsd" MetadataType="Schema" ID="fbc1f501-3b2d-456d-b2c3-e6f45a84b184" SourceId="1" SourceUrl="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ReportRequestService1.xsd" MetadataType="Schema" ID="6cb8c794-e167-4968-b58b-de50efdb0e3d" SourceId="1" SourceUrl="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ReportRequestService2.xsd" MetadataType="Schema" ID="031952b7-11d6-474c-b42c-ed88224cea86" SourceId="1" SourceUrl="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ReportRequestService.disco" MetadataType="Disco" ID="054d0ac9-a1d9-435d-94c1-5ea87fabd794" SourceId="1" SourceUrl="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?disco" />
+    <MetadataFile FileName="ReportRequestService.wsdl" MetadataType="Wsdl" ID="5d2efad8-1aaa-45a3-887a-dff86043fc26" SourceId="1" SourceUrl="https://www.tudirect.co.za/TUReportService/Services/ReportRequest/ReportRequestService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

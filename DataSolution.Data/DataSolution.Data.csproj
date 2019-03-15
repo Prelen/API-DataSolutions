@@ -103,6 +103,9 @@
     <Compile Include="Data\lk_Default.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\lk_EnquireReason.cs">
+      <DependentUpon>LookupModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\lk_EnquiryReason.cs">
       <DependentUpon>LookupModel.tt</DependentUpon>
     </Compile>

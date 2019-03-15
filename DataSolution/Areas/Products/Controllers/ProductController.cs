@@ -112,8 +112,8 @@ namespace DataSolution.Areas.Products.Controllers
                 AddressLine1 = AddressLine1,
                 AddressLine2 = AddressLine2,
                 Suburb = Suburb,
-                DateOfBirth = DateOfBirth,
-                TelNo = ContactNo
+                DateOfBirth = DateOfBirth
+                //CellNo = ContactNo
                 
             };
 
@@ -183,6 +183,7 @@ namespace DataSolution.Areas.Products.Controllers
                 Suburb = Suburb,
                 City = City,
                 ProvinceCode = Province
+          
             };
 
             result = await new TransUnionConsumer().ProcessRequestTrans41Async(trans01, user.UserID.ToString(), 2);
@@ -204,6 +205,68 @@ namespace DataSolution.Areas.Products.Controllers
             result = new AuditData().InsertAudit(audit);
 
             return result;
+        }
+
+        public JsonResult GetSearchTypes()
+        {
+            var searchTypes = new LookupData().GetSearchTypes();
+            return Json(searchTypes, JsonRequestBehavior.AllowGet);
+        }
+        
+        public async Task<JsonResult> ProcessCommercialRequest(string ReportType,string SearchCriteria, string SearchValue,string EnquiryReason)
+        {
+            bool result = false;
+            UserModel user = Session["User"] as UserModel;
+            BusinessSearchRequest request = new BusinessSearchRequest();
+
+            request.SearchType = SearchCriteria;
+            switch (SearchCriteria.Trim())
+            {
+                case "BankAccountNo":
+                    request.BankAccount = SearchValue;
+                    break;
+                case "DunsNo":
+                    request.DunsNumber = SearchValue;
+                    break;
+                case "ITNo":
+                    request.ITNumber = SearchValue;
+                    break;
+                case "Name":
+                    request.SubjectName = SearchValue;
+                    break;
+                case "RegNo":
+                    request.RegistrationNo = SearchValue;
+                    break;
+                case "TradingNo":
+                    request.RegistrationNo = SearchValue;
+                    break;
+                case "VatNo":
+                    request.VatNumber = SearchValue;
+                    break;
+                default:
+                    break;
+            }
+
+            string companyITNum = await new Services.TransUnionCommercialService().BusinessSearch(request, user.UserID, 2);
+
+            if (ReportType == "ONLINE")
+            {
+
+            }
+            else if (ReportType == "INV")
+            {
+
+            }
+            
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetEnquirerReasons()
+        {
+            var results = new LookupData().GetEnquirerReason();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

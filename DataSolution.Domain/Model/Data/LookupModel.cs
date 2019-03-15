@@ -97,5 +97,9 @@ namespace DataSolution.Domain.Model.Data
             public string EnquiryCode { get; set; }
             public string EnquiryDescription { get; set; }
         }
+
+        
+
+       
     }
 }
